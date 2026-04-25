@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Maria Showalter</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: white; overflow: hidden; }
+    canvas { display: block; }
+
+    /* ── centered name overlay ── */
+    .hero {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .hero-name {
+      font-size: clamp(2rem, 6vw, 5rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #2255ff;
+      font-family: serif;
+      opacity: 0;
+      animation: fadein 2s ease 0.8s forwards;
+    }
+    .hero-sub {
+      margin-top: 14px;
+      font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #2255ff;
+      opacity: 0;
+      animation: fadein 2s ease 1.6s forwards;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── nav links fixed bottom ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 40px;
+      z-index: 10;
+      opacity: 0;
+      animation: fadein 2s ease 2.4s forwards;
+    }
+    .bottom-nav a {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #2255ff;
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      pointer-events: all;
+    }
+    .bottom-nav a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <canvas id="c"></canvas>
+
+  <div class="hero">
+    <div class="hero-name">Maria Showalter</div>
+    <div class="hero-sub">creative developer</div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx    = canvas.getContext('2d');
+
+    const CELL_SIZE = 12;
+    const PLUS_ARM  = 3;
+    const DOT_R     = 1.5; // radius of dot cells
+    const SPEED_MS  = 80;
+    const COLOR     = '#2255ff';
+
+    // each cell is randomly assigned to draw as a plus or a dot
+    // assignment is fixed at birth and kept through the cell's life
+    let COLS, ROWS, grid, cellType;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      COLS = Math.floor(canvas.width  / CELL_SIZE);
+      ROWS = Math.floor(canvas.height / CELL_SIZE);
+      init();
+    }
+
+    function init() {
+      grid     = Array.from({ length: ROWS }, () =>
+        Array.from({ length: COLS }, () => Math.random() < 0.28 ? 1 : 0)
+      );
+      // assign each cell a type: 0 = plus, 1 = dot
+      // roughly 60% pluses, 40% dots
+      cellType = Array.from({ length: ROWS }, () =>
+        Array.from({ length: COLS }, () => Math.random() < 0.4 ? 1 : 0)
+      );
+    }
+
+    function countNeighbors(r, c) {
+      let n = 0;
+      for (let dr = -1; dr <= 1; dr++)
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          n += grid[(r + dr + ROWS) % ROWS][(c + dc + COLS) % COLS];
+        }
+      return n;
+    }
+
+    function step() {
+      const next = grid.map((row, r) =>
+        row.map((cell, c) => {
+          const n = countNeighbors(r, c);
+          return cell ? (n === 2 || n === 3 ? 1 : 0) : (n === 3 ? 1 : 0);
+        })
+      );
+      grid = next;
+    }
+
+    function totalAlive() {
+      return grid.reduce((s, r) => s + r.reduce((a, v) => a + v, 0), 0);
+    }
+
+    function drawPlus(px, py) {
+      ctx.beginPath();
+      ctx.moveTo(px - PLUS_ARM, py); ctx.lineTo(px + PLUS_ARM, py);
+      ctx.moveTo(px, py - PLUS_ARM); ctx.lineTo(px, py + PLUS_ARM);
+      ctx.stroke();
+    }
+
+    function drawDot(px, py) {
+      ctx.beginPath();
+      ctx.arc(px, py, DOT_R, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function draw() {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = COLOR;
+      ctx.fillStyle   = COLOR;
+      ctx.lineWidth   = 1;
+      ctx.lineCap     = 'round';
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          if (!grid[r][c]) continue;
+          const px = c * CELL_SIZE + CELL_SIZE / 2;
+          const py = r * CELL_SIZE + CELL_SIZE / 2;
+          if (cellType[r][c] === 0) {
+            drawPlus(px, py);
+          } else {
+            drawDot(px, py);
+          }
+        }
+      }
+    }
+
+    function tick() {
+      step();
+      if (totalAlive() < COLS * ROWS * 0.02) init();
+      draw();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+    setInterval(tick, SPEED_MS);
+  </script>
+</body>
+</html>
