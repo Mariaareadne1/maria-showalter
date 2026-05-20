@@ -130,7 +130,12 @@ body{background:var(--white);color:var(--black);font-family:var(--sans);overflow
 .dj-note-item strong{color:var(--blue);font-weight:500;}
 .dj-yt-link{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:1px;transition:opacity .2s;}
 .dj-yt-link:hover{opacity:.6;}
-.dj-drop-hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--muted);margin-top:6px;text-align:center;}
+.mix-chip{font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:var(--blue);background:none;border:1px solid rgba(0,68,255,.2);border-radius:100px;padding:4px 11px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.mix-chip:hover{background:rgba(0,68,255,.06);border-color:var(--blue);}
+.mix-chip.active{background:rgba(0,68,255,.1);border-color:var(--blue);}
+.track-select{width:190px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--black);background:var(--white);border:1px solid rgba(0,0,0,.15);border-radius:2px;padding:7px 10px;cursor:pointer;outline:none;margin-bottom:10px;transition:border-color .2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%230044ff' opacity='.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.track-select:hover,.track-select:focus{border-color:var(--blue);}
+.track-select option{font-family:var(--mono);font-size:9px;}
 /* VIDEOS */
 #videos{padding:80px 10vw;background:var(--offwhite);border-top:1px solid rgba(0,0,0,.07);}
 .video-grid{display:flex;gap:18px;overflow-x:auto;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:rgba(0,68,255,.2) transparent;}
@@ -283,56 +288,88 @@ footer{background:var(--black);color:var(--white);padding:60px 10vw;display:grid
   </div>
 </section>
 
-<section id="dj">
-  <div class="reveal">
+<section id="dj" style="position:relative;overflow:hidden;">
+  <!-- background frequency visualizer -->
+  <canvas id="vizCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;transition:opacity 1s;"></canvas>
+
+  <div class="reveal" style="position:relative;z-index:1;">
     <div class="dj-title">DJ Deck</div>
     <div class="dj-personal">a little view into how I like to create</div>
     <div class="dj-subtitle">mix · match the BPM · steer the filter · blend the decks</div>
   </div>
-  <div class="dj-deck reveal">
+
+  <!-- mix suggestions - compact chips -->
+  <div style="max-width:840px;margin:0 auto 32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <span style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">try →</span>
+    <button class="mix-chip" onclick="applySuggestion('track-yummy.mp3','track-paper-planes.mp3')">Yummy + Paper Planes</button>
+    <button class="mix-chip" onclick="applySuggestion('track-no-scrubs.mp3','track-bills.mp3')">No Scrubs + Bills Bills Bills</button>
+    <button class="mix-chip" onclick="applySuggestion('track-blinding-lights.mp3','track-as-it-was.mp3')">Blinding Lights + As It Was</button>
+    <button class="mix-chip" onclick="applySuggestion('track-paper-planes.mp3','track-no-scrubs.mp3')">Paper Planes + No Scrubs</button>
+  </div>
+
+  <div class="dj-deck reveal" style="position:relative;z-index:1;">
     <div class="turntable-wrap">
+      <!-- track selector A -->
+      <select class="track-select" id="selectA" onchange="loadPreset('A',this.value)">
+        <option value="">— choose a track —</option>
+        <option value="track-yummy.mp3|96|Yummy">Yummy — Ayesha Erotica</option>
+        <option value="track-paper-planes.mp3|98|Paper Planes">Paper Planes — M.I.A.</option>
+        <option value="track-no-scrubs.mp3|100|No Scrubs">No Scrubs — TLC</option>
+        <option value="track-bills.mp3|100|Bills Bills Bills">Bills Bills Bills — Destiny's Child</option>
+        <option value="track-blinding-lights.mp3|171|Blinding Lights">Blinding Lights — The Weeknd</option>
+        <option value="track-as-it-was.mp3|174|As It Was">As It Was — Harry Styles</option>
+      </select>
       <div class="turntable" id="ttA">
         <div class="tt-groove" style="width:170px;height:170px;top:8px;left:8px;"></div>
         <div class="tt-groove" style="width:140px;height:140px;top:23px;left:23px;"></div>
         <div class="tt-groove" style="width:110px;height:110px;top:38px;left:38px;"></div>
         <div class="tt-groove" style="width:80px;height:80px;top:53px;left:53px;"></div>
         <div class="tt-spinline" id="spinlineA"></div>
-        <div class="tt-label-inner"><div class="tt-center"><div class="tt-song-name" id="songLabelA">Track A</div></div></div>
+        <div class="tt-label-inner"><div class="tt-center"><div class="tt-song-name" id="songLabelA">—</div></div></div>
       </div>
       <div class="tt-deck-label">Deck A</div>
-      <div class="tt-track-info" id="trackInfoA">drag &amp; drop a track</div>
-      <div class="tt-bpm-display" id="bpmA">128 BPM</div>
-      <div class="waveform" id="waveA"></div>
+      <div class="tt-track-info" id="trackInfoA">select a track above</div>
+      <div class="tt-bpm-display" id="bpmA">— BPM</div>
       <button class="play-btn" id="playA" onclick="togglePlay('A')">▶</button>
-      <div class="dj-drop-hint">drag an mp3 onto the deck</div>
     </div>
+
     <div class="mixer">
-      <div class="mix-fader"><label>BPM</label><input type="range" id="bpmSync" min="60" max="180" value="128" step="1" oninput="updateBPM(this.value)"/><span id="bpmDisplay" style="font-family:var(--mono);font-size:10px;color:var(--blue);">128</span></div>
+      <div class="mix-fader"><label>BPM</label><input type="range" id="bpmSync" min="60" max="180" value="100" step="1" oninput="updateBPM(this.value)"/><span id="bpmDisplay" style="font-family:var(--mono);font-size:10px;color:var(--blue);">100</span></div>
       <button class="sync-btn" onclick="syncBPM()">⇄ sync decks</button>
       <div class="mix-fader"><label>Low Pass</label><input type="range" id="lpFilter" min="0" max="100" value="80" step="1" oninput="updateLP(this.value)"/></div>
       <div class="mix-fader"><label>High Pass</label><input type="range" id="hpFilter" min="0" max="100" value="0" step="1" oninput="updateHP(this.value)"/></div>
       <div class="mix-fader"><label>Crossfader</label><div class="crossfader-labels"><span>A</span><span>B</span></div><input type="range" id="crossfader" min="0" max="100" value="50" step="1" style="width:100%;" oninput="updateCross(this.value)"/></div>
     </div>
+
     <div class="turntable-wrap">
+      <!-- track selector B -->
+      <select class="track-select" id="selectB" onchange="loadPreset('B',this.value)">
+        <option value="">— choose a track —</option>
+        <option value="track-yummy.mp3|96|Yummy">Yummy — Ayesha Erotica</option>
+        <option value="track-paper-planes.mp3|98|Paper Planes">Paper Planes — M.I.A.</option>
+        <option value="track-no-scrubs.mp3|100|No Scrubs">No Scrubs — TLC</option>
+        <option value="track-bills.mp3|100|Bills Bills Bills">Bills Bills Bills — Destiny's Child</option>
+        <option value="track-blinding-lights.mp3|171|Blinding Lights">Blinding Lights — The Weeknd</option>
+        <option value="track-as-it-was.mp3|174|As It Was">As It Was — Harry Styles</option>
+      </select>
       <div class="turntable" id="ttB">
         <div class="tt-groove" style="width:170px;height:170px;top:8px;left:8px;"></div>
         <div class="tt-groove" style="width:140px;height:140px;top:23px;left:23px;"></div>
         <div class="tt-groove" style="width:110px;height:110px;top:38px;left:38px;"></div>
         <div class="tt-groove" style="width:80px;height:80px;top:53px;left:53px;"></div>
         <div class="tt-spinline" id="spinlineB"></div>
-        <div class="tt-label-inner"><div class="tt-center"><div class="tt-song-name" id="songLabelB">Track B</div></div></div>
+        <div class="tt-label-inner"><div class="tt-center"><div class="tt-song-name" id="songLabelB">—</div></div></div>
       </div>
       <div class="tt-deck-label">Deck B</div>
-      <div class="tt-track-info" id="trackInfoB">drag &amp; drop a track</div>
-      <div class="tt-bpm-display" id="bpmB">128 BPM</div>
-      <div class="waveform" id="waveB"></div>
+      <div class="tt-track-info" id="trackInfoB">select a track above</div>
+      <div class="tt-bpm-display" id="bpmB">— BPM</div>
       <button class="play-btn" id="playB" onclick="togglePlay('B')">▶</button>
-      <div class="dj-drop-hint">drag an mp3 onto the deck</div>
     </div>
   </div>
-  <div class="dj-controls-note reveal">
+
+  <div class="dj-controls-note reveal" style="position:relative;z-index:1;">
     <div class="dj-note-items">
-      <div class="dj-note-item"><strong>Drag mp3</strong> onto either deck to load</div>
+      <div class="dj-note-item"><strong>Pick a track</strong> from the dropdown above each deck</div>
       <div class="dj-note-item"><strong>Drag platter</strong> to scratch</div>
       <div class="dj-note-item"><strong>BPM + Sync</strong> — match tempos</div>
       <div class="dj-note-item"><strong>Low Pass</strong> — roll off the highs</div>
@@ -451,68 +488,185 @@ function openPanel(id){const card=CARDS.find(c=>c.id===id);if(!card)return;docum
 function closePanel(){document.getElementById('panel-overlay').classList.remove('open');document.body.style.overflow='';}
 document.getElementById('panel-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('panel-overlay'))closePanel();});
 
-// DJ DECK — full Web Audio with drag-and-drop
+// DJ DECK — preset tracks, Web Audio API, frequency visualizer
+const TRACKS={
+  'track-yummy.mp3':    {label:'Yummy',     short:'Yummy',        bpm:96},
+  'track-paper-planes.mp3': {label:'Paper Planes', short:'Paper Planes', bpm:98},
+  'track-no-scrubs.mp3':{label:'No Scrubs', short:'No Scrubs',    bpm:100},
+  'track-bills.mp3':    {label:'Bills Bills Bills', short:'Bills',bpm:100},
+  'track-blinding-lights.mp3':{label:'Blinding Lights',short:'Blinding Lights',bpm:171},
+  'track-as-it-was.mp3':{label:'As It Was', short:'As It Was',    bpm:174},
+};
+
 let audioCtx=null;
-const sources={A:null,B:null},gainNodes={A:null,B:null},lpNodes={A:null,B:null},hpNodes={A:null,B:null},buffers={A:null,B:null};
-let playingA=false,playingB=false,angleA=0,angleB=0,bpm=128,spinIntA=null,spinIntB=null;
+const buffers={A:null,B:null},sources={A:null,B:null};
+const gainNodes={A:null,B:null},lpNodes={A:null,B:null},hpNodes={A:null,B:null},analyserNodes={A:null,B:null};
+const mergeGain={A:null,B:null};
+let masterAnalyser=null;
+let playingA=false,playingB=false,angleA=0,angleB=0;
+let bpmA=null,bpmB=null,spinIntA=null,spinIntB=null;
+let bpmSyncVal=100;
+let vizRaf=null;
 
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-
-async function loadTrack(deck,file){
-  const ctx=getCtx();if(ctx.state==='suspended')ctx.resume();
-  const ab=await file.arrayBuffer();
-  const decoded=await ctx.decodeAudioData(ab);
-  buffers[deck]=decoded;
-  if(sources[deck]){try{sources[deck].stop();}catch(e){}}
-  if(gainNodes[deck])gainNodes[deck].disconnect();
-  const gain=ctx.createGain();gainNodes[deck]=gain;
-  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=18000;lpNodes[deck]=lp;
-  const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=20;hpNodes[deck]=hp;
-  lp.connect(hp);hp.connect(gain);gain.connect(ctx.destination);
-  updateCross(document.getElementById('crossfader').value);
-  const short=file.name.length>16?file.name.slice(0,14)+'…':file.name;
-  document.getElementById('songLabel'+deck).textContent=short;
-  document.getElementById('trackInfo'+deck).textContent=file.name;
+function getCtx(){
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(!masterAnalyser){
+    masterAnalyser=audioCtx.createAnalyser();
+    masterAnalyser.fftSize=512;
+    masterAnalyser.connect(audioCtx.destination);
+  }
+  return audioCtx;
 }
 
-['ttA','ttB'].forEach(id=>{
-  const deck=id.replace('tt','');
-  const el=document.getElementById(id);
-  el.addEventListener('dragover',e=>{e.preventDefault();el.style.borderColor='var(--blue)';});
-  el.addEventListener('dragleave',()=>{el.style.borderColor='';});
-  el.addEventListener('drop',e=>{e.preventDefault();el.style.borderColor='';const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('audio'))loadTrack(deck,f);});
-});
+function applySuggestion(fileA,fileB){
+  // set dropdowns
+  const selA=document.getElementById('selectA'),selB=document.getElementById('selectB');
+  for(const opt of selA.options){if(opt.value.startsWith(fileA)){selA.value=opt.value;break;}}
+  for(const opt of selB.options){if(opt.value.startsWith(fileB)){selB.value=opt.value;break;}}
+  // load both
+  loadPreset('A',selA.value);
+  loadPreset('B',selB.value);
+  // highlight active suggestion
+  document.querySelectorAll('.mix-chip').forEach(b=>{
+    const isThis=b.getAttribute('onclick').includes(fileA)&&b.getAttribute('onclick').includes(fileB);
+    b.classList.toggle('active',isThis);
+  });
+  // scroll deck into view gently
+  document.getElementById('dj').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+async function loadPreset(deck,val){
+  if(!val)return;
+  const[file,,label]=val.split('|');
+  const track=TRACKS[file];
+  const ctx=getCtx();
+  if(ctx.state==='suspended')ctx.resume();
+
+  // stop existing
+  if(sources[deck]){try{sources[deck].stop();}catch(e){}}
+  if(gainNodes[deck])gainNodes[deck].disconnect();
+  if(deck==='A')playingA=false,document.getElementById('playA').textContent='▶',document.getElementById('playA').classList.remove('playing'),clearInterval(spinIntA);
+  else playingB=false,document.getElementById('playB').textContent='▶',document.getElementById('playB').classList.remove('playing'),clearInterval(spinIntB);
+
+  // fetch & decode
+  const resp=await fetch(file);
+  const ab=await resp.arrayBuffer();
+  const decoded=await ctx.decodeAudioData(ab);
+  buffers[deck]=decoded;
+
+  // build chain: source → lp → hp → analyser → gain → masterAnalyser
+  const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=18000;lpNodes[deck]=lp;
+  const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=20;hpNodes[deck]=hp;
+  const analyser=ctx.createAnalyser();analyser.fftSize=512;analyserNodes[deck]=analyser;
+  const gain=ctx.createGain();gainNodes[deck]=gain;
+  lp.connect(hp);hp.connect(analyser);analyser.connect(gain);gain.connect(masterAnalyser);
+  updateCross(document.getElementById('crossfader').value);
+
+  // update UI
+  const short=track.short;
+  document.getElementById('songLabel'+deck).textContent=short;
+  document.getElementById('trackInfo'+deck).textContent=track.label;
+  if(deck==='A'){bpmA=track.bpm;document.getElementById('bpmA').textContent=track.bpm+' BPM';}
+  else{bpmB=track.bpm;document.getElementById('bpmB').textContent=track.bpm+' BPM';}
+
+  // suggest BPM sync midpoint if both loaded
+  if(bpmA&&bpmB){
+    const mid=Math.round((bpmA+bpmB)/2);
+    document.getElementById('bpmSync').value=mid;
+    document.getElementById('bpmDisplay').textContent=mid;
+    bpmSyncVal=mid;
+  }
+}
 
 function makeSource(deck){
   const ctx=getCtx();
   if(!buffers[deck]||!lpNodes[deck])return null;
-  const src=ctx.createBufferSource();src.buffer=buffers[deck];src.loop=true;src.connect(lpNodes[deck]);
+  const src=ctx.createBufferSource();
+  src.buffer=buffers[deck];src.loop=true;
+  src.connect(lpNodes[deck]);
   return src;
 }
 
 function togglePlay(deck){
   const ctx=getCtx();if(ctx.state==='suspended')ctx.resume();
   if(deck==='A'){
+    if(!buffers.A){alert('Pick a track for Deck A first!');return;}
     playingA=!playingA;
     const btn=document.getElementById('playA');btn.textContent=playingA?'■':'▶';btn.classList.toggle('playing',playingA);
-    if(playingA){sources.A=makeSource('A');if(sources.A)sources.A.start(0);spinIntA=setInterval(()=>spinTT('A'),16);animateWave('A');}
+    if(playingA){sources.A=makeSource('A');sources.A.start(0);spinIntA=setInterval(()=>spinTT('A'),16);if(!vizRaf)drawViz();}
     else{if(sources.A){try{sources.A.stop();}catch(e){}}sources.A=null;clearInterval(spinIntA);}
   }else{
+    if(!buffers.B){alert('Pick a track for Deck B first!');return;}
     playingB=!playingB;
     const btn=document.getElementById('playB');btn.textContent=playingB?'■':'▶';btn.classList.toggle('playing',playingB);
-    if(playingB){sources.B=makeSource('B');if(sources.B)sources.B.start(0);spinIntB=setInterval(()=>spinTT('B'),16);animateWave('B');}
+    if(playingB){sources.B=makeSource('B');sources.B.start(0);spinIntB=setInterval(()=>spinTT('B'),16);if(!vizRaf)drawViz();}
     else{if(sources.B){try{sources.B.stop();}catch(e){}}sources.B=null;clearInterval(spinIntB);}
   }
 }
 
-function spinTT(deck){const spd=(bpm/128)*2.8;if(deck==='A'){angleA+=spd;document.getElementById('spinlineA').style.transform=`rotate(${angleA}deg)`;document.getElementById('ttA').style.background=`conic-gradient(from ${angleA}deg,rgba(0,68,255,.04) 0%,transparent 25%,rgba(0,68,255,.02) 50%,transparent 75%)`;}else{angleB+=spd;document.getElementById('spinlineB').style.transform=`rotate(${angleB}deg)`;document.getElementById('ttB').style.background=`conic-gradient(from ${angleB}deg,rgba(0,68,255,.04) 0%,transparent 25%,rgba(0,68,255,.02) 50%,transparent 75%)`;}}
-function updateBPM(v){bpm=parseInt(v);document.getElementById('bpmDisplay').textContent=bpm;document.getElementById('bpmA').textContent=bpm+' BPM';document.getElementById('bpmB').textContent=bpm+' BPM';}
-function syncBPM(){const v=parseInt(document.getElementById('bpmSync').value);document.getElementById('bpmA').textContent=v+' BPM';document.getElementById('bpmB').textContent=v+' BPM';const btn=document.querySelector('.sync-btn');btn.style.background='var(--blue)';btn.style.color='white';setTimeout(()=>{btn.style.background='';btn.style.color='';},350);}
-function updateLP(v){const f=20+Math.pow(v/100,2)*19980;if(lpNodes.A)lpNodes.A.frequency.value=f;if(lpNodes.B)lpNodes.B.frequency.value=f;}
-function updateHP(v){const f=20+Math.pow(v/100,2)*4000;if(hpNodes.A)hpNodes.A.frequency.value=f;if(hpNodes.B)hpNodes.B.frequency.value=f;}
-function updateCross(v){const f=parseInt(v)/100;if(gainNodes.A)gainNodes.A.gain.value=1-f;if(gainNodes.B)gainNodes.B.gain.value=f;}
-function animateWave(deck){const el=document.getElementById('wave'+deck);el.innerHTML='';for(let i=0;i<28;i++){const b=document.createElement('div');b.className='wf-bar';b.style.height=(Math.random()*22+4)+'px';b.style.flexShrink='0';el.appendChild(b);}const ip=deck==='A'?playingA:playingB;if(ip){setTimeout(()=>{el.querySelectorAll('.wf-bar').forEach(b=>b.style.height=(Math.random()*22+4)+'px');setTimeout(()=>animateWave(deck),175);},135);}}
-function makeDraggable(id,deck){const tt=document.getElementById(id);let drag=false,lastY=0;tt.addEventListener('mousedown',e=>{drag=true;lastY=e.clientY;tt.classList.add('spinning');e.preventDefault();});document.addEventListener('mousemove',e=>{if(!drag)return;const dy=e.clientY-lastY;if(deck==='A'){angleA+=dy*2;document.getElementById('spinlineA').style.transform=`rotate(${angleA}deg)`;}else{angleB+=dy*2;document.getElementById('spinlineB').style.transform=`rotate(${angleB}deg)`;}lastY=e.clientY;});document.addEventListener('mouseup',()=>{drag=false;tt.classList.remove('spinning');});}
+function spinTT(deck){
+  const bpm=deck==='A'?(bpmA||100):(bpmB||100);
+  const spd=(bpm/128)*2.8;
+  if(deck==='A'){angleA+=spd;document.getElementById('spinlineA').style.transform=`rotate(${angleA}deg)`;document.getElementById('ttA').style.background=`conic-gradient(from ${angleA}deg,rgba(0,68,255,.04) 0%,transparent 25%,rgba(0,68,255,.02) 50%,transparent 75%)`;}
+  else{angleB+=spd;document.getElementById('spinlineB').style.transform=`rotate(${angleB}deg)`;document.getElementById('ttB').style.background=`conic-gradient(from ${angleB}deg,rgba(0,68,255,.04) 0%,transparent 25%,rgba(0,68,255,.02) 50%,transparent 75%)`;}
+}
+
+function updateBPM(v){bpmSyncVal=parseInt(v);document.getElementById('bpmDisplay').textContent=v;}
+function syncBPM(){
+  document.getElementById('bpmA').textContent=bpmSyncVal+' BPM';
+  document.getElementById('bpmB').textContent=bpmSyncVal+' BPM';
+  const btn=document.querySelector('.sync-btn');btn.style.background='var(--blue)';btn.style.color='white';
+  setTimeout(()=>{btn.style.background='';btn.style.color='';},350);
+}
+function updateLP(v){const f=200+Math.pow(v/100,2)*17800;if(lpNodes.A)lpNodes.A.frequency.value=f;if(lpNodes.B)lpNodes.B.frequency.value=f;}
+function updateHP(v){const f=20+Math.pow(v/100,2)*800;if(hpNodes.A)hpNodes.A.frequency.value=f;if(hpNodes.B)hpNodes.B.frequency.value=f;}
+function updateCross(v){const f=parseInt(v)/100;if(gainNodes.A)gainNodes.A.gain.value=Math.cos(f*Math.PI/2);if(gainNodes.B)gainNodes.B.gain.value=Math.cos((1-f)*Math.PI/2);}
+
+// FREQUENCY VISUALIZER — full background of DJ section
+const vizCanvas=document.getElementById('vizCanvas');
+const vizCtx=vizCanvas.getContext('2d');
+
+function drawViz(){
+  if(!playingA&&!playingB){
+    vizRaf=null;
+    vizCanvas.style.opacity='0';
+    return;
+  }
+  vizRaf=requestAnimationFrame(drawViz);
+  vizCanvas.style.opacity='1';
+
+  const W=vizCanvas.offsetWidth,H=vizCanvas.offsetHeight;
+  if(vizCanvas.width!==W||vizCanvas.height!==H){vizCanvas.width=W;vizCanvas.height=H;}
+
+  vizCtx.clearRect(0,0,W,H);
+
+  const cross=parseInt(document.getElementById('crossfader').value)/100;
+
+  function drawLayer(analyser,alpha){
+    if(!analyser)return;
+    const data=new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
+    vizCtx.beginPath();
+    vizCtx.fillStyle=`rgba(0,68,255,${alpha})`;
+    const step=W/data.length;
+    // draw mirrored frequency bars growing from center
+    for(let i=0;i<data.length;i++){
+      const x=i*step;
+      const barH=(data[i]/255)*(H*0.5);
+      vizCtx.fillRect(x,H/2-barH,Math.max(1,step-0.5),barH*2);
+    }
+  }
+
+  drawLayer(analyserNodes.A, (1-cross)*0.06);
+  drawLayer(analyserNodes.B, cross*0.06);
+}
+
+// init
+window.addEventListener('load',()=>{
+  const W=vizCanvas.offsetWidth||800,H=vizCanvas.offsetHeight||400;
+  vizCanvas.width=W;vizCanvas.height=H;
+});
+function makeDraggable(id,deck){const tt=document.getElementById(id);let drag=false,lastY=0;tt.addEventListener('mousedown',e=>{if(e.target.tagName==='SELECT')return;drag=true;lastY=e.clientY;tt.classList.add('spinning');e.preventDefault();});document.addEventListener('mousemove',e=>{if(!drag)return;const dy=e.clientY-lastY;if(deck==='A'){angleA+=dy*2;document.getElementById('spinlineA').style.transform=`rotate(${angleA}deg)`;}else{angleB+=dy*2;document.getElementById('spinlineB').style.transform=`rotate(${angleB}deg)`;}lastY=e.clientY;});document.addEventListener('mouseup',()=>{drag=false;tt.classList.remove('spinning');});}
 makeDraggable('ttA','A');makeDraggable('ttB','B');
 
 // PHOTO EASTER EGG — image-shaped cellular automata
