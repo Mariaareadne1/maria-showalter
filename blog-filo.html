@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>I Built a Social Discovery App From My Dorm Room — Maria Showalter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--offwhite:#f8f6f3;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
+.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-home:hover{opacity:.6;}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.post-wrap{max-width:680px;margin:0 auto;padding:120px 24px 100px;}
+.post-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;}
+.post-date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:52px;display:block;}
+.post-body{font-family:var(--sans);font-size:1.05rem;line-height:1.85;color:#222;}
+.post-body p{margin-bottom:1.5em;}
+.post-body em{font-style:italic;}
+.post-body strong{font-weight:500;color:var(--black);}
+.post-body h2{font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:-.01em;margin:2.4em 0 .8em;color:var(--black);}
+.post-body hr{border:none;border-top:1px solid rgba(0,0,0,.08);margin:2.4em 0;}
+.post-body blockquote{border-left:2px solid var(--blue);padding-left:20px;margin:1.6em 0;color:var(--muted);font-style:italic;}
+.callout{background:var(--offwhite);border-left:3px solid var(--blue);padding:18px 22px;margin:1.8em 0;border-radius:0 2px 2px 0;}
+.callout p{margin:0;font-size:.95rem;color:#444;}
+.post-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.pf-author{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.pf-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:2px;transition:opacity .2s;}
+.pf-back:hover{opacity:.6;}
+.contact-note{margin-top:32px;padding:20px 24px;border:1px solid rgba(0,68,255,.2);border-radius:2px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);}
+.contact-note a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-home" href="index.html">Maria Showalter</a>
+  <a class="nav-back" href="index.html#writing">← back to writing</a>
+</nav>
+<div class="post-wrap">
+  <span class="post-tag">Product · Startups · Building</span>
+  <h1 class="post-title">I Built a Social Discovery App From My Dorm Room. Here's How It Actually Happened.</h1>
+  <span class="post-date">2026 · Maria Showalter</span>
+  <div class="post-body">
+
+    <p>I have a screenshot on my phone of a text my friend sent to a group chat. It's a list of her favorite bars in New York — not sent to me specifically, just dropped into a conversation where someone was asking where to take a girl on a date. I screenshot it and held onto it. Months later, I was in that exact situation: trying to find a bar, pulling up that screenshot, Googling each place individually to see which was closest.</p>
+    <p>We ended up at a portrait bar in the West Village. It was great. But the fact that the best discovery tool I had was a screenshot of someone else's group chat message — that stuck with me.</p>
+    <p>That, in a sentence, is why I built Filo.</p>
+    <hr/>
+
+    <h2>It Didn't Start as Filo</h2>
+    <p>The honest version of this story starts messier than that.</p>
+    <p>The first version of this idea was called <strong>Echo Link</strong>. It was a referral platform — what if you got cash back for recommending things to your friends, and your friends got a discount? Word-of-mouth as infrastructure. Peer-to-peer referrals, formalized.</p>
+    <p>I brought the idea to my roommate, Gabriella Martinez. We were both sophomores at Barnard in fall 2025. She got it immediately — she had been thinking about the same shift, this new wave of people trusting friends over influencers, over sponsored content, over ads. We refined it together and built something called <strong>Numi</strong>: a universal loyalty platform for small businesses. Think punch cards, but digital.</p>
+    <p>We talked to people. We talked to small business owners in the neighborhood. We built an MVP. But we were both sophomores in the middle of full course loads and eventually the pace slowed. The idea needed to change anyway.</p>
+    <p>Then I took <strong>Principles of Innovation and Entrepreneurship</strong>, and something clicked.</p>
+    <hr/>
+
+    <h2>From Numi to Loci to Filo</h2>
+    <p>The class gave me the structure to rethink the idea from scratch. I kept the core insight — people trust friends more than platforms — but I stripped out the loyalty mechanics and asked a simpler question: what if you could just <em>see</em> where your friends have actually been?</p>
+    <p>The real name came from a feeling more than a strategic decision. In Italian, <em>filo</em> means thread. In Japanese mythology, there's the red thread of fate — 運命の赤い糸 — the idea that people who are meant to find each other are connected by an invisible red thread. Every pin is a thread. Your map is a web of everywhere you've been. Your friends' maps overlap with yours in places you haven't found yet. The app's job is to show you where the threads lead.</p>
+    <hr/>
+
+    <h2>The Problem Was Real</h2>
+    <p>I kept coming back to two stories.</p>
+    <p>The first was my friend with the bar list.</p>
+    <p>The second was a freshman boy I know, new to Columbia, new to New York. He went most of his first year without getting a haircut — not because he couldn't afford one, but because he had no idea where to go. He eventually joined a fraternity, and the upperclassmen told him their spots. Problem solved. But it took half a year and joining a social organization to get a basic recommendation.</p>
+    <p>Had Filo existed, he could have opened the app, looked at the Columbia campus circle, and seen a map of every place Columbia students get their hair cut — how often, what they think, prices. Done.</p>
+    <div class="callout"><p>Yelp gives you 200 results ranked by strangers. TikTok gives you sponsored content. Google Maps gives you AI summaries of anonymous reviews. None of them tell you what <em>your people</em> actually think.</p></div>
+    <hr/>
+
+    <h2>Building It — The Honest Version</h2>
+    <p>I'm a CS student at Barnard. I know how to code. But building a full social app — map interface, social graph, pinning system, boards, a business dashboard — is a lot, even for someone technical.</p>
+    <p>This is where I need to be honest: <strong>I built most of Filo with Claude.</strong></p>
+    <p>Not in a "I asked it to write an essay for me" way. More like: I had a clear vision, strong opinions about design and product decisions, and I used AI as the pair programmer, design collaborator, and documentation engine that let me move at a speed I couldn't have matched alone.</p>
+    <p>The UI took the longest. I had a very specific feeling I was going for — urban and editorial, not sterile and corporate. I went deep on Pinterest looking for reference points. I iterated through versions I hated before landing on the design system Filo has now: warm off-white background, every card with a hard sticker shadow (2px, no blur, like it's physically pinned), Fraunces serif for display text, one italicized word per headline in red. The red accent — <code>#d8423a</code> — is the thread. It appears on exactly one or two things per screen, never as a fill, always as a signal.</p>
+    <p>I rejected beige. I rejected star ratings. I rejected infinite scroll. Every one was a deliberate decision that came from arguments in chat — me pushing back, iterating, asking "what if we tried this instead." Hundreds of decisions over dozens of sessions.</p>
+    <hr/>
+
+    <h2>Validation That Felt Real</h2>
+    <p>Before getting too far into the build, I did interviews. One of them was with <strong>Jorge at La Famiglia</strong>, a pizza shop a few blocks from Columbia's campus.</p>
+    <p>I asked him about how students find his place. He talked about word of mouth — how a few students who become regulars bring in their whole friend group, how he can sometimes tell which dorm a cluster of new faces came from. He had no way to see that data. He couldn't identify who his super-fans were — the people actively sending him business.</p>
+    <p>That conversation made the business dashboard feel necessary, not just clever. A local owner seeing: "23 new students discovered you this week. 6 of them came from one person's board" — that's information that has never been available to a small business before.</p>
+    <hr/>
+
+    <h2>Where It Is Now</h2>
+    <p>Filo has a working MVP. There's a React Native app running on Supabase, a map, pins, boards, a social feed, a taste-twins feature. I've had real users on it. I presented it as my final project for the entrepreneurship class.</p>
+    <p>I'm now deciding what comes next. Do I push toward a Columbia campus launch? Do I look for early users, co-founders, funding? The class gave me a structure to validate the idea — now the validation is on me to act on.</p>
+    <p>The one thing I know is that the problem is real. Every person I've talked to has their own version of the screenshot story.</p>
+    <hr/>
+
+    <h2>What I'd Tell Someone Starting From Scratch</h2>
+    <p><strong>The idea will change. That's not failure.</strong> Echo Link became Numi became Loci became Filo. Each version kept the same core insight and shed the parts that weren't true.</p>
+    <p><strong>Talk to the businesses, not just the users.</strong> The Jorge interview changed how I thought about the product. Users get excited. Business owners will tell you quickly whether they'd actually pay for something.</p>
+    <p><strong>Building with AI is a real option now.</strong> I'm a CS student who could code this by hand. I still used Claude extensively — for speed, design thinking, documentation, code I would have written more slowly and less well on my own. The judgment, the decisions, the vision — those are still yours. The AI accelerates the execution.</p>
+    <p><strong>Done is better than perfect.</strong> I spent a long time on the UI. Too long, maybe. The app that works imperfectly in someone's hands is more valuable than the prototype that looks right in a Figma file.</p>
+
+    <p style="margin-top:2em;font-style:italic;color:var(--muted);">The red thread is there. I just have to follow it.</p>
+  </div>
+
+  <div class="contact-note">
+    Filo is currently in early testing. If you're a Columbia student and want to be on the waitlist, or if you own a small business near campus — <a href="mailto:m.showalter@columbia.edu">reach out</a>.
+  </div>
+
+  <div class="post-footer">
+    <span class="pf-author">Maria Carla Ariadne Showalter · Barnard College, Columbia University</span>
+    <a class="pf-back" href="index.html#writing">← all writing</a>
+  </div>
+</div>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
+</script>
+</body>
+</html>

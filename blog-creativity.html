@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>On code, creativity, and languages — Maria Showalter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
+.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-home:hover{opacity:.6;}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.post-wrap{max-width:660px;margin:0 auto;padding:120px 24px 100px;}
+.post-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;}
+.post-date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:52px;display:block;}
+.post-body{font-family:var(--serif);font-size:1.15rem;line-height:1.85;color:#222;}
+.post-body p{margin-bottom:1.6em;}
+.post-body em{font-style:italic;color:var(--blue);}
+.post-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.pf-author{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.pf-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:2px;transition:opacity .2s;}
+.pf-back:hover{opacity:.6;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-home" href="index.html">Maria Showalter</a>
+  <a class="nav-back" href="index.html#writing">← back to writing</a>
+</nav>
+<div class="post-wrap">
+  <span class="post-tag">Essay · Languages · Code · Creativity</span>
+  <h1 class="post-title">On code, creativity, and languages</h1>
+  <span class="post-date">May 2026 · Maria Showalter</span>
+  <div class="post-body">
+    <p>I grew up in a multilingual household. My first language is Greek. I learned English alongside it. By elementary school I was learning French, by middle school Mandarin and Spanish. Languages were just the texture of my childhood — always present, always requiring me to find patterns, build bridges, problem-solve my way to being understood.</p>
+    <p>What I figured out early is that learning a language is a creative act. You're given a vocabulary, a grammar, a set of rules — and you have something you want to say. But you can't say it the way you'd say it in the language you're thinking in. So you improvise. You match things together and hope they hold. You find a workaround, and sometimes the workaround is actually more interesting than what you originally meant. That's creativity: working with constraints toward an output you can only half-see in advance.</p>
+    <p>I grew up making things too. My parents were both artists. All my free time went into painting, drawing, collages, paper mache. Hours of focused work for one finished thing on the wall. And the violin — classically trained since I was five, which is the same lesson over and over: repetition, problem-solving, one clean output after a lot of mess.</p>
+    <p>When I took AP Computer Science in high school, something clicked. Code is a language. Literally — syntax, grammar, vocabulary that shifts depending on which language you're writing in. And the process of writing it is exactly what I'd been doing since I could talk: you have an output in mind, you work with the rules you know, you problem-solve when it breaks, you find a more efficient path next time.</p>
+    <p>I was good at it. And I thought it was <em>creative</em> in the same way everything else I loved was creative.</p>
+    <p>That's why I'm a CS major. I dropped the French major along the way — which still stings — but computer science turned out to be the most interesting version of the same thing I'd always been doing. Building. Finding patterns. Making something that works.</p>
+    <p>Live coding was when it all collapsed into one thing. Making music by writing and modifying code in real time, in front of people who can see the screen — it's languages, music, performance, and problem-solving happening simultaneously. It's the most <em>me</em> thing I've found to do with a computer.</p>
+    <p>I don't think code is separate from creativity. I think it's just another language. And like any language, the interesting part is what you say with it.</p>
+  </div>
+  <div class="post-footer">
+    <span class="pf-author">Maria Carla Ariadne Showalter · Barnard College, Columbia University</span>
+    <a class="pf-back" href="index.html#writing">← all writing</a>
+  </div>
+</div>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
+</script>
+</body>
+</html>
