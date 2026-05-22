@@ -53,14 +53,14 @@ body{background:var(--white);color:var(--black);font-family:var(--sans);overflow
 .currently{border-top:1px solid rgba(0,0,0,.07);padding-top:24px;}
 .currently p{font-family:var(--sans);font-size:13px;line-height:1.75;color:var(--muted);}
 .currently strong{color:var(--black);font-weight:400;}
-#records{width:100vw;height:100vh;background:var(--white);position:relative;border-top:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+#records{width:100vw;min-height:640px;background:var(--white);position:relative;border-top:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:50px 0;}
 .records-heading{position:absolute;top:32px;left:10vw;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
 .records-continue{position:absolute;top:32px;right:10vw;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);opacity:.5;cursor:pointer;transition:opacity .2s;text-decoration:none;}
 .records-continue:hover{opacity:1;}
 .records-sidebar{position:absolute;right:36px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:20;}
 .rs-item{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--black);opacity:.22;cursor:pointer;text-align:right;transition:all .25s;padding:2px 0;}
 .rs-item.active{opacity:1;color:var(--blue);font-size:10px;}
-.records-stage{width:100%;height:520px;perspective:1400px;position:relative;display:flex;align-items:center;justify-content:center;}
+.records-stage{width:100%;height:440px;perspective:1400px;position:relative;display:flex;align-items:center;justify-content:center;}
 .record-card{position:absolute;width:310px;height:400px;border-radius:4px;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;border:1px solid rgba(0,0,0,.1);user-select:none;background:var(--white);will-change:transform,opacity;transition:transform .55s cubic-bezier(.25,.46,.45,.94),opacity .4s,box-shadow .4s;}
 .record-card::before{content:'';position:absolute;inset:0;border-radius:4px;background:repeating-linear-gradient(0deg,transparent,transparent 34px,rgba(0,0,0,.025) 34px,rgba(0,0,0,.025) 35px);pointer-events:none;}
 .record-card.is-active{animation:float 3.5s ease-in-out infinite;}
@@ -175,6 +175,35 @@ footer{background:var(--black);color:var(--white);padding:60px 10vw;display:grid
 .footer-copy{grid-column:1/-1;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.18);border-top:1px solid rgba(255,255,255,.07);padding-top:18px;}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.in{opacity:1;transform:none;}
+/* PHOTOS SECTION */
+#photos{padding:60px 10vw 80px;background:var(--white);border-top:1px solid rgba(0,0,0,.07);}
+.photos-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+.photos-header-left{display:flex;align-items:baseline;gap:20px;}
+.photos-see-all{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:1px;transition:opacity .2s;white-space:nowrap;}
+.photos-see-all:hover{opacity:.6;}
+.photo-scroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:14px;scrollbar-width:thin;scrollbar-color:rgba(0,68,255,.2) transparent;}
+.photo-scroll::-webkit-scrollbar{height:2px;}
+.photo-scroll::-webkit-scrollbar-thumb{background:rgba(0,68,255,.2);border-radius:2px;}
+.photo-tile{flex:0 0 220px;aspect-ratio:3/4;border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.08);background:var(--offwhite);text-decoration:none;display:block;transition:transform .2s,border-color .2s;position:relative;}
+.photo-tile:hover{transform:translateY(-3px);border-color:var(--blue);}
+.photo-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-tile-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:linear-gradient(160deg,var(--offwhite) 0%,#ede9e4 100%);}
+.ptp-label{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+/* SONG BUBBLE */
+#song-rec{padding:40px 10vw 56px;background:var(--white);border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:center;}
+.bubble-wrap{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:14px;}
+.bubble-speech{background:var(--offwhite);border:1px solid rgba(0,0,0,.08);border-radius:18px 18px 18px 4px;padding:18px 22px;position:relative;max-width:400px;}
+.bubble-speech p{font-family:var(--serif);font-size:1.05rem;line-height:1.5;color:var(--black);}
+.bubble-speech em{color:var(--blue);font-style:italic;}
+.bubble-input-row{display:flex;gap:8px;width:100%;}
+.bubble-input{flex:1;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--black);background:var(--white);border:1px solid rgba(0,0,0,.15);border-radius:100px;padding:10px 18px;outline:none;transition:border-color .2s;}
+.bubble-input:focus{border-color:var(--blue);}
+.bubble-send{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:var(--blue);border:none;border-radius:100px;padding:10px 18px;cursor:pointer;transition:opacity .2s;white-space:nowrap;}
+.bubble-send:hover{opacity:.8;}
+.bubble-recs{width:100%;display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.bubble-rec-item{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);padding:7px 14px;background:var(--offwhite);border-radius:100px;display:inline-flex;align-items:center;gap:8px;width:fit-content;}
+.bubble-rec-item span{color:var(--blue);font-size:9px;}
+.bubble-recs-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
 </style>
 </head>
 <body>
@@ -182,7 +211,7 @@ footer{background:var(--black);color:var(--white);padding:60px 10vw;display:grid
 <div class="cursor-ring" id="cursorRing"></div>
 <section id="hero">
   <nav class="hero-nav">
-    <a href="#about-bridge">about</a><a href="#records">work</a><a href="#writing">writing</a><a href="#dj">music</a><a href="#videos">videos</a><a href="mailto:m.showalter@columbia.edu">contact</a>
+    <a href="#about-bridge">about</a><a href="#records">work</a><a href="#writing">writing</a><a href="#photos">photos</a><a href="#dj">music</a><a href="#videos">videos</a><a href="mailto:m.showalter@columbia.edu">contact</a>
   </nav>
   <div class="hero-photo" id="heroPhoto" onclick="triggerPhotoEE()">
     <img src="photo_main.png" alt="Maria Showalter" id="heroImg" crossorigin="anonymous"/>
@@ -270,6 +299,24 @@ footer{background:var(--black);color:var(--white);padding:60px 10vw;display:grid
       <div class="bc-link">Read →</div>
     </a>
     <div class="bc-coming"><div class="bc-coming-label">Coming soon</div><div class="bc-coming-title">What Hellenic studies taught me about programming languages</div></div>
+  </div>
+</section>
+<section id="photos">
+  <div class="photos-header reveal">
+    <div class="photos-header-left">
+      <div class="section-title">Photos</div>
+      <div class="section-sub">35mm film · drawing · painting</div>
+    </div>
+    <a class="photos-see-all" href="gallery.html">all photos →</a>
+  </div>
+  <div class="photo-scroll reveal">
+    <!-- Replace placeholders below with your real film scans: <a class="photo-tile" href="gallery.html"><img src="yourphoto.jpg" alt=""/></a> -->
+    <a class="photo-tile" href="gallery.html"><div class="photo-tile-placeholder"><div class="ptp-label">35mm film</div></div></a>
+    <a class="photo-tile" href="gallery.html"><div class="photo-tile-placeholder"><div class="ptp-label">35mm film</div></div></a>
+    <a class="photo-tile" href="gallery.html"><div class="photo-tile-placeholder"><div class="ptp-label">painting</div></div></a>
+    <a class="photo-tile" href="gallery.html"><div class="photo-tile-placeholder"><div class="ptp-label">35mm film</div></div></a>
+    <a class="photo-tile" href="gallery.html"><div class="photo-tile-placeholder"><div class="ptp-label">35mm film</div></div></a>
+    <a class="photo-tile" href="gallery.html" style="flex:0 0 160px;border-style:dashed;display:flex;align-items:center;justify-content:center;"><div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);text-align:center;padding:12px;">see all →</div></a>
   </div>
 </section>
 <section id="dj" style="position:relative;overflow:hidden;">
@@ -369,6 +416,21 @@ footer{background:var(--black);color:var(--white);padding:60px 10vw;display:grid
     </div>
   </div>
 </section>
+<section id="song-rec">
+  <div class="bubble-wrap reveal">
+    <div class="bubble-speech">
+      <p>Thanks for visiting! 🎵 <em>Give me a song recommendation</em> — I'm always looking for new music.</p>
+    </div>
+    <div class="bubble-input-row">
+      <input class="bubble-input" id="songInput" type="text" placeholder="artist — song title" maxlength="120" onkeydown="if(event.key==='Enter')submitSong()"/>
+      <button class="bubble-send" onclick="submitSong()">send it →</button>
+    </div>
+    <div id="songRecsWrap" style="display:none;">
+      <div class="bubble-recs-label">recommendations so far</div>
+      <div class="bubble-recs" id="songRecsList"></div>
+    </div>
+  </div>
+</section>
 <footer>
   <div class="footer-name reveal">Maria<br><em>Showalter</em></div>
   <div class="footer-links reveal">
@@ -391,7 +453,7 @@ document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.styl
 const rio=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);rio.unobserve(e.target);}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>rio.observe(el));
 const CARDS=[
-  {id:'projects',num:'01',title:'Projects',sub:'selected work',color:'#0044ff',content:`<div class="panel-section-num">01 — Projects</div><div class="panel-title">Selected Work</div><div class="panel-body"><div class="project-card-inner" style="border-left:3px solid #f0a500;position:relative;"><div style="position:absolute;top:14px;right:16px;font-size:16px;">🏆</div><div class="pc-tag">Next.js · FastAPI · OpenAI · Supabase · AI · Hackathon Winner</div><div class="pc-name">Stencil — Prompt-to-Brand Engine</div><div class="pc-desc">Built with a team at NYU EEG Hackathon — won 1st place. Type a handle and Stencil generates a complete brand identity: persona, visual assets, mockups, agency matches, and a printable brand guide. Stack: Next.js 14, FastAPI, Supabase, OpenAI, Replicate, Apify. <a href="https://github.com/LKRamen/eeg-hackathon" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Flutter · Dart · Google Safe Browsing API · Security</div><div class="pc-name">SafeScan — QR Security Scanner</div><div class="pc-desc">Built with a team of 4. Scans QR codes and URLs through Google Safe Browsing API plus an 11-rule custom heuristic engine. Animated risk score 0–100, scan history, dark/light mode. <a href="https://github.com/Umme-R/safe_scan_flutter" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Web Audio · JavaScript · Featured</div><div class="pc-name">TONUS — Polyphonic Web Synthesizer</div><div class="pc-desc">FM, AM, additive (10 harmonics), and subtractive synthesis crossfaded in real time. Per-voice ADSR, LFO, Nopia-inspired chord generator, oscilloscope, spectrum analyzer, record-to-file. ~1,700 lines, zero dependencies. <a href="https://mariaareadne1.github.io/webaudio-synth/" target="_blank">Play it →</a></div></div><div class="project-card-inner"><div class="pc-tag">React Native · Expo · Supabase · Mapbox · TypeScript</div><div class="pc-name">Filo — Location Discovery Mobile App</div><div class="pc-desc">Native iOS/Android app for discovering places. Expo Router, Supabase backend/auth/database, Mapbox location, PostHog analytics. Full TypeScript. <a href="https://github.com/Mariaareadne1/Filo" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">React · Vite · Claude API · AI Vision</div><div class="pc-name">Sheet Music to Strudel</div><div class="pc-desc">Converts sheet music, MusicXML, and MIDI to live-coded Strudel patterns. Multi-stage Claude AI pipeline. <a href="https://github.com/Mariaareadne1/sheet-music-to-strudel" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Data Engineering · AI · Presented Geneva 2025</div><div class="pc-name">Plastics Circularity Dashboard — American Chemistry Council</div><div class="pc-desc">AI pipeline cutting manual data workload by 80%. Presented at ACC's 2025 Geneva conference. <a href="https://plasticscircularity.org/our-progress/" target="_blank">See the live dashboard →</a></div></div><div class="project-card-inner"><div class="pc-tag">Audiovisual · Live Coding</div><div class="pc-name">audio-to-strudel · sonic-canvas · cellular-automata</div><div class="pc-desc">Converting audio to Strudel patterns, real-time audio-driven visuals, and mapping Game of Life to musical notes.</div></div></div>`},
+  {id:'projects',num:'01',title:'Projects',sub:'selected work',color:'#0044ff',content:`<div class="panel-section-num">01 — Projects</div><div class="panel-title">Selected Work</div><div class="panel-body"><div class="project-card-inner"><div class="pc-tag">Web Audio · JavaScript · Featured</div><div class="pc-name">TONUS — Polyphonic Web Synthesizer</div><div class="pc-desc">FM, AM, additive (10 harmonics), and subtractive synthesis crossfaded in real time. Per-voice ADSR, LFO, Nopia-inspired chord generator, oscilloscope, spectrum analyzer, record-to-file. ~1,700 lines, zero dependencies. <a href="https://mariaareadne1.github.io/webaudio-synth/" target="_blank">Play it →</a></div></div><div class="project-card-inner"><div class="pc-tag">React Native · Expo · Supabase · Mapbox · TypeScript</div><div class="pc-name">Filo — Location Discovery Mobile App</div><div class="pc-desc">Native iOS/Android app for discovering places. Expo Router, Supabase backend/auth/database, Mapbox location, PostHog analytics. Full TypeScript. <a href="https://github.com/Mariaareadne1/Filo" target="_blank">GitHub →</a></div></div><div class="project-card-inner" style="border-left:3px solid #f0a500;position:relative;"><div style="position:absolute;top:14px;right:16px;font-size:16px;">🏆</div><div class="pc-tag">Next.js · FastAPI · OpenAI · Supabase · AI · Hackathon Winner</div><div class="pc-name">Stencil — Prompt-to-Brand Engine</div><div class="pc-desc">Built with a team at NYU EEG Hackathon — won 1st place. Type a handle and Stencil generates a complete brand identity: persona, visual assets, mockups, agency matches, and a printable brand guide. Stack: Next.js 14, FastAPI, Supabase, OpenAI, Replicate, Apify. <a href="https://github.com/LKRamen/eeg-hackathon" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Flutter · Dart · Google Safe Browsing API · Security</div><div class="pc-name">SafeScan — QR Security Scanner</div><div class="pc-desc">Built with a team of 4. Scans QR codes and URLs through Google Safe Browsing API plus an 11-rule custom heuristic engine — catching typosquatting, phishing keywords, brand impersonation, and more. Animated risk score 0–100, scan history, dark/light mode. <a href="https://github.com/Umme-R/safe_scan_flutter" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Python · n8n · Excel · AI Automation · Climate Policy</div><div class="pc-name">Global Plastics Recycling Dashboard — American Chemistry Council</div><div class="pc-desc">Built and deployed an AI automation pipeline (Python, Excel, n8n) to scrape recycling facility data from press releases, trusted sources, and real-time feeds — updating the dashboard automatically. Cut manual data workload by 80%, powering climate policy work. Presented at ACC's 2025 Geneva conference. <a href="https://plasticscircularity.org/our-progress/" target="_blank">See the live dashboard →</a></div></div><div class="project-card-inner"><div class="pc-tag">React · Vite · Claude API · AI Vision</div><div class="pc-name">Sheet Music to Strudel</div><div class="pc-desc">Converts sheet music, MusicXML, and MIDI to live-coded Strudel patterns. Multi-stage Claude AI pipeline: key detection → description → JSON transcription → compiler → validation. <a href="https://github.com/Mariaareadne1/sheet-music-to-strudel" target="_blank">GitHub →</a></div></div><div class="project-card-inner"><div class="pc-tag">Hugging Face · Python · Multimodal AI · Sustainability</div><div class="pc-name">WasteWise AI — Multimodal Waste-Sorting Prototype</div><div class="pc-desc">Prototyped a waste-sorting app using Hugging Face models (detection, OCR, classification) to assess recyclability. Integrated VQA for real-time AI disposal tips across education, sustainability, and civic tech contexts.</div></div><div class="project-card-inner"><div class="pc-tag">Audiovisual · Live Coding</div><div class="pc-name">audio-to-strudel · sonic-canvas · cellular-automata</div><div class="pc-desc">Converting audio to Strudel patterns, real-time audio-driven visuals, and mapping Game of Life to musical notes.</div></div></div>`},
   {id:'experience',num:'02',title:'Experience',sub:'work & roles',color:'#0a0a0a',content:`<div class="panel-section-num">02 — Experience</div><div class="panel-title">Work</div><div class="panel-body"><div class="xp-row"><div><div class="xp-role">Software Engineer (Personal Project)</div><div class="xp-org">Filo — native iOS/Android location-discovery app</div></div><div class="xp-when">2025 — now</div></div><div class="xp-row"><div><div class="xp-role">Data Engineer Intern</div><div class="xp-org">American Chemistry Council — Plastics Circularity Dashboard, Geneva 2025</div></div><div class="xp-when">Summer 2025</div></div><div class="xp-row"><div><div class="xp-role">Systems &amp; Project Engineer Intern</div><div class="xp-org">COTY, Inc. — raised throughput 3,000 → 18,000 units/day</div></div><div class="xp-when">Summer 2024</div></div><div class="xp-row"><div><div class="xp-role">Operating Committee Leader</div><div class="xp-org">Almaworks Accelerator</div></div><div class="xp-when">2025 — now</div></div></div>`},
   {id:'music',num:'03',title:'Music',sub:'live coding · algorave · DJ',color:'#0a0a0a',isMusic:true,content:`<div class="panel-section-num">03 — Music</div><div class="panel-title">Music &amp;<br>Live Coding</div><div class="panel-body"><p>I approach music the same way I approach code: as a system that can be understood, taken apart, and rebuilt.</p><h3>Algorave</h3><p>I host Algoraves at Columbia — music performed by writing code in real time, projected so the audience can see.</p><div class="photo-row"><img src="photo_dj2.png" alt="Maria DJing" onerror="this.style.display='none'"/><img src="photo_dj1.jpg" alt="Maria at Bomba" onerror="this.style.display='none'"/></div><h3>DJing</h3><p>I DJ with a Pioneer DDJ-400 running Serato.</p><h3>Live Coding</h3><p>I perform with Strudel (JavaScript port of TidalCycles) and build tools to extend it.</p><p><a href="https://www.youtube.com/@Mariaareadne1" target="_blank">YouTube →</a></p></div>`},
   {id:'creative',num:'04',title:'Creative',sub:'film · drawing · painting',color:'#0a0a0a',content:`<div class="panel-section-num">04 — Creative</div><div class="panel-title">More on What<br>I Create</div><div class="panel-body"><p>Outside of code I shoot film photography, draw, and paint.</p><h3>Film Photography</h3><p>I shoot on 35mm. 36 frames, think before you shoot, live with what you got.</p><h3>Drawing &amp; Painting</h3><p>Mostly portraits and abstract work. Painting and coding feel surprisingly similar.</p><h3>Live Coding Visuals</h3><p>I run Hydra at Algoraves — generating visuals in real time that respond to the music.</p><p style="color:var(--muted);font-style:italic;margin-top:20px;">Film gallery coming soon.</p></div>`},
@@ -450,6 +512,11 @@ function seedGrid(map,cols,rows){const g=[];for(let r=0;r<rows;r++){const row=[]
 function triggerPhotoEE(){const ov=document.getElementById('photoEE');if(peeRunning){ov.classList.remove('open');clearInterval(peeInt);peeRunning=false;return;}const ph=document.getElementById('heroPhoto'),img=document.getElementById('heroImg');const W=ph.offsetWidth,H=ph.offsetHeight;pCanvas.width=W;pCanvas.height=H;const{map,cols,rows}=buildMap(img,W,H);peeMap=map;peeCols=cols;peeRows=rows;peeGrid=seedGrid(map,cols,rows);drawPEE();ov.classList.add('open');peeInt=setInterval(()=>{stepPEE();drawPEE();},90);peeRunning=true;setTimeout(()=>{if(peeRunning){ov.classList.remove('open');clearInterval(peeInt);peeRunning=false;}},8000);}
 function stepPEE(){peeGrid=peeGrid.map((row,r)=>row.map((cell,c)=>{if(peeMap[r][c]===-1)return 0;let n=0;for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dr&&!dc)continue;n+=peeGrid[(r+dr+peeRows)%peeRows][(c+dc+peeCols)%peeCols];}return cell?(n===2||n===3?1:0):(n===3?1:0);}));}
 function drawPEE(){pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);for(let r=0;r<peeRows;r++)for(let c=0;c<peeCols;c++){if(!peeGrid[r][c])continue;const g=peeMap[r][c];if(g===-1)continue;const d=1-g;const alpha=.45+d*.55;const blue=Math.round(200+d*55);const green=Math.round(d*30);pCtx.fillStyle=`rgba(0,${green},${blue},${alpha})`;pCtx.fillRect(c*PC+1,r*PC+1,PC-2,PC-2);}}
+// Song recommendations
+let songRecs=JSON.parse(sessionStorage.getItem('songRecs')||'[]');
+function renderSongRecs(){const list=document.getElementById('songRecsList');const wrap=document.getElementById('songRecsWrap');if(!songRecs.length){wrap.style.display='none';return;}wrap.style.display='block';list.innerHTML=songRecs.map(s=>`<div class="bubble-rec-item"><span>♪</span>${s}</div>`).join('');}
+function submitSong(){const inp=document.getElementById('songInput');const val=inp.value.trim();if(!val)return;songRecs.unshift(val);sessionStorage.setItem('songRecs',JSON.stringify(songRecs));inp.value='';renderSongRecs();}
+renderSongRecs();
 </script>
 </body>
 </html>
