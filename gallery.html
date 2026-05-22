@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Photos — Maria Showalter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--offwhite:#f8f6f3;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
+.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.page-wrap{max-width:1100px;margin:0 auto;padding:100px 24px 80px;}
+.page-header{margin-bottom:48px;}
+.page-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:block;}
+.page-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1;letter-spacing:-.02em;margin-bottom:10px;}
+.page-sub{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+/* masonry-ish grid */
+.photo-grid{columns:3;column-gap:12px;}
+@media(max-width:700px){.photo-grid{columns:2;}}
+.photo-item{break-inside:avoid;margin-bottom:12px;border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.07);cursor:pointer;transition:transform .2s;display:block;}
+.photo-item:hover{transform:scale(1.01);}
+.photo-item img{width:100%;display:block;filter:grayscale(15%);}
+/* placeholder tiles */
+.photo-placeholder{break-inside:avoid;margin-bottom:12px;border:1px dashed rgba(0,0,0,.1);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;text-align:center;padding:40px 16px;}
+.pp-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.pp-sub{font-family:var(--serif);font-size:.85rem;font-style:italic;color:var(--muted);}
+/* lightbox */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:200;display:none;align-items:center;justify-content:center;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:2px;}
+#lightbox-close{position:absolute;top:24px;right:28px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:color .2s;}
+#lightbox-close:hover{color:#fff;}
+.upload-note{margin-top:40px;padding:20px 24px;border:1px dashed rgba(0,0,0,.1);border-radius:2px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);line-height:1.7;}
+.upload-note strong{color:var(--black);font-weight:500;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-home" href="index.html">Maria Showalter</a>
+  <a class="nav-back" href="index.html">← back</a>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <span class="page-tag">35mm film · drawing · painting</span>
+    <h1 class="page-title">Photos &amp; Art</h1>
+    <div class="page-sub">shot on film · scanned · developed</div>
+  </div>
+
+  <div class="photo-grid" id="photoGrid">
+    <!-- Add your photos here: <div class="photo-item"><img src="your-photo.jpg" alt=""/></div> -->
+    <!-- Placeholder tiles until you upload scans -->
+    <div class="photo-placeholder" style="height:280px;"><div class="pp-label">Upload your scans</div><div class="pp-sub">35mm film</div></div>
+    <div class="photo-placeholder" style="height:200px;"><div class="pp-label">Upload your scans</div><div class="pp-sub">35mm film</div></div>
+    <div class="photo-placeholder" style="height:240px;"><div class="pp-label">Painting / drawing</div><div class="pp-sub">scan or photo</div></div>
+    <div class="photo-placeholder" style="height:220px;"><div class="pp-label">Upload your scans</div><div class="pp-sub">35mm film</div></div>
+    <div class="photo-placeholder" style="height:260px;"><div class="pp-label">Upload your scans</div><div class="pp-sub">35mm film</div></div>
+    <div class="photo-placeholder" style="height:200px;"><div class="pp-label">Algorave / live coding</div><div class="pp-sub">event photo</div></div>
+  </div>
+
+  <div class="upload-note">
+    <strong>To add photos:</strong> put your image files in the <code>maria-showalter</code> folder, then replace each placeholder tile with:<br/>
+    <code>&lt;div class="photo-item"&gt;&lt;img src="your-filename.jpg" alt=""/&gt;&lt;/div&gt;</code><br/>
+    They'll automatically arrange into the grid. Click any photo to open it full screen.
+  </div>
+</div>
+
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">close ×</button>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
+document.querySelectorAll('.photo-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const src=item.querySelector('img').src;
+    document.getElementById('lightbox-img').src=src;
+    document.getElementById('lightbox').classList.add('open');
+  });
+});
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
+</script>
+</body>
+</html>
