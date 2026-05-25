@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>What it took to get a pole to stop falling — Maria Showalter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--offwhite:#f8f6f3;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
+.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-home:hover{opacity:.6;}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.post-wrap{max-width:680px;margin:0 auto;padding:120px 24px 100px;}
+.post-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;}
+.post-date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:52px;display:block;}
+.post-body{font-family:var(--sans);font-size:1.05rem;line-height:1.85;color:#222;}
+.post-body p{margin-bottom:1.5em;}
+.post-body em{font-style:italic;}
+.post-body strong{font-weight:500;color:var(--black);}
+.post-body h2{font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:-.01em;margin:2.4em 0 .8em;color:var(--black);}
+.post-body hr{border:none;border-top:1px solid rgba(0,0,0,.08);margin:2.4em 0;}
+.post-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.25);}
+.post-body a:hover{border-bottom-color:var(--blue);}
+.post-body pre{background:var(--offwhite);border:1px solid rgba(0,0,0,.08);border-radius:2px;padding:20px 22px;margin:1.6em 0;overflow-x:auto;}
+.post-body code{font-family:var(--mono);font-size:.88rem;line-height:1.7;color:var(--black);}
+.post-body p code{font-family:var(--mono);font-size:.88em;background:var(--offwhite);padding:2px 6px;border-radius:2px;}
+.callout{background:var(--offwhite);border-left:3px solid var(--blue);padding:18px 22px;margin:1.8em 0;border-radius:0 2px 2px 0;}
+.callout p{margin:0;font-size:.95rem;color:#444;}
+.post-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.pf-author{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.pf-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:2px;transition:opacity .2s;}
+.pf-back:hover{opacity:.6;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-home" href="index.html">Maria Showalter</a>
+  <a class="nav-back" href="index.html#writing">← back to writing</a>
+</nav>
+<div class="post-wrap">
+  <span class="post-tag">RL · PyTorch · Building</span>
+  <h1 class="post-title">What it took to get a pole to stop falling</h1>
+  <span class="post-date">May 2026 · Maria Showalter</span>
+  <div class="post-body">
+
+    <p>I built this in a day. Not because I've been dreaming about robotics — I'm applying for a robotics internship and wanted something real to show. That's the honest version.</p>
+    <p>But somewhere between the third failed training run and watching the reward finally climb, something genuinely clicked. So this is about both things: the strategic build, and what I actually learned.</p>
+
+    <hr/>
+
+    <h2>The problem</h2>
+    <p>CartPole is simple to describe. A pole is balanced on a cart. Every timestep, you push the cart left or right. The pole falls if you don't. You get one point for every step the pole stays up. Maximum score: 500. "Solved" means averaging 475 over 100 episodes.</p>
+    <p>A human can do it in a few seconds. Teaching a neural network to do it is a classic benchmark in reinforcement learning — not because it's hard, but because it's clean. The environment is simple enough that if your algorithm is wrong, you know immediately.</p>
+    <p>Mine was wrong. Twice.</p>
+
+    <hr/>
+
+    <h2>Three attempts</h2>
+    <p><strong>Attempt 1:</strong> I started with a custom 2-joint robot arm environment — more visually interesting, more robotics-adjacent. REINFORCE with a value baseline. 3000 episodes. The average final distance to target barely moved. Flatlined at 1.5 the entire run.</p>
+    <p><strong>Attempt 2:</strong> Switched to CartPole, which has a well-tested reward signal. Still flatlined. Mean return stuck around 25 through 1200 episodes.</p>
+    <p>Both times the issue wasn't the network architecture or the learning rate. It was something subtler about how REINFORCE handles variance.</p>
+    <p><strong>Attempt 3:</strong> Worked. Solved at episode 288. 20/20 perfect episodes at eval.</p>
+
+    <hr/>
+
+    <h2>What actually fixed it</h2>
+    <p>REINFORCE is conceptually simple:</p>
+    <pre><code>run an episode
+compute discounted returns G_t = r_t + γ·r_{t+1} + γ²·r_{t+2} + ...
+update the policy: make actions that led to high returns more likely</code></pre>
+    <p>The math is clean. The implementation detail that kills it is variance.</p>
+    <p>Each episode's returns get normalized — subtracted by mean, divided by std — to make training stable. The problem: if you normalize <em>per episode</em>, every episode looks the same to the optimizer. A terrible episode where the pole falls in 15 steps and a great one where it survives 400 steps both normalize to mean=0, std=1. The signal is gone.</p>
+    <p>The fix was <strong>batch REINFORCE</strong>: collect 5 episodes, then normalize returns across all 5 together. Now the optimizer can actually tell the difference between a bad episode and a good one. That's it. That's what two failed runs were missing.</p>
+    <pre><code># Wrong: normalize each episode independently
+returns = (returns - returns.mean()) / returns.std()
+
+# Right: normalize across the whole batch
+all_returns = torch.cat([r for _, r in batch])
+mean, std = all_returns.mean(), all_returns.std()
+advantages = (returns - mean) / std</code></pre>
+    <p>Watching it converge after that was mostly just relief. But the relief came with actual understanding — I now know exactly why REINFORCE fails, not just that it can.</p>
+
+    <hr/>
+
+    <h2>Why this connects to things I already think about</h2>
+    <p>I've spent the last year building generative music systems. Cellular automata that compose patterns. A synthesizer that does its own music theory. Live coding performances where the code runs in real time while the audience watches.</p>
+    <p>What those have in common: you don't specify the output. You specify the rules, or the reward, or the constraints — and the behavior emerges. A cellular automaton generates music no one wrote. An RL agent learns to balance a pole without being told how.</p>
+    <p>That's not a stretch. It's genuinely how I think about both.</p>
+    <p>The difference is that in RL, the emergence is <em>trained</em> — the system improves through feedback. In cellular automata, it's fixed rules producing complex behavior. RL adds the loop: act, observe, update. It's a more interesting kind of emergence because it's directed.</p>
+
+    <hr/>
+
+    <h2>The two-repo thing</h2>
+    <p>I also built a <a href="https://github.com/Mariaareadne1/inverted-pendulum-pid" target="_blank">PID controller</a> the same week — an inverted pendulum stabilized by a hand-tuned feedback controller rather than a learned policy.</p>
+    <p>It's the same physical problem. The PID controller uses the math directly: measure the angle, compute the correction analytically. The RL agent figures out what to do by trying things thousands of times and learning from the outcomes.</p>
+    <div class="callout"><p>PID converges instantly and is perfectly interpretable. RL takes 288 episodes and is a black box. Neither is better — they're different tools, and understanding why you'd reach for one versus the other is more interesting than the implementations themselves.</p></div>
+
+    <hr/>
+
+    <h2>On applying strategically</h2>
+    <p>I said at the start that I built this strategically. That's true. I'm a CS student at Columbia who builds music tools and generative systems — not someone with a robotics background. I wanted something to show that I'd taken the concepts seriously, not just read about them.</p>
+    <p>But I don't think strategic and genuine are opposites. I built the thing. I debugged it for hours. I now understand REINFORCE well enough to explain exactly what was wrong with my first two implementations. That's real, even if the starting motivation was an application.</p>
+    <p>Whether robotics is what I want to do long-term — I'm still figuring that out. But I'm glad I spent a day here.</p>
+
+  </div>
+  <div class="post-footer">
+    <span class="pf-author">Maria Carla Ariadne Showalter · Barnard College, Columbia University</span>
+    <a class="pf-back" href="index.html#writing">← all writing</a>
+  </div>
+</div>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
+</script>
+</body>
+</html>

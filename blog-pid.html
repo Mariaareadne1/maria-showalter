@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Three terms that control everything — Maria Showalter</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
+@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--offwhite:#f8f6f3;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
+body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
+.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
+.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-home:hover{opacity:.6;}
+.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.post-wrap{max-width:680px;margin:0 auto;padding:120px 24px 100px;}
+.post-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;}
+.post-date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:52px;display:block;}
+.post-body{font-family:var(--sans);font-size:1.05rem;line-height:1.85;color:#222;}
+.post-body p{margin-bottom:1.5em;}
+.post-body em{font-style:italic;}
+.post-body strong{font-weight:500;color:var(--black);}
+.post-body h2{font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:-.01em;margin:2.4em 0 .8em;color:var(--black);}
+.post-body hr{border:none;border-top:1px solid rgba(0,0,0,.08);margin:2.4em 0;}
+.post-body a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.25);}
+.post-body a:hover{border-bottom-color:var(--blue);}
+.post-body pre{background:var(--offwhite);border:1px solid rgba(0,0,0,.08);border-radius:2px;padding:20px 22px;margin:1.6em 0;overflow-x:auto;}
+.post-body code{font-family:var(--mono);font-size:.88rem;line-height:1.7;color:var(--black);}
+.post-body p code{font-family:var(--mono);font-size:.88em;background:var(--offwhite);padding:2px 6px;border-radius:2px;}
+.callout{background:var(--offwhite);border-left:3px solid var(--blue);padding:18px 22px;margin:1.8em 0;border-radius:0 2px 2px 0;}
+.callout p{margin:0;font-size:.95rem;color:#444;}
+.post-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.pf-author{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.pf-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:2px;transition:opacity .2s;}
+.pf-back:hover{opacity:.6;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a class="nav-home" href="index.html">Maria Showalter</a>
+  <a class="nav-back" href="index.html#writing">← back to writing</a>
+</nav>
+<div class="post-wrap">
+  <span class="post-tag">Controls · Python · Building</span>
+  <h1 class="post-title">Three terms that control everything</h1>
+  <span class="post-date">May 2026 · Maria Showalter</span>
+  <div class="post-body">
+
+    <p>I knew what a filter was, what resonance does, what feedback loops sound like — but I'd never thought about how physical systems are controlled.</p>
+    <p>That's not false modesty — I genuinely didn't know the term. I'm a CS student who builds music tools. I know what a filter is, what resonance does, what happens when a feedback loop goes wrong in an audio chain. But PID? Not something I'd encountered.</p>
+    <p>Then I learned that PID controllers are in literally every robot ever made. Robotic arms, drones, autonomous vehicles, industrial machinery. If something physical is being controlled — if a system is trying to hold a value steady against disturbance — there's almost certainly a PID controller somewhere in the loop.</p>
+    <p>So I built one from scratch.</p>
+
+    <hr/>
+
+    <h2>What PID is</h2>
+    <p>The problem: a pole is balanced upright on a cart. It's unstable — left alone, it falls. A controller must apply horizontal forces to the cart to keep it upright.</p>
+    <p>The controller measures one thing: the pole's angle from vertical. That's the <strong>error</strong> — how far the system is from where it should be. From that single measurement, three terms compute a corrective force:</p>
+    <p><strong>P — Proportional.</strong> Push back in proportion to how far off you are right now. Simple, intuitive, and the one that breaks everything if it's too high. Crank Kp past a certain point and the system doesn't stabilize — it oscillates. The harder you push, the more it overshoots, the harder it has to push back, forever.</p>
+    <p><strong>I — Integral.</strong> Accumulate the error over time. If the pole has been slightly off to one side for a long time, the integral term builds up and applies a corrective force to fix the drift. It has memory. P-only controllers often settle near the target but never exactly at it — I closes that gap.</p>
+    <p><strong>D — Derivative.</strong> Look at the rate of change of the error. If the pole is falling fast, the derivative term pushes back harder than if it's falling slowly — even if the current angle is the same. It's predicting where the system is headed, not just reacting to where it is.</p>
+    <p>That last one is the one that stuck with me. The D term is anticipatory. It doesn't know the future, but it uses the present rate of change to act as if it does. That felt surprising for something so mechanically simple.</p>
+    <pre><code>u(t) = Kp·e(t) + Ki·∫e dt + Kd·de/dt</code></pre>
+    <p>Three terms. That's the whole thing. And it's in every robot ever made.</p>
+
+    <hr/>
+
+    <h2>What oscillation looks like</h2>
+    <p>I built an interactive dashboard — Python simulation ported to the browser, with sliders for each gain and presets that demonstrate failure modes.</p>
+    <p>The most interesting one: high Kp, zero Kd.</p>
+    <p>The pole starts to fall. P pushes back hard — too hard. It overcorrects, now leaning the other way. P pushes back again. The pole swings back and forth, never settling, oscillating with increasing energy. Without D to dampen it, the proportional response just keeps fighting itself.</p>
+    <div class="callout"><p>It looks exactly like a reverb that builds instead of decays. In audio, when a feedback loop has too much gain — a microphone too close to a speaker, a reverb with too-high feedback — you get the same runaway behavior. Energy re-enters the system faster than it dissipates. PID is the thing that prevents that in physical systems. D is the thing that tells the controller: you're moving too fast, ease off before you overshoot.</p></div>
+
+    <hr/>
+
+    <h2>Feedback loops everywhere</h2>
+    <p>The more I thought about it, the more PID appeared in things I already know.</p>
+    <p>Ten years of violin. When you play, you're running a continuous feedback loop: listen to the pitch, measure the error against where it should be, adjust bow pressure and finger position. You don't compute this — it's physical intuition built over years. But the structure is identical. Error measurement, proportional response, derivative dampening (you don't snap to the right pitch, you ease into it).</p>
+    <p>Live coding at an Algorave. You're writing code that generates music in real time while the audience watches. The loop is: listen to what the system is producing, decide what to change, update the code. You're the controller. The music is the plant. The audience's reaction is the feedback.</p>
+    <p>Tuning a filter by ear. You sweep the cutoff frequency, listen for the resonance peak, back off when it starts to scream. That's manual gain tuning. That's Kp.</p>
+    <p>I don't think I'm stretching this. Feedback — measure, compare, correct — is a pattern that appears everywhere once you're looking for it. PID is just the formalization of something that was already familiar.</p>
+
+    <hr/>
+
+    <h2>The pairing</h2>
+    <p>I built this alongside a <a href="blog-cartpole.html">policy gradient RL project</a> that solves the same physical problem — a pole that needs to stay upright — using a learned neural network policy instead of a hand-coded controller.</p>
+    <p>The contrast is the interesting part.</p>
+    <p>PID knows nothing at the start. You give it the math, tune three numbers, and it works. It's interpretable: you can look at the gains and understand exactly what the controller will do in any situation. It converges instantly. An experienced engineer can tune it in minutes.</p>
+    <p>RL knows nothing at the start either, but it learns through trial and error. 288 episodes of falling poles before it figures out how to balance one. The policy that emerges is a black box — you can't look at the weights and understand why it works. But it generalizes. You could imagine training it on a harder version of the problem and having it adapt.</p>
+    <p>Neither is better. They're different tools for different situations, and understanding <em>when</em> you'd reach for one versus the other is more interesting than either implementation by itself.</p>
+    <p>What I actually take from building both: the thing that makes a robot work isn't one technique. It's knowing which technique fits.</p>
+
+  </div>
+  <div class="post-footer">
+    <span class="pf-author">Maria Carla Ariadne Showalter · Barnard College, Columbia University</span>
+    <a class="pf-back" href="index.html#writing">← all writing</a>
+  </div>
+</div>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
+</script>
+</body>
+</html>
