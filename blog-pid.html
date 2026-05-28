@@ -56,7 +56,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:fle
   <div class="post-body">
 
     <p>I knew what a filter was, what resonance does, what feedback loops sound like — but I'd never thought about how physical systems are controlled.</p>
-    <p>That's not false modesty — I genuinely didn't know the term. I'm a CS student who builds music tools. I know what a filter is, what resonance does, what happens when a feedback loop goes wrong in an audio chain. But PID? Not something I'd encountered.</p>
+    <p>I'm a CS student who builds music tools. I know audio feedback intimately. But PID? Not something I'd encountered.</p>
     <p>Then I learned that PID controllers are in literally every robot ever made. Robotic arms, drones, autonomous vehicles, industrial machinery. If something physical is being controlled — if a system is trying to hold a value steady against disturbance — there's almost certainly a PID controller somewhere in the loop.</p>
     <p>So I built one from scratch.</p>
 
@@ -87,17 +87,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:fle
     <p>Ten years of violin. When you play, you're running a continuous feedback loop: listen to the pitch, measure the error against where it should be, adjust bow pressure and finger position. You don't compute this — it's physical intuition built over years. But the structure is identical. Error measurement, proportional response, derivative dampening (you don't snap to the right pitch, you ease into it).</p>
     <p>Live coding at an Algorave. You're writing code that generates music in real time while the audience watches. The loop is: listen to what the system is producing, decide what to change, update the code. You're the controller. The music is the plant. The audience's reaction is the feedback.</p>
     <p>Tuning a filter by ear. You sweep the cutoff frequency, listen for the resonance peak, back off when it starts to scream. That's manual gain tuning. That's Kp.</p>
-    <p>I don't think I'm stretching this. Feedback — measure, compare, correct — is a pattern that appears everywhere once you're looking for it. PID is just the formalization of something that was already familiar.</p>
+    <p>Feedback — measure, compare, correct — shows up everywhere once you're looking for it. PID is the formalization of something that was already familiar.</p>
 
     <hr/>
 
     <h2>The pairing</h2>
     <p>I built this alongside a <a href="blog-cartpole.html">policy gradient RL project</a> that solves the same physical problem — a pole that needs to stay upright — using a learned neural network policy instead of a hand-coded controller.</p>
-    <p>The contrast is the interesting part.</p>
     <p>PID knows nothing at the start. You give it the math, tune three numbers, and it works. It's interpretable: you can look at the gains and understand exactly what the controller will do in any situation. It converges instantly. An experienced engineer can tune it in minutes.</p>
-    <p>RL knows nothing at the start either, but it learns through trial and error. 288 episodes of falling poles before it figures out how to balance one. The policy that emerges is a black box — you can't look at the weights and understand why it works. But it generalizes. You could imagine training it on a harder version of the problem and having it adapt.</p>
-    <p>Neither is better. They're different tools for different situations, and understanding <em>when</em> you'd reach for one versus the other is more interesting than either implementation by itself.</p>
-    <p>What I actually take from building both: the thing that makes a robot work isn't one technique. It's knowing which technique fits.</p>
+    <p>RL knows nothing at the start either, but it learns through trial and error. 288 episodes of falling poles before it figures out how to balance one. The policy that emerges is a black box — you can't look at the weights and understand why it works. But it generalizes. You could train it on a harder version of the problem and it would adapt.</p>
+    <p>Neither is better. The thing that makes a robot work isn't one technique. It's knowing which one fits.</p>
 
   </div>
   <div class="post-footer">
