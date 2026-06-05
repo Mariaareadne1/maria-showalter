@@ -16,6 +16,7 @@ body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:n
 .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
 nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
 .nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
+.nav-home:hover{opacity:.6;}
 .nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
 .nav-back:hover{color:var(--blue);}
 .page-wrap{max-width:1100px;margin:0 auto;padding:100px 24px 80px;}
@@ -23,24 +24,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:fle
 .page-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:block;}
 .page-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1;letter-spacing:-.02em;margin-bottom:10px;}
 .page-sub{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
-/* masonry-ish grid */
 .photo-grid{columns:3;column-gap:12px;}
 @media(max-width:700px){.photo-grid{columns:2;}}
-.photo-item{break-inside:avoid;margin-bottom:12px;border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.07);cursor:pointer;transition:transform .2s;display:block;}
+.photo-item{break-inside:avoid;margin-bottom:12px;border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.07);cursor:pointer;transition:transform .2s;display:block;position:relative;}
 .photo-item:hover{transform:scale(1.01);}
 .photo-item img{width:100%;display:block;filter:grayscale(15%);}
-/* placeholder tiles */
-.photo-placeholder{break-inside:avoid;margin-bottom:12px;border:1px dashed rgba(0,0,0,.1);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;text-align:center;padding:40px 16px;}
-.pp-label{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
-.pp-sub{font-family:var(--serif);font-size:.85rem;font-style:italic;color:var(--muted);}
-/* lightbox */
-#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:200;display:none;align-items:center;justify-content:center;}
+.photo-item .sphere-hint{position:absolute;bottom:8px;right:8px;font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);background:rgba(0,0,0,.35);padding:3px 7px;border-radius:2px;opacity:0;transition:opacity .2s;}
+.photo-item:hover .sphere-hint{opacity:1;}
+
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;background:rgba(248,246,243,.96);backdrop-filter:blur(12px);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;}
 #lightbox.open{display:flex;}
-#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:2px;}
-#lightbox-close{position:absolute;top:24px;right:28px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;border:none;background:none;transition:color .2s;}
-#lightbox-close:hover{color:#fff;}
-.upload-note{margin-top:40px;padding:20px 24px;border:1px dashed rgba(0,0,0,.1);border-radius:2px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);line-height:1.7;}
-.upload-note strong{color:var(--black);font-weight:500;}
+.lb-top{position:absolute;top:0;left:0;right:0;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;}
+.lb-hint{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.3);}
+.lb-close{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:none;transition:color .2s;}
+.lb-close:hover{color:var(--blue);}
+#lb-canvas{display:block;border-radius:4px;}
+.lb-controls{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap;justify-content:center;}
+.lb-ctrl{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.lb-ctrl label{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.lb-ctrl input{width:110px;}
+.lb-toggle{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);border:1px solid rgba(0,68,255,.3);background:none;padding:6px 12px;border-radius:2px;cursor:pointer;transition:all .2s;margin-top:8px;}
+.lb-toggle:hover{background:var(--blue);color:white;}
 </style>
 </head>
 <body>
@@ -55,45 +60,206 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:fle
   <div class="page-header">
     <span class="page-tag">35mm film · drawing · painting</span>
     <h1 class="page-title">Photos &amp; Art</h1>
-    <div class="page-sub">shot on film · scanned · developed</div>
+    <div class="page-sub">shot on film · click any photo to explore in 3D</div>
   </div>
 
   <div class="photo-grid" id="photoGrid">
-    <div class="photo-item"><img src="IMG_0422.JPG" alt="sunset over Diamond Head, Oahu"/></div>
-    <div class="photo-item"><img src="000000010015.jpg" alt="Liliha Bakery sign, Honolulu"/></div>
-    <div class="photo-item"><img src="IMG_0427.JPG" alt="Makapuu beach, Oahu"/></div>
-    <div class="photo-item"><img src="000000010026.jpg" alt="figure by window light"/></div>
-    <div class="photo-item"><img src="IMG_0383.JPG" alt="Columbia University steps, NYC"/></div>
-    <div class="photo-item"><img src="000000010020.jpg" alt="two friends in a parking lot, Hawaii"/></div>
-    <div class="photo-item"><img src="IMG_0435.JPG" alt="beach and Rabbit Island, Oahu"/></div>
-    <div class="photo-item"><img src="000000010016.jpg" alt="friends outside Liliha Bakery"/></div>
-    <div class="photo-item"><img src="IMG_0394.JPG" alt="corgi meeting, Hawaii"/></div>
-    <div class="photo-item"><img src="000000010005.jpg" alt="tour bus and palm trees, Hawaii"/></div>
-    <div class="photo-item"><img src="IMG_0386.JPG" alt="W 116th St looking downtown, NYC"/></div>
-    <div class="photo-item"><img src="000000010024.jpg" alt="friends sparring in the garden"/></div>
-    <div class="photo-item"><img src="IMG_0396_2.JPG" alt="rainbow over the fields, Hawaii"/></div>
-    <div class="photo-item"><img src="IMG_0387.JPG" alt="Columbia Library facade detail"/></div>
-    <div class="photo-item"><img src="IMG_0426.JPG" alt="Hanauma Bay rocky cove, Oahu"/></div>
+    <div class="photo-item"><img src="IMG_0422.JPG" alt="sunset over Diamond Head, Oahu"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010015.jpg" alt="Liliha Bakery sign, Honolulu"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0427.JPG" alt="Makapuu beach, Oahu"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010026.jpg" alt="figure by window light"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0383.JPG" alt="Columbia University steps, NYC"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010020.jpg" alt="two friends in a parking lot, Hawaii"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0435.JPG" alt="beach and Rabbit Island, Oahu"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010016.jpg" alt="friends outside Liliha Bakery"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0394.JPG" alt="corgi meeting, Hawaii"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010005.jpg" alt="tour bus and palm trees, Hawaii"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0386.JPG" alt="W 116th St looking downtown, NYC"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="000000010024.jpg" alt="friends sparring in the garden"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0396_2.JPG" alt="rainbow over the fields, Hawaii"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0387.JPG" alt="Columbia Library facade detail"/><span class="sphere-hint">3D →</span></div>
+    <div class="photo-item"><img src="IMG_0426.JPG" alt="Hanauma Bay rocky cove, Oahu"/><span class="sphere-hint">3D →</span></div>
   </div>
 </div>
 
+<!-- LIGHTBOX WITH 3D SPHERE VIEW -->
 <div id="lightbox">
-  <button id="lightbox-close" onclick="closeLightbox()">close ×</button>
-  <img id="lightbox-img" src="" alt=""/>
+  <div class="lb-top">
+    <span class="lb-hint" id="lbHint">drag · scroll · pinch</span>
+    <button class="lb-close" onclick="closeLightbox()">close ×</button>
+  </div>
+  <canvas id="lb-canvas"></canvas>
+  <div class="lb-controls">
+    <div class="lb-ctrl"><label>sphere size</label><input type="range" id="lbSize" min="0.5" max="6" value="1.8" step="0.1" oninput="rebuildCloud()"/></div>
+    <div class="lb-ctrl"><label>depth</label><input type="range" id="lbDepth" min="20" max="300" value="120" oninput="rebuildCloud()"/></div>
+    <div class="lb-ctrl"><label>density</label><input type="range" id="lbDensity" min="3" max="14" value="6" oninput="rebuildCloud()"/></div>
+    <div class="lb-ctrl"><label>auto-rotate</label><input type="range" id="lbRotate" min="0" max="5" value="1" step="0.1" oninput="autoRotateSpeed=parseFloat(this.value)*0.003"/></div>
+  </div>
+  <button class="lb-toggle" id="flatToggle" onclick="toggleFlat()">switch to flat photo</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// cursor
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
-document.querySelectorAll('.photo-item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    const src=item.querySelector('img').src;
-    document.getElementById('lightbox-img').src=src;
-    document.getElementById('lightbox').classList.add('open');
-  });
+
+// THREE setup
+let scene,camera,renderer,meshGroup,currentSrc,currentImgEl;
+let isDragging=false,prevMouse={x:0,y:0};
+let sph={theta:0,phi:Math.PI/2,r:300};
+let autoRotateSpeed=0.003;
+let animId=null;
+let is3D=true;
+
+const sharedGeo=new THREE.SphereGeometry(1,8,8);
+
+function initThree(){
+  const canvas=document.getElementById('lb-canvas');
+  const size=Math.min(window.innerWidth-60, window.innerHeight-220, 600);
+  canvas.width=size; canvas.height=size;
+  canvas.style.width=size+'px'; canvas.style.height=size+'px';
+  renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(size,size);
+  renderer.setClearColor(0xf8f6f3,1);
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(60,1,0.1,2000);
+  camera.position.set(0,0,300);
+}
+
+function sphToCart(){
+  camera.position.x=sph.r*Math.sin(sph.phi)*Math.sin(sph.theta);
+  camera.position.y=sph.r*Math.cos(sph.phi);
+  camera.position.z=sph.r*Math.sin(sph.phi)*Math.cos(sph.theta);
+  camera.lookAt(0,0,0);
+}
+
+function animate(){
+  animId=requestAnimationFrame(animate);
+  if(!isDragging&&autoRotateSpeed>0&&meshGroup){sph.theta+=autoRotateSpeed;sphToCart();}
+  renderer.render(scene,camera);
+}
+
+function buildCloud(img){
+  if(meshGroup){scene.remove(meshGroup);meshGroup.children.forEach(m=>m.material.dispose());meshGroup=null;}
+  meshGroup=new THREE.Group();
+  const step=parseInt(document.getElementById('lbDensity').value);
+  const depthScale=parseFloat(document.getElementById('lbDepth').value);
+  const radius=parseFloat(document.getElementById('lbSize').value);
+  const off=document.createElement('canvas');
+  const maxDim=160;
+  const ratio=img.naturalWidth/img.naturalHeight;
+  off.width=ratio>=1?maxDim:Math.round(maxDim*ratio);
+  off.height=ratio>=1?Math.round(maxDim/ratio):maxDim;
+  const ctx=off.getContext('2d');
+  ctx.drawImage(img,0,0,off.width,off.height);
+  const data=ctx.getImageData(0,0,off.width,off.height).data;
+  const halfW=off.width/2,halfH=off.height/2;
+  for(let y=0;y<off.height;y+=step){
+    for(let x=0;x<off.width;x+=step){
+      const i=(y*off.width+x)*4;
+      const r=data[i]/255,g=data[i+1]/255,b=data[i+2]/255,a=data[i+3];
+      if(a<30)continue;
+      const lum=0.299*r+0.587*g+0.114*b;
+      const mat=new THREE.MeshBasicMaterial({color:new THREE.Color(r,g,b),depthWrite:true,depthTest:true});
+      const mesh=new THREE.Mesh(sharedGeo,mat);
+      mesh.scale.setScalar(radius);
+      mesh.position.set((x-halfW)*(200/off.width),-(y-halfH)*(200/off.height),(lum-0.5)*depthScale);
+      meshGroup.add(mesh);
+    }
+  }
+  scene.add(meshGroup);
+}
+
+function rebuildCloud(){if(currentImgEl&&is3D)buildCloud(currentImgEl);}
+
+function openLightbox(imgEl){
+  currentImgEl=imgEl;
+  currentSrc=imgEl.src;
+  is3D=true;
+  document.getElementById('flatToggle').textContent='switch to flat photo';
+  document.getElementById('lb-canvas').style.display='block';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(!renderer)initThree();
+  sph={theta:0,phi:Math.PI/2,r:300};
+  sphToCart();
+  buildCloud(imgEl);
+  if(animId)cancelAnimationFrame(animId);
+  animate();
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+  if(animId){cancelAnimationFrame(animId);animId=null;}
+  if(meshGroup){scene.remove(meshGroup);meshGroup.children.forEach(m=>m.material.dispose());meshGroup=null;}
+}
+
+function toggleFlat(){
+  is3D=!is3D;
+  const canvas=document.getElementById('lb-canvas');
+  const btn=document.getElementById('flatToggle');
+  if(is3D){
+    canvas.style.display='block';
+    btn.textContent='switch to flat photo';
+    buildCloud(currentImgEl);
+    if(animId)cancelAnimationFrame(animId);
+    animate();
+  } else {
+    if(animId){cancelAnimationFrame(animId);animId=null;}
+    // draw flat image onto canvas
+    const size=canvas.width;
+    const ctx2=canvas.getContext('2d');
+    // clear three renderer then draw image
+    renderer.clear();
+    ctx2.drawImage(currentImgEl,0,0,size,size);
+    btn.textContent='switch to 3D spheres';
+  }
+}
+
+// drag/scroll
+const lbCanvas=document.getElementById('lb-canvas');
+lbCanvas.addEventListener('mousedown',e=>{isDragging=true;prevMouse={x:e.clientX,y:e.clientY};});
+window.addEventListener('mouseup',()=>{isDragging=false;});
+window.addEventListener('mousemove',e=>{
+  if(!isDragging||!is3D)return;
+  const dx=e.clientX-prevMouse.x,dy=e.clientY-prevMouse.y;
+  sph.theta-=dx*0.008;sph.phi=Math.max(0.1,Math.min(Math.PI-0.1,sph.phi+dy*0.008));
+  sphToCart();prevMouse={x:e.clientX,y:e.clientY};
 });
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+lbCanvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  sph.r=Math.max(80,Math.min(600,sph.r+e.deltaY*0.3));sphToCart();
+},{passive:false});
+let pinchDist0=0;
+lbCanvas.addEventListener('touchstart',e=>{
+  if(e.touches.length===1){isDragging=true;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};}
+  else if(e.touches.length===2){const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;pinchDist0=Math.sqrt(dx*dx+dy*dy);}
+},{passive:true});
+lbCanvas.addEventListener('touchend',()=>{isDragging=false;});
+lbCanvas.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  if(e.touches.length===1&&isDragging){
+    const dx=e.touches[0].clientX-prevMouse.x,dy=e.touches[0].clientY-prevMouse.y;
+    sph.theta-=dx*0.01;sph.phi=Math.max(0.1,Math.min(Math.PI-0.1,sph.phi+dy*0.01));
+    sphToCart();prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};
+  }else if(e.touches.length===2){
+    const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;
+    const d=Math.sqrt(dx*dx+dy*dy);
+    sph.r=Math.max(80,Math.min(600,sph.r*(pinchDist0/d)));pinchDist0=d;sphToCart();
+  }
+},{passive:false});
+
+// close on backdrop
 document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+
+// wire up all photos
+document.querySelectorAll('.photo-item').forEach(item=>{
+  item.addEventListener('click',()=>openLightbox(item.querySelector('img')));
+});
 </script>
 </body>
 </html>
