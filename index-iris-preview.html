@@ -21,7 +21,7 @@ body{background:var(--white);color:var(--black);font-family:var(--sans);overflow
 .hero-nav{position:absolute;top:28px;left:0;right:0;display:flex;justify-content:center;gap:36px;z-index:20;opacity:0;animation:fadein 1s ease .3s forwards;}
 .hero-nav a{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--black);text-decoration:none;opacity:.45;transition:opacity .2s,color .2s;}
 .hero-nav a:hover{opacity:1;color:var(--blue);}
-.hero-photo{position:absolute;inset:0;width:100%;height:100%;z-index:5;}
+.hero-photo{position:absolute;top:0;right:0;bottom:0;width:80%;z-index:5;}
 .hero-photo img{height:100%;width:auto;object-fit:contain;object-position:bottom center;display:block;position:relative;z-index:2;transition:filter .4s;}
 .hero-photo:hover img{filter:drop-shadow(0 0 30px rgba(0,68,255,.12));}
 .photo-click-hint{position:absolute;bottom:24px;right:24px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,68,255,.25);transition:opacity .3s;z-index:3;}
