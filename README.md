@@ -30,14 +30,6 @@ maria-showalter/
 └── Fraunces-SemiBold.ttf
 ```
 
-## To-do / coming soon
-
-- [ ] Film photography gallery (Creative section)
-- [ ] DJ deck wired to real audio (drop MP3s in folder)
-- [ ] Live coding video series (YouTube)
-- [ ] Blog posts: Filo, sheet-music-to-strudel, audio-to-strudel
-- [ ] Custom domain
-
 ## Live site
 
 [mariaareadne1.github.io/maria-showalter](https://mariaareadne1.github.io/maria-showalter)
