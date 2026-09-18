@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Audacity Project — Startups & VC for High School Girls</title>
+<meta name="description" content="A nonprofit teaching high school girls about startups, venture capital, and the audacity to go for it. Piloted at The Bryn Mawr School, January 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #f8f6f4;
+    --bone-dim: #f1ece8;
+    --berry: #a5445f;
+    --berry-deep: #8a3650;
+    --rose: #c98298;
+    --ink: #221a1c;
+    --ink-soft: #33282b;
+    --text-body: #4d4142;
+    --text-dim-dark: #b39aa0;
+    --display: 'Fraunces', serif;
+    --body: 'Instrument Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--bone); color: var(--text-body); line-height: 1.65; overflow-x: hidden; }
+
+  ::selection { background: var(--berry); color: var(--bone); }
+
+  /* ───────── intro ───────── */
+  .intro {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--bone);
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    animation: introLift 0.9s cubic-bezier(0.76, 0, 0.24, 1) 2.3s forwards;
+  }
+  .intro-word {
+    font-family: var(--display); font-weight: 600; font-style: italic;
+    font-size: clamp(2.6rem, 9vw, 7rem);
+    color: var(--ink); letter-spacing: -0.02em;
+    display: flex;
+  }
+  .intro-word span {
+    opacity: 0; transform: translateY(0.5em) rotate(3deg);
+    animation: letterUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .intro-word .dot { color: var(--berry); }
+  .intro-sub {
+    font-weight: 600; font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--berry); margin-top: 1rem; opacity: 0; animation: fadeIn 0.6s ease 1.4s forwards;
+  }
+  @keyframes letterUp { to { opacity: 1; transform: translateY(0) rotate(0); } }
+  @keyframes introLift { to { transform: translateY(-100%); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ───────── nav ───────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2rem;
+    background: color-mix(in srgb, var(--bone) 86%, transparent);
+    backdrop-filter: blur(12px);
+    transition: background 0.4s;
+  }
+  nav.over-dark { background: color-mix(in srgb, var(--ink) 84%, transparent); }
+  .nav-logo { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; transition: color 0.4s; }
+  nav.over-dark .nav-logo { color: var(--bone); }
+  .nav-logo em { font-style: italic; color: var(--berry); font-weight: 600; }
+  .nav-links { display: flex; gap: 1.6rem; align-items: center; }
+  .nav-links a {
+    font-weight: 500; font-size: 0.82rem; letter-spacing: 0.04em;
+    color: #97848a; text-decoration: none; transition: color 0.2s;
+  }
+  nav.over-dark .nav-links a { color: var(--text-dim-dark); }
+  .nav-links a:hover { color: var(--berry); }
+  .nav-cta { background: var(--ink); color: var(--bone) !important; padding: 0.55rem 1.2rem; border-radius: 4px; }
+  .nav-cta:hover { background: var(--berry); }
+  nav.over-dark .nav-cta { background: var(--berry); }
+  @media (max-width: 780px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ───────── hero ───────── */
+  .hero {
+    min-height: 100svh;
+    background:
+      radial-gradient(ellipse 70% 55% at 78% 30%, #f3e4e6 0%, transparent 62%),
+      var(--bone);
+    color: var(--ink);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+    padding: 7rem 2rem 5rem;
+    overflow: hidden;
+  }
+  #planeCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+  .label {
+    font-weight: 600; font-size: 0.72rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--berry);
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .label::before { content: ''; width: 2rem; height: 1px; background: var(--berry); }
+  .hero .label { margin-bottom: 1.7rem; }
+  .hero h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(2.8rem, 7.5vw, 5.9rem);
+    line-height: 1.03; letter-spacing: -0.02em;
+    max-width: 13ch; color: var(--ink);
+  }
+  .hero h1 em { font-style: italic; color: var(--berry); font-weight: 600; }
+  .hero-sub { margin-top: 1.9rem; max-width: 46ch; font-size: clamp(1.02rem, 1.6vw, 1.18rem); }
+  .hero-ctas { margin-top: 2.7rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--body); font-weight: 600; font-size: 0.86rem; letter-spacing: 0.04em;
+    padding: 0.95rem 1.9rem; border-radius: 4px; text-decoration: none;
+    transition: transform 0.15s, background 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s;
+    display: inline-block; border: none; cursor: pointer;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-berry { background: var(--berry); color: var(--bone); }
+  .btn-berry:hover { background: var(--berry-deep); box-shadow: 0 8px 26px rgba(165, 68, 95, 0.28); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid #ddc9cd; }
+  .btn-outline:hover { border-color: var(--berry); color: var(--berry); }
+
+  /* ───────── sections ───────── */
+  section { padding: 6.5rem 2rem; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    line-height: 1.08; letter-spacing: -0.015em;
+    color: var(--ink); max-width: 24ch;
+    margin-top: 1.2rem;
+  }
+  h2 em { font-style: italic; color: var(--berry); }
+  .section-sub { margin-top: 1.3rem; max-width: 58ch; font-size: 1.05rem; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ───────── founders ───────── */
+  .founders { background: var(--bone); padding-bottom: 5rem; }
+  .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
+  @media (max-width: 860px) { .founders-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+  .founder-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .founder-card { text-align: center; }
+  .founder-img {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 8px; background: var(--bone-dim);
+    display: block;
+  }
+  .founder-img-fallback {
+    width: 100%; aspect-ratio: 4 / 5; border-radius: 8px;
+    background: linear-gradient(150deg, #eddfe0 0%, var(--bone-dim) 100%);
+    display: none; align-items: center; justify-content: center;
+    font-family: var(--display); font-style: italic; font-size: 2.4rem; color: var(--berry);
+  }
+  .founder-card.no-img .founder-img { display: none; }
+  .founder-card.no-img .founder-img-fallback { display: flex; }
+  .founder-name { font-family: var(--display); font-weight: 600; font-size: 1.1rem; color: var(--ink); margin-top: 1rem; }
+  .founder-name a { color: inherit; text-decoration: none; border-bottom: 1.5px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .founder-name a:hover { color: var(--berry); border-color: var(--berry); }
+  .founder-role { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: #a08289; margin-top: 0.2rem; }
+  .founders-blurb p { margin-bottom: 1.2rem; font-size: 1.05rem; }
+  .founders-blurb strong { color: var(--ink); }
+  .text-link {
+    color: var(--berry); font-weight: 600; text-decoration: none;
+    border-bottom: 1.5px solid #e3c4cd; transition: border-color 0.2s;
+  }
+  .text-link:hover { border-color: var(--berry); }
+
+  /* ───────── journey / timeline ───────── */
+  .journey { background: var(--bone-dim); padding-top: 5rem; padding-bottom: 5rem; }
+  .journey-track { margin-top: 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; }
+  @media (max-width: 860px) { .journey-track { grid-template-columns: 1fr; } }
+  .journey-step { position: relative; padding-top: 1.4rem; }
+  .journey-step::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: #ddccc7;
+  }
+  .journey-step::after {
+    content: ''; position: absolute; top: -4px; left: 0; width: 10px; height: 10px;
+    border-radius: 50%; background: var(--berry);
+  }
+  .journey-date { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--berry); }
+  .journey-step h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--ink); margin: 0.5rem 0 0.4rem; }
+  .journey-step p { font-size: 0.92rem; }
+
+  /* ───────── alumnae carousel ───────── */
+  .alumnae { background: var(--bone); overflow: hidden; }
+  .alumnae-scroll {
+    margin-top: 3rem;
+    display: flex; gap: 1.4rem;
+    overflow-x: auto; padding-bottom: 1.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .alumnae-scroll::-webkit-scrollbar { height: 6px; }
+  .alumnae-scroll::-webkit-scrollbar-track { background: var(--bone-dim); border-radius: 3px; }
+  .alumnae-scroll::-webkit-scrollbar-thumb { background: #d8bfc6; border-radius: 3px; }
+  .alum-card {
+    flex: 0 0 240px; scroll-snap-align: start;
+    background: #fff; border-radius: 8px; overflow: hidden;
+    border: 1px solid #ece2de;
+  }
+  .alum-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--bone-dim); display: block; }
+  .alum-img-fallback {
+    width: 100%; aspect-ratio: 1;
+    background: linear-gradient(150deg, #eddfe0 0%, var(--bone-dim) 100%);
+    display: none; align-items: center; justify-content: center;
+    font-family: var(--display); font-style: italic; font-size: 2rem; color: var(--berry);
+  }
+  .alum-card.no-img .alum-img { display: none; }
+  .alum-card.no-img .alum-img-fallback { display: flex; }
+  .alum-info { padding: 1.1rem 1.2rem 1.3rem; }
+  .alum-name { font-family: var(--display); font-weight: 600; font-size: 1.02rem; color: var(--ink); }
+  .alum-path { font-size: 0.82rem; margin-top: 0.25rem; color: #97848a; }
+  .alum-path strong { color: var(--berry); font-weight: 600; }
+  .scroll-hint { margin-top: 0.6rem; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #b8a4aa; }
+
+  /* ───────── stats ───────── */
+  .stats { background: var(--ink); color: var(--bone); padding: 5rem 2rem; position: relative; overflow: hidden; }
+  .stats::before {
+    content: ''; position: absolute; width: 55vw; height: 55vw; max-width: 640px; max-height: 640px;
+    left: -18vw; bottom: -30vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(165, 68, 95, 0.22) 0%, transparent 65%);
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; max-width: 1100px; margin: 0 auto; position: relative; }
+  @media (max-width: 760px) { .stats-grid { grid-template-columns: 1fr; gap: 2.4rem; } }
+  .stat-num {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(3rem, 6vw, 4.6rem); letter-spacing: -0.02em;
+    color: var(--rose); line-height: 1;
+  }
+  .stat-label { margin-top: 0.9rem; font-size: 0.96rem; color: #cbb3b9; max-width: 30ch; }
+  .stat-src { display: block; margin-top: 0.6rem; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7d666c; font-weight: 600; }
+
+  /* ───────── program ───────── */
+  .program { background: var(--bone-dim); }
+  .session-list { margin-top: 3rem; border-top: 1px solid #dcd0cb; }
+  .session-row { border-bottom: 1px solid #dcd0cb; }
+  .session-head {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: grid; grid-template-columns: 3.8rem 1fr auto; align-items: center; gap: 1.2rem;
+    padding: 1.5rem 0.4rem; text-align: left;
+    font-family: var(--body);
+    transition: padding-left 0.2s;
+  }
+  .session-head:hover { padding-left: 0.9rem; }
+  .session-no { font-family: var(--display); font-style: italic; font-size: 1rem; color: var(--berry); }
+  .session-name { font-family: var(--display); font-weight: 600; font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--ink); letter-spacing: -0.01em; }
+  .session-toggle { font-family: var(--display); font-size: 1.3rem; color: #c2a8ad; transition: transform 0.3s; line-height: 1; }
+  .session-row.open .session-toggle { transform: rotate(45deg); color: var(--berry); }
+  .session-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .session-body-inner { padding: 0 0.4rem 1.7rem 5rem; max-width: 64ch; }
+  @media (max-width: 600px) { .session-body-inner { padding-left: 0.4rem; } }
+  .session-body-inner p { font-size: 0.97rem; margin-bottom: 0.9rem; }
+  .dare-chip {
+    display: flex; align-items: baseline; gap: 0.9rem;
+    background: #fff; border-left: 3px solid var(--berry); border-radius: 0 8px 8px 0;
+    padding: 0.9rem 1.15rem;
+    font-size: 0.93rem; color: var(--text-body);
+    max-width: 56ch;
+  }
+  .dare-chip .dare-label {
+    font-weight: 600; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--berry); white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ───────── trip ───────── */
+  .trip { background: var(--ink); color: var(--bone); position: relative; overflow: hidden; }
+  .trip h2 { color: var(--bone); }
+  .trip h2 em { color: var(--rose); }
+  .trip .section-sub { color: #cbb3b9; }
+  .trip .label { color: var(--rose); }
+  .trip .label::before { background: var(--rose); }
+  .trip-points { margin-top: 2.6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 760px) { .trip-points { grid-template-columns: 1fr; } }
+  .trip-point {
+    border: 1px solid #443539; border-radius: 8px; padding: 1.7rem;
+    background: color-mix(in srgb, var(--ink-soft) 55%, transparent);
+  }
+  .trip-point h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--bone); margin-bottom: 0.5rem; }
+  .trip-point p { font-size: 0.93rem; color: #b39aa0; }
+  .trip::after {
+    content: ''; position: absolute; right: -10rem; top: -10rem;
+    width: 32rem; height: 32rem; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 130, 152, 0.14) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ───────── partners ───────── */
+  .partners { background: var(--bone); }
+  .partners-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  @media (max-width: 860px) { .partners-flex { grid-template-columns: 1fr; gap: 2rem; } }
+  .partner-asks { list-style: none; margin-top: 0.5rem; }
+  .partner-asks li {
+    padding: 1.15rem 0; border-bottom: 1px solid #e5d8d4;
+    display: flex; gap: 1rem; align-items: baseline; font-size: 1rem;
+  }
+  .partner-asks li:first-child { border-top: 1px solid #e5d8d4; }
+  .partner-asks .ask-mark { font-family: var(--display); font-style: italic; font-size: 0.95rem; color: var(--berry); flex-shrink: 0; }
+  .partner-asks strong { color: var(--ink); }
+
+  /* ───────── apply ───────── */
+  .apply { background: var(--bone-dim); }
+  .form-tabs { display: flex; gap: 0.6rem; margin: 2.4rem 0 2rem; flex-wrap: wrap; }
+  .form-tab {
+    font-family: var(--body); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.03em;
+    padding: 0.75rem 1.4rem; border-radius: 4px; border: 1.5px solid #dcc6cb;
+    background: none; cursor: pointer; color: #97848a; transition: all 0.2s;
+  }
+  .form-tab.active { background: var(--ink); border-color: var(--ink); color: var(--bone); }
+  .form-panel { display: none; max-width: 560px; }
+  .form-panel.active { display: block; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .field { margin-bottom: 1.2rem; }
+  .field label { display: block; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #a08289; margin-bottom: 0.45rem; }
+  .field input, .field textarea, .field select {
+    width: 100%; padding: 0.9rem 1.1rem; border: 1.5px solid #e0d2d4; border-radius: 6px;
+    background: #fff; font-family: var(--body); font-size: 0.95rem; color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--berry); box-shadow: 0 0 0 4px rgba(165, 68, 95, 0.1);
+  }
+  .form-note { margin-top: 1rem; font-size: 0.84rem; color: #97848a; }
+  .form-success {
+    display: none; background: #fff; border-left: 3px solid var(--berry); border-radius: 0 8px 8px 0;
+    padding: 1.15rem 1.3rem; color: var(--ink); font-size: 0.95rem; margin-top: 1rem;
+  }
+
+  /* ───────── footer ───────── */
+  footer { background: var(--ink); color: #b39aa0; padding: 4rem 2rem 2.5rem; }
+  .footer-grid { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+  .footer-word { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 6vw, 4rem); color: var(--bone); letter-spacing: -0.02em; line-height: 1.05; }
+  .footer-word em { font-style: italic; color: var(--berry); }
+  .footer-tag { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #7d666c; margin-bottom: 0.9rem; }
+  .footer-meta { font-size: 0.8rem; letter-spacing: 0.04em; text-align: right; }
+  .footer-meta a { color: #b39aa0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+    .intro { display: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- intro -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-word" id="introWord"></div>
+  <p class="intro-sub">the nerve to go for it anyway</p>
+</div>
+
+<!-- nav -->
+<nav id="nav">
+  <a class="nav-logo" href="#top">the <em>audacity</em> project</a>
+  <div class="nav-links">
+    <a href="#founders">Founders</a>
+    <a href="#program">Program</a>
+    <a href="#alumnae">Alumnae</a>
+    <a href="#partners">Partners</a>
+    <a href="#apply" class="nav-cta">Apply</a>
+  </div>
+</nav>
+
+<!-- hero -->
+<header class="hero" id="top">
+  <canvas id="planeCanvas" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="label">A nonprofit for high school girls · piloted at The Bryn Mawr School</p>
+    <h1>Audacity is a <em>skill.</em><br>We teach it.</h1>
+    <p class="hero-sub">Startups, venture capital, and entrepreneurship — taught to high school girls at all-girls schools, with one real act of boldness assigned every single session. Piloted January 2026. Full curriculum this fall.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-berry" href="#apply">Apply for fall</a>
+      <a class="btn btn-outline" href="#partners">Partner with us</a>
+    </div>
+  </div>
+</header>
+
+<!-- founders -->
+<section class="founders" id="founders">
+  <div class="wrap">
+    <p class="label reveal">Meet the co-founders</p>
+    <div class="founders-grid">
+      <div class="founder-photos reveal">
+        <!-- ═══ REPLACE: put your photos in an /images folder next to this file ═══ -->
+        <div class="founder-card" onerror-handled>
+          <img class="founder-img" src="images/maria.founder.png" alt="Maria Showalter" onerror="this.parentElement.classList.add('no-img')">
+          <div class="founder-img-fallback">MS</div>
+          <p class="founder-name"><a href="https://www.linkedin.com/in/maria-showalter-16a905240/" target="_blank" rel="noopener noreferrer">Maria Showalter</a></p>
+          <p class="founder-role">Co-founder · Barnard, Columbia</p>
+        </div>
+        <div class="founder-card">
+          <img class="founder-img" src="images/gabriela.founder.png" alt="Gabriela Martinez" onerror="this.parentElement.classList.add('no-img')">
+          <div class="founder-img-fallback">GM</div>
+          <p class="founder-name"><a href="https://www.linkedin.com/in/gabrielasarahimartinezrodriguez/" target="_blank" rel="noopener noreferrer">Gabriela Martinez</a></p>
+          <p class="founder-role">Co-founder · Barnard, Columbia</p>
+        </div>
+      </div>
+      <div class="founders-blurb">
+        <p class="reveal"><strong>We met as freshman roommates at Barnard — and three years later we still live together.</strong> We grew up worlds apart: Maria at an all-girls school in Baltimore, Gabriela in Mexico by way of a United World College in Bosnia. Neither of us ever heard the words "venture capital" growing up.</p>
+        <p class="reveal">We both fell into the startup world the same way — by accident, through Columbia's entrepreneurship club — and had the same reaction: <em>why is no one telling girls about this sooner?</em> The Audacity Project is the program we wish someone had handed us at sixteen: real knowledge about startups and VC, and deliberate practice at the bold asks this world runs on.</p>
+        <p class="reveal"><a class="text-link" href="story.html">Read our full story →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- journey -->
+<section class="journey">
+  <div class="wrap">
+    <p class="label reveal">How it's going</p>
+    <h2 class="reveal">From idea to <em>waitlist</em> in one school year.</h2>
+    <div class="journey-track reveal">
+      <div class="journey-step">
+        <p class="journey-date">Fall 2025</p>
+        <h3>The plan</h3>
+        <p>Two students start sketching the program — curriculum, dares, and a partnership with Maria's own high school.</p>
+      </div>
+      <div class="journey-step">
+        <p class="journey-date">January 2026</p>
+        <h3>The pilot</h3>
+        <p>Launched at The Bryn Mawr School with a small founding cohort — under ten girls, run as close mentorship.</p>
+      </div>
+      <div class="journey-step">
+        <p class="journey-date">Spring 2026</p>
+        <h3>The signal</h3>
+        <p>By semester's end, 50+ students had expressed interest in joining. The demand was never the question.</p>
+      </div>
+      <div class="journey-step">
+        <p class="journey-date">Fall 2026</p>
+        <h3>The real thing</h3>
+        <p>Full 8-session curriculum, a bigger cohort, applications open — and fundraising toward the first NYC trip.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- alumnae -->
+<section class="alumnae" id="alumnae">
+  <div class="wrap">
+    <p class="label reveal">The founding cohort</p>
+    <h2 class="reveal">Our first <em>graduates.</em></h2>
+    <p class="section-sub reveal">The girls who took a chance on a brand-new program at The Bryn Mawr School — and where they're headed now.</p>
+  </div>
+  <div class="wrap">
+    <div class="alumnae-scroll reveal">
+      <!-- ═══ REPLACE: one card per graduate. Add photos to /images, update names & schools. Duplicate cards as needed. ═══ -->
+      <div class="alum-card">
+        <img class="alum-img" src="images/elia.alum.png" alt="Elia Showalter" onerror="this.parentElement.classList.add('no-img')">
+        <div class="alum-img-fallback">✈</div>
+        <div class="alum-info">
+          <p class="alum-name">Elia Showalter</p>
+          <p class="alum-path">Bryn Mawr '26 → <strong>Cornell '30</strong></p>
+        </div>
+      </div>
+      <div class="alum-card">
+        <img class="alum-img" src="images/harper.alum.png" alt="Harper King" onerror="this.parentElement.classList.add('no-img')">
+        <div class="alum-img-fallback">✈</div>
+        <div class="alum-info">
+          <p class="alum-name">Harper King</p>
+          <p class="alum-path">Bryn Mawr '26 → <strong>Skidmore College '30</strong></p>
+        </div>
+      </div>
+      <div class="alum-card">
+        <img class="alum-img" src="images/virginia.alum.png" alt="Virginia Whalen" onerror="this.parentElement.classList.add('no-img')">
+        <div class="alum-img-fallback">✈</div>
+        <div class="alum-info">
+          <p class="alum-name">Virginia Whalen</p>
+          <p class="alum-path">Bryn Mawr '26 → <strong>Williams College '30</strong></p>
+        </div>
+      </div>
+      <div class="alum-card">
+        <img class="alum-img" src="images/celia.alum.png" alt="Celia Marshall" onerror="this.parentElement.classList.add('no-img')">
+        <div class="alum-img-fallback">✈</div>
+        <div class="alum-info">
+          <p class="alum-name">Celia Marshall</p>
+          <p class="alum-path">Bryn Mawr '26 → <strong>University of Virginia '30</strong></p>
+        </div>
+      </div>
+      <div class="alum-card">
+        <img class="alum-img" src="images/tanvi.alum.png" alt="Tanvi Garg" onerror="this.parentElement.classList.add('no-img')">
+        <div class="alum-img-fallback">✈</div>
+        <div class="alum-info">
+          <p class="alum-name">Tanvi Garg</p>
+          <p class="alum-path">Bryn Mawr '26 → <strong>University of Maryland '30</strong></p>
+        </div>
+      </div>
+    </div>
+    <p class="scroll-hint">Scroll →</p>
+  </div>
+</section>
+
+<!-- stats -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="reveal">
+      <div class="stat-num" data-count="20" data-suffix="%">0%</div>
+      <p class="stat-label">fewer jobs applied to by women than men — despite browsing the same listings.</p>
+      <span class="stat-src">LinkedIn Gender Insights Report</span>
+    </div>
+    <div class="reveal" style="transition-delay:0.1s">
+      <div class="stat-num" data-count="22" data-prefix="&lt;" data-suffix="%">0%</div>
+      <p class="stat-label">of startups in recent Y Combinator batches have even one female founder.</p>
+      <span class="stat-src">YC batch data, 2024</span>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <div class="stat-num" data-count="50" data-suffix="+">0</div>
+      <p class="stat-label">Bryn Mawr students expressed interest after our first tiny pilot cohort. Demand isn't the problem.</p>
+      <span class="stat-src">Spring 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- program -->
+<section class="program" id="program">
+  <div class="wrap">
+    <p class="label reveal">The program · fall 2026</p>
+    <h2 class="reveal">Eight sessions. Eight acts of <em>audacity.</em></h2>
+    <p class="section-sub reveal">Every session pairs real startup and VC knowledge with a dare — a concrete act of boldness assigned as homework. Cold emails get sent. Founders get DMed. By pitch day, going for it feels normal. That's the point.</p>
+
+    <div class="session-list reveal">
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.1</span>
+          <span class="session-name">Why you're here (and why nobody told you)</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>The audacity gap, the numbers behind it, and our founders' story. Every girl writes down the thing she's been "too unqualified" to try — sealed in an envelope until the final session.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 01</span><span>Write the thing you've talked yourself out of. Seal it. You'll meet it again.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.2</span>
+          <span class="session-name">What even is a startup?</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Startup vs. small business vs. corporation — mapped through the apps already on your phone. What a founder actually does on a Tuesday.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 02</span><span>Cold email a founder. One sentence. The win is pressing send.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.3</span>
+          <span class="session-name">How a business actually makes money</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Business models in plain language — subscriptions, marketplaces, ads. Why a company can lose money and still be valuable.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 03</span><span>Name a problem you've lived, and commit to a number someone would pay to fix it.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.4</span>
+          <span class="session-name">What is venture capital?</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Where startup money comes from, why investors fund unprofitable companies, and what owning a slice of something means. The session our founders wish they'd had.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 04</span><span>Find a woman at a VC firm. Send the LinkedIn request. Just connect.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.5</span>
+          <span class="session-name">Fundraising &amp; equity, demystified</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Rounds, valuations, and the pizza-slice version of equity. A fictional founder's journey from idea to Series A.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 05</span><span>DM a founder who just raised. Congratulate her. You don't need a reason.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.6</span>
+          <span class="session-name">Build something small</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Teams form around real problems. One-line value propositions. An MVP with zero code — a mockup, a form, a single slide that makes someone get it in 30 seconds.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 06</span><span>Talk to one real potential user. Not a friend. Ask what would make it better.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.7</span>
+          <span class="session-name">How to pitch</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Problem, solution, why you, why now. How to talk about things that aren't built yet. The confidence trick: you act first, the feeling follows.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 07</span><span>Pitch someone who'll push back. Report the hardest question you got.</span></div>
+        </div></div>
+      </div>
+      <div class="session-row">
+        <button class="session-head" aria-expanded="false">
+          <span class="session-no">no.8</span>
+          <span class="session-name">Pitch day + the envelope</span>
+          <span class="session-toggle">+</span>
+        </button>
+        <div class="session-body"><div class="session-body-inner">
+          <p>Teams pitch to a panel of women in VC and founders — real feedback, not just applause. Then the envelopes from session one come back out, and every girl reads what she once thought she couldn't do.</p>
+          <div class="dare-chip"><span class="dare-label">Dare 08</span><span>Open the envelope. See how far you've come.</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- trip -->
+<section class="trip" id="trip">
+  <div class="wrap">
+    <p class="label reveal">Where we're headed</p>
+    <h2 class="reveal">Investors, sponsors, and a trip to <em>New York.</em></h2>
+    <p class="section-sub reveal">The next chapter: bringing investors and sponsors into the program, and funding an all-expenses-paid NYC trip where girls who complete the curriculum step inside real VC firms and female-founded startups.</p>
+    <div class="trip-points">
+      <div class="trip-point reveal"><h3>Inside real firms</h3><p>Visits to VC offices and female-founded startups — the buildings, the rooms, the people.</p></div>
+      <div class="trip-point reveal" style="transition-delay:0.1s"><h3>Real women, real paths</h3><p>"Here's how I got here" conversations with founders, investors, and operators.</p></div>
+      <div class="trip-point reveal" style="transition-delay:0.2s"><h3>Earned, not given</h3><p>Eligibility is gated by attendance and participation. The trip is the proof they showed up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- partners -->
+<section class="partners" id="partners">
+  <div class="wrap">
+    <div class="partners-flex">
+      <div>
+        <p class="label reveal">For VCs &amp; founders</p>
+        <h2 class="reveal">Your pipeline problem starts in high school. <em>So do we.</em></h2>
+        <p class="section-sub reveal">If you want more women founding companies and writing checks, the earliest intervention wins. We've proven the demand — now we're building the program to meet it. Partner with us and meet the next generation a decade before everyone else does.</p>
+      </div>
+      <div class="reveal">
+        <ul class="partner-asks">
+          <li><span class="ask-mark">i.</span><span><strong>Speak.</strong> 20 minutes on a video call with a session, or a seat on the pitch day panel.</span></li>
+          <li><span class="ask-mark">ii.</span><span><strong>Host.</strong> Open your office to the NYC trip — a tour, a talk, a moment that makes it real.</span></li>
+          <li><span class="ask-mark">iii.</span><span><strong>Sponsor.</strong> Fund the program and the trip. A small check here changes a trajectory.</span></li>
+        </ul>
+        <div style="margin-top:1.8rem">
+          <a class="btn btn-berry" href="#apply" onclick="setTimeout(()=>switchTab('partner'),100)">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- apply -->
+<section class="apply" id="apply">
+  <div class="wrap">
+    <p class="label reveal">Get involved</p>
+    <h2 class="reveal">The first dare is <em>filling this out.</em></h2>
+
+    <div class="form-tabs reveal">
+      <button class="form-tab active" data-tab="student" onclick="switchTab('student')">I'm a student</button>
+      <button class="form-tab" data-tab="school" onclick="switchTab('school')">I'm a school</button>
+      <button class="form-tab" data-tab="partner" onclick="switchTab('partner')">I'm a VC / founder</button>
+    </div>
+
+    <div class="form-panel active" id="panel-student">
+      <div class="field"><label for="s-name">Your name</label><input id="s-name" type="text" placeholder="First and last"></div>
+      <div class="field"><label for="s-school">Your school</label><input id="s-school" type="text" placeholder="School name"></div>
+      <div class="field"><label for="s-grade">Grade (fall 2026)</label><select id="s-grade"><option>9th</option><option>10th</option><option>11th</option><option>12th</option></select></div>
+      <div class="field"><label for="s-email">Email</label><input id="s-email" type="email" placeholder="you@email.com"></div>
+      <div class="field"><label for="s-why">One thing you'd do if you knew it would work</label><textarea id="s-why" rows="3" placeholder="Be audacious. That's the whole point."></textarea></div>
+      <button class="btn btn-berry" onclick="submitForm('student')">Join the interest list</button>
+      <p class="form-note">Applications for the fall cohort open fall 2026. Interest-list students hear from us first.</p>
+      <div class="form-success" id="success-student">You're on the list. Telling someone what you want — that's the first rep. We'll be in touch.</div>
+    </div>
+
+    <div class="form-panel" id="panel-school">
+      <div class="field"><label for="sc-name">Your name &amp; role</label><input id="sc-name" type="text" placeholder="e.g. Jane Doe, College Counselor"></div>
+      <div class="field"><label for="sc-school">School</label><input id="sc-school" type="text" placeholder="School name and city"></div>
+      <div class="field"><label for="sc-email">Email</label><input id="sc-email" type="email" placeholder="you@school.org"></div>
+      <div class="field"><label for="sc-msg">Anything we should know?</label><textarea id="sc-msg" rows="3" placeholder="Student body size, timing, questions..."></textarea></div>
+      <button class="btn btn-berry" onclick="submitForm('school')">Start the conversation</button>
+      <p class="form-note">The program runs on your campus with a trained facilitator — designed to ask very little of your staff.</p>
+      <div class="form-success" id="success-school">Thank you — we'll reach out within a few days to set up a call.</div>
+    </div>
+
+    <div class="form-panel" id="panel-partner">
+      <div class="field"><label for="p-name">Your name</label><input id="p-name" type="text" placeholder="First and last"></div>
+      <div class="field"><label for="p-org">Firm / company</label><input id="p-org" type="text" placeholder="Where you work"></div>
+      <div class="field"><label for="p-email">Email</label><input id="p-email" type="email" placeholder="you@firm.com"></div>
+      <div class="field"><label for="p-how">How you'd like to help</label><select id="p-how"><option>Speak at a session</option><option>Join the pitch day panel</option><option>Host the NYC trip</option><option>Sponsor the program</option><option>Something else</option></select></div>
+      <button class="btn btn-berry" onclick="submitForm('partner')">Get in touch</button>
+      <p class="form-note">Even 20 minutes of your time changes what these girls believe is possible.</p>
+      <div class="form-success" id="success-partner">Thank you — we'll follow up shortly. The next generation appreciates it already.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tag">Go for it anyway</p>
+      <div class="footer-word">the <em>audacity</em><br>project</div>
+    </div>
+    <div class="footer-meta">
+      <p>Founded by <a href="https://www.linkedin.com/in/maria-showalter-16a905240/" target="_blank" rel="noopener noreferrer">Maria Showalter</a> &amp; <a href="https://www.linkedin.com/in/gabrielasarahimartinezrodriguez/" target="_blank" rel="noopener noreferrer">Gabriela Martinez</a></p>
+      <p style="margin-top:0.4rem">Baltimore &amp; New York · Piloted at The Bryn Mawr School</p>
+      <p style="margin-top:0.4rem"><a href="mailto:hello@theaudacityproject.org">hello@theaudacityproject.org</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // ── intro ──
+  (function () {
+    const word = 'audacity.';
+    const el = document.getElementById('introWord');
+    word.split('').forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.textContent = ch;
+      if (ch === '.') s.classList.add('dot');
+      s.style.animationDelay = (0.15 + i * 0.07) + 's';
+      el.appendChild(s);
+    });
+    setTimeout(() => { const intro = document.getElementById('intro'); if (intro) intro.remove(); }, 3400);
+  })();
+
+  // ── 3D paper airplane ──
+  (function () {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canvas = document.getElementById('planeCanvas');
+    if (!window.THREE || !canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+    camera.position.set(0, 0.5, 9.5);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    scene.add(new THREE.AmbientLight(0xfff5f0, 0.55));
+    const key = new THREE.DirectionalLight(0xffffff, 0.85);
+    key.position.set(3, 7, 5);
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0xe8c4cf, 0.5);
+    rim.position.set(-6, 2, -4);
+    scene.add(rim);
+    const berryFill = new THREE.PointLight(0xa5445f, 0.35, 25);
+    berryFill.position.set(-3, -3, 5);
+    scene.add(berryFill);
+
+    const plane = new THREE.Group();
+
+    const NOSE   = [ 2.4,  0.00,  0   ];
+    const SPINE  = [-1.9,  0.14,  0   ];
+    const FOLD_L = [-2.0,  0.10,  0.52];
+    const FOLD_R = [-2.0,  0.10, -0.52];
+    const TIP_L  = [-2.15, 0.46,  1.55];
+    const TIP_R  = [-2.15, 0.46, -1.55];
+    const KEEL   = [-1.9, -0.62,  0   ];
+
+    function panel(a, b, c, color) {
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute([...a, ...b, ...c], 3));
+      geo.computeVertexNormals();
+      return new THREE.Mesh(geo, new THREE.MeshStandardMaterial({
+        color, side: THREE.DoubleSide, flatShading: true,
+        roughness: 0.55, metalness: 0.02
+      }));
+    }
+
+    const white   = 0xffffff;
+    const warm    = 0xf9f3ef;
+    const shadow  = 0xefe4e0;
+
+    plane.add(panel(NOSE, SPINE, FOLD_L, warm));
+    plane.add(panel(NOSE, SPINE, FOLD_R, warm));
+    plane.add(panel(NOSE, FOLD_L, TIP_L, white));
+    plane.add(panel(NOSE, FOLD_R, TIP_R, white));
+    plane.add(panel(NOSE, KEEL, SPINE, shadow));
+
+    const creaseMat = new THREE.LineBasicMaterial({ color: 0xcbb3ac, transparent: true, opacity: 0.9 });
+    function crease(a, b) {
+      const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a), new THREE.Vector3(...b)]);
+      plane.add(new THREE.Line(g, creaseMat));
+    }
+    crease(NOSE, SPINE);
+    crease(NOSE, FOLD_L);
+    crease(NOSE, FOLD_R);
+    crease(NOSE, KEEL);
+
+    plane.scale.setScalar(0.78);
+    plane.rotation.y = -0.55;
+    scene.add(plane);
+
+    const trailPts = [];
+    for (let i = 0; i <= 60; i++) {
+      const t = i / 60;
+      trailPts.push(new THREE.Vector3(
+        -2.2 - t * 7 + Math.sin(t * 4) * 0.35,
+        -0.4 - Math.sin(t * 2.8) * 0.7 - t * 1.6,
+        -t * 2.2
+      ));
+    }
+    const trailGeo = new THREE.BufferGeometry().setFromPoints(new THREE.CatmullRomCurve3(trailPts).getPoints(120));
+    const trail = new THREE.Line(trailGeo, new THREE.LineDashedMaterial({
+      color: 0xa5445f, dashSize: 0.16, gapSize: 0.16, transparent: true, opacity: 0.4
+    }));
+    trail.computeLineDistances();
+    scene.add(trail);
+
+    const heroEl = document.querySelector('.hero');
+    function resize() {
+      const w = heroEl.clientWidth, h = heroEl.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      const wide = w > 900;
+      plane.position.set(wide ? 3.2 : 0, wide ? 0.55 : 2.2, 0);
+      trail.position.set(plane.position.x, plane.position.y, 0);
+      canvas.style.opacity = wide ? '1' : '0.35';
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let mx = 0, my = 0;
+    window.addEventListener('pointermove', (e) => {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      const t = clock.getElapsedTime();
+      if (!reduced) {
+        plane.position.y += Math.sin(t * 1.1) * 0.003;
+        plane.rotation.z = Math.sin(t * 0.85) * 0.09 - 0.05;
+        plane.rotation.y = -0.55 + Math.sin(t * 0.38) * 0.16 + mx * 0.14;
+        plane.rotation.x = Math.sin(t * 0.55) * 0.045 + my * 0.07;
+        camera.position.x = mx * 0.22;
+        camera.position.y = 0.5 - my * 0.16;
+        camera.lookAt(plane.position.x - 1, plane.position.y, 0);
+      }
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
+  // ── scroll reveals ──
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── stat counters ──
+  const statIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      statIO.unobserve(el);
+      const target = parseInt(el.dataset.count, 10);
+      const prefix = el.dataset.prefix ? '<' : '';
+      const suffix = el.dataset.suffix || '';
+      if (target === 0) { el.textContent = '0'; return; }
+      const dur = 1400; const start = performance.now();
+      function step(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = prefix + Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num').forEach(el => statIO.observe(el));
+
+  // ── nav swap ──
+  const nav = document.getElementById('nav');
+  const darkSections = [document.querySelector('.stats'), document.querySelector('.trip'), document.querySelector('footer')];
+  function navCheck() {
+    const y = window.scrollY + 40;
+    let overDark = false;
+    darkSections.forEach(s => { if (s && y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) overDark = true; });
+    nav.classList.toggle('over-dark', overDark);
+  }
+  window.addEventListener('scroll', navCheck, { passive: true });
+  navCheck();
+
+  // ── accordion ──
+  document.querySelectorAll('.session-head').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.parentElement;
+      const body = row.querySelector('.session-body');
+      const isOpen = row.classList.contains('open');
+      document.querySelectorAll('.session-row.open').forEach(r => {
+        r.classList.remove('open');
+        r.querySelector('.session-body').style.maxHeight = '0';
+        r.querySelector('.session-head').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        row.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ── form tabs ──
+  function switchTab(name) {
+    document.querySelectorAll('.form-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.form-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+  }
+  function submitForm(name) {
+    document.getElementById('success-' + name).style.display = 'block';
+  }
+</script>
+
+</body>
+</html>

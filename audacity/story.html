@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story — The Audacity Project</title>
+<meta name="description" content="Why two students who never heard the words 'venture capital' in high school built a program to make sure the next generation of girls does.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #f8f6f4;
+    --bone-dim: #f1ece8;
+    --berry: #a5445f;
+    --berry-deep: #8a3650;
+    --rose: #c98298;
+    --ink: #221a1c;
+    --text-body: #4d4142;
+    --display: 'Fraunces', serif;
+    --body: 'Instrument Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--bone); color: var(--text-body); line-height: 1.75; }
+
+  ::selection { background: var(--berry); color: var(--bone); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2rem;
+    background: color-mix(in srgb, var(--bone) 86%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .nav-logo em { font-style: italic; color: var(--berry); font-weight: 600; }
+  .nav-back {
+    font-weight: 600; font-size: 0.82rem; color: #97848a; text-decoration: none; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--berry); }
+
+  .story-hero { padding: 10rem 2rem 4rem; max-width: 720px; margin: 0 auto; }
+  .label {
+    font-weight: 600; font-size: 0.72rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--berry); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .label::before { content: ''; width: 2rem; height: 1px; background: var(--berry); }
+  h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.06; letter-spacing: -0.02em; color: var(--ink);
+  }
+  h1 em { font-style: italic; color: var(--berry); }
+
+  article { max-width: 720px; margin: 0 auto; padding: 0 2rem 6rem; }
+  article p { margin-bottom: 1.5rem; font-size: 1.08rem; }
+  article h2 {
+    font-family: var(--display); font-weight: 600; font-size: 1.7rem;
+    color: var(--ink); letter-spacing: -0.01em;
+    margin: 3rem 0 1.2rem;
+  }
+  article h2 em { font-style: italic; color: var(--berry); }
+  article strong { color: var(--ink); font-weight: 600; }
+
+  .pull {
+    font-family: var(--display); font-weight: 500; font-style: italic;
+    font-size: 1.6rem; line-height: 1.4; color: var(--berry);
+    border-left: 3px solid var(--berry); padding-left: 1.6rem;
+    margin: 2.6rem 0;
+  }
+
+  .story-cta {
+    background: var(--ink); border-radius: 12px; padding: 2.6rem;
+    margin-top: 3.5rem; text-align: center;
+  }
+  .story-cta p { color: #cbb3b9; margin-bottom: 1.4rem; font-size: 1rem; }
+  .story-cta .cta-head { font-family: var(--display); font-weight: 600; font-size: 1.6rem; color: var(--bone); margin-bottom: 0.5rem; }
+  .btn {
+    font-weight: 600; font-size: 0.86rem; letter-spacing: 0.04em;
+    padding: 0.95rem 1.9rem; border-radius: 4px; text-decoration: none;
+    display: inline-block; background: var(--berry); color: var(--bone);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { background: var(--berry-deep); box-shadow: 0 8px 26px rgba(165, 68, 95, 0.28); }
+
+  footer { background: var(--ink); color: #b39aa0; padding: 3rem 2rem; text-align: center; font-size: 0.85rem; }
+  footer a { color: #b39aa0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">the <em>audacity</em> project</a>
+  <a class="nav-back" href="index.html">← Back to home</a>
+</nav>
+
+<div class="story-hero">
+  <p class="label">Our story</p>
+  <h1>Two roommates from opposite corners of the world — and neither of us had heard the words <em>venture capital.</em></h1>
+</div>
+
+<article>
+  <p>We met as first-year roommates at Barnard College — and three years later, we still live together. On paper we could not have arrived from more different places. Maria grew up in Baltimore; Gabriela grew up in Mexico. But we walked into that dorm room with the same blind spot, and it took us a while to realize we shared it.</p>
+
+  <p>Maria spent her entire K–12 education at The Bryn Mawr School in Baltimore — an all-girls school she loved, with strong academics and serious science classes. And in thirteen years there, nobody ever said the words "venture capital." Not once. Startups weren't a thing people talked about. The career menu, as far as anyone knew, was: doctor, lawyer, maybe engineer if you were the math type. The closest thing to an exception was a short after-school finance program capped by a trip to New York to meet alumnae in finance — the single most important preview of the professional world she got in high school. It just stopped at finance. Nobody extended the line to founders, to technology, to the people who fund new companies.</p>
+
+  <p>Gabriela's path to that same dorm room ran through three countries. She grew up in Mexico, studied at a United World College in Mostar, Bosnia, was named a Rise Fellow, and was recognized back home through BBVA's "Chavos que Inspiran" program — all before arriving at Barnard to study economics, statistics, and education. She had already spent years building things that mattered: financial-fluency programs for young women, tools to support survivors of gender-based violence, research on how people relate to money. And yet the specific world of startups and venture capital — who builds companies, who funds them, how you get in the room — had never been named for her either.</p>
+
+  <p><strong>So for both of us, the discovery happened by accident, in college.</strong> We each found our way — almost didn't, actually — into Columbia's biggest entrepreneurship club, and a door opened onto an entire world: founders, funds, demo days, term sheets, people in their twenties building real companies. Our first thought was how exciting it all was. Our second thought was the one that became this organization: <em>why are we only hearing about this now?</em></p>
+
+  <p>The men around us weren't only hearing about it now. Many had known about this world since middle school — from parents, older brothers, group chats, YouTube. They walked into college already fluent. That fluency compounds: it's who applies to the club, who feels entitled to cold email a founder, who raises their hand for the internship, and eventually, who raises money. The gap was never talent. It was a head start.</p>
+
+  <div class="pull">Men have the audacity to go for things they're not qualified for. Women talk themselves out of applying. That difference is trainable — in both directions.</div>
+
+  <p>Maria's mom has a saying that became the seed of this whole organization: men have an audacity that women don't — the absurd courage to go for things they're not qualified for. The research backs her up. Women consistently apply to fewer opportunities than equally qualified men, hold themselves to a stricter standard of "ready," and are dramatically underrepresented among funded founders. In recent Y Combinator batches, fewer than a quarter of startups had even one woman on the founding team.</p>
+
+  <p>You can read that as a discouraging statistic. We read it as a curriculum.</p>
+
+  <h2>What we're <em>doing about it</em></h2>
+
+  <p>The Audacity Project teaches high school girls two things at once. The first is knowledge: what startups actually are, how venture capital works, what equity means, how fundraising happens — the vocabulary that some kids get at the dinner table and most girls never get at all. The second is the thing the name promises: audacity itself, practiced like a skill. Every session assigns a dare. Cold email a founder. Connect with a woman at a VC firm. Pitch your idea to someone who will push back. Small, real acts of boldness, repeated until they stop feeling like acts.</p>
+
+  <p>We started planning in fall 2025 and launched in January 2026 at Bryn Mawr — deliberately tiny, under ten girls, run as close mentorship rather than a lecture series. We wanted to learn what worked before we scaled anything. By the end of the semester, more than fifty students had asked about joining.</p>
+
+  <p>That told us what we needed to know.</p>
+
+  <h2>Where this <em>goes next</em></h2>
+
+  <p>This fall, the program becomes the real thing: a full eight-session curriculum at Bryn Mawr covering startups, venture capital, fundraising, and building — ending in a pitch day judged by women who actually do this work. From there: more all-girls schools in Baltimore, investors and sponsors behind the program, and the capstone we're fundraising toward — an all-expenses-paid New York trip where girls walk into real VC firms and female-founded startups and meet women who were once exactly where they're sitting.</p>
+
+  <p>Because the whole point is this: none of it should happen by accident. Not the way it did for us.</p>
+
+  <div class="story-cta">
+    <p class="cta-head">Be part of the next chapter.</p>
+    <p>Whether you're a student, a school, or someone who writes checks and remembers being sixteen.</p>
+    <a class="btn" href="index.html#apply">Get involved</a>
+  </div>
+</article>
+
+<footer>
+  <p>The Audacity Project · Founded by <a href="https://www.linkedin.com/in/maria-showalter-16a905240/" target="_blank" rel="noopener noreferrer">Maria Showalter</a> &amp; <a href="https://www.linkedin.com/in/gabrielasarahimartinezrodriguez/" target="_blank" rel="noopener noreferrer">Gabriela Martinez</a></p>
+  <p style="margin-top:0.4rem"><a href="mailto:hello@theaudacityproject.org">hello@theaudacityproject.org</a></p>
+</footer>
+
+</body>
+</html>
