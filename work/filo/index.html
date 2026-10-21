@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Filo — case study — Maria Showalter</title>
+<meta name="description" content="Filo is a campus map of places ranked by people you trust: comparison-based rankings, taste twins and privacy enforced in the database. An honest look at what is built and what isn't."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../case-study.css"/>
+<style>
+  /* Explainers drawn in Filo's own tokens: paper ground, ink, one red thread, sticker shadows. */
+  .filo { --paper: #fafaf8; --surface: #fff; --ink: #0a0a0a; --soft: rgba(10, 10, 10, 0.6); --line: rgba(10, 10, 10, 0.18); --thread: #d8423a;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 28px; margin-top: 32px; color: var(--ink); }
+  .filo h3 { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; letter-spacing: -0.01em; line-height: 1.1; }
+  .filo h3 em { font-weight: 400; color: var(--thread); }
+  .filo .sub { margin-top: 6px; font-size: 13.5px; color: var(--soft); max-width: 60ch; }
+  .filo-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 22px; align-items: start; }
+  .rank-list { list-style: none; display: grid; gap: 6px; }
+  .rank-list li { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 10px; padding: 9px 12px; background: var(--surface); border: 1.5px solid var(--ink); border-radius: 6px; box-shadow: 2px 2px 0 var(--ink); font-size: 14px; transition: opacity 0.2s, transform 0.2s; }
+  .rank-list li .r { font-family: var(--mono); font-size: 11px; color: var(--soft); }
+  .rank-list li.out { opacity: 0.32; box-shadow: none; }
+  .rank-list li.mid { border-color: var(--thread); box-shadow: 2px 2px 0 var(--thread); }
+  .rank-list li.new { border-color: var(--thread); background: #fff4f2; }
+  .rank-list li .tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--thread); }
+  .compare { background: var(--surface); border: 1.5px solid var(--ink); border-radius: 8px; box-shadow: 2px 2px 0 var(--ink); padding: 18px; }
+  .compare .q { font-family: var(--serif); font-size: 1.25rem; line-height: 1.3; }
+  .compare .q b { font-weight: 600; }
+  .compare .q i { color: var(--thread); }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .btns button, .filo .reset { font: 500 13px var(--sans); padding: 10px 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: 2px 2px 0 var(--ink); transition: transform 0.08s, box-shadow 0.08s; }
+  .btns button:active, .filo .reset:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
+  .btns button.primary { background: var(--ink); color: #fff; }
+  .btns button:disabled { opacity: 0.35; cursor: default; }
+  .meter { margin-top: 14px; font-family: var(--mono); font-size: 11.5px; color: var(--soft); line-height: 1.6; }
+  .meter strong { color: var(--ink); font-weight: 500; }
+  .filo .reset { margin-top: 12px; font-size: 12px; padding: 6px 12px; }
+  .twins-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .twins-lists h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft); margin-bottom: 8px; font-weight: 500; }
+  .twins-lists .rank-list li { grid-template-columns: 22px 1fr auto; }
+  .move { display: inline-flex; gap: 2px; }
+  .move button { width: 26px; height: 26px; border: 1px solid var(--line); background: var(--paper); border-radius: 4px; cursor: pointer; font-size: 12px; color: var(--ink); }
+  .move button:hover { border-color: var(--ink); }
+  .move button:disabled { opacity: 0.3; cursor: default; }
+  .score { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--line); }
+  .score .pct { font-family: var(--serif); font-weight: 600; font-size: 3rem; line-height: 1; color: var(--thread); }
+  .score .work { font-family: var(--mono); font-size: 11.5px; color: var(--soft); line-height: 1.6; }
+  .explainer-label { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 10.5px; color: var(--soft); }
+  @media (max-width: 860px) { .filo-grid, .twins-lists { grid-template-columns: 1fr; } .filo { padding: 20px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="cs-nav" aria-label="Site">
+  <a class="home" href="../../index.html">Maria Showalter</a>
+  <div class="links">
+    <a href="#ranking">Ranking</a>
+    <a href="#system">System</a>
+    <a href="#ml">Search model</a>
+    <a class="primary" href="../frameflow/">FrameFlow →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · mobile product · 2026</span>
+  <h1 class="cs-title">Places worth going, from people you <em>trust</em>.</h1>
+  <p class="cs-lede">Filo is a map of a single campus where every pin belongs to a person you know. Instead of anonymous stars, places are ranked by comparison — is this better or worse than somewhere you've been? — and the people whose rankings line up with yours become your taste twins.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Founder · product, design and engineering</dd></div>
+    <div><dt>Stack</dt><dd>React Native / Expo SDK 54 · Supabase (Postgres, RLS, RPCs) · Mapbox · Google Places · Next.js</dd></div>
+    <div><dt>Status</dt><dd>Prototype; iOS build in progress. Not released — no users or traction are claimed here.</dd></div>
+    <div><dt>Source</dt><dd><a href="https://github.com/Mariaareadne1/Filo">Filo</a> · <a href="https://github.com/Mariaareadne1/filo-recommendation-engine">recommendation engine</a></dd></div>
+  </dl>
+  <p class="note" style="margin-left:0">There are no screenshots of the mobile app on this page. Every screen depends on a live Supabase project, and the only way to fill one with demo content writes fake accounts into a real database — so rather than stage that, the interactive pieces below run the app's own ranking and matching code, ported line for line, and are labelled as explainers. The <a href="../../blog-filo.html">story of how Filo started</a> is on the blog.</p>
+</header>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Premise</span><h2 id="s1">A screenshot of a friend's list beats a five-star average.</h2></header>
+  <div class="prose">
+    <p>Review platforms answer “is this place good?” for an imaginary average person. The question students actually ask each other is narrower: <em>would you like it?</em> — and the best answer usually comes from a friend whose taste you already know. Filo is built around that, with three deliberate refusals written into its design rules: no public star ratings or numeric scores, no sponsored or algorithmic feed, and a feed that stops instead of scrolling forever.</p>
+    <p>The core loop in the code today:</p>
+    <ul>
+      <li><strong>Pin</strong> a place found through Google Places, as <em>visited</em> or <em>want to go</em>, with a photo and a one-line impression.</li>
+      <li><strong>Rank</strong> visited places by comparing them with ones you've already ranked.</li>
+      <li><strong>Collect</strong> pins into boards you can reorder and share.</li>
+      <li><strong>Follow</strong> classmates — sign-in is limited to campus email domains, and private accounts require approval.</li>
+      <li><strong>See</strong> a map of your pins, your friends' or the whole campus, a feed of friends' pins, and your taste twins.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cs-section" id="ranking" aria-labelledby="s2">
+  <header><span class="num">02 — Interaction</span><h2 id="s2">Ranking by comparison, in about log₂(n) taps.</h2></header>
+  <div class="prose">
+    <p>Scores invite inflation: everything good becomes a 9. A ranking forces a choice, but dragging a new café into a list of thirty is tedious. Filo asks one question at a time about the place in the middle of the candidates that are left, and each answer halves them — a binary search the user performs with their taste. Try it: you are adding a new café to a list of seven.</p>
+  </div>
+  <div class="filo" id="rank-demo">
+    <h3>Where does <em>Tamsin</em> go?</h3>
+    <p class="sub">Your cafés, best first. Answer as you like — the list narrows to the places still in contention.</p>
+    <div class="filo-grid">
+      <ol class="rank-list" id="rank-list" aria-label="Your ranked cafés"></ol>
+      <div>
+        <div class="compare" aria-live="polite">
+          <p class="q" id="rank-q"></p>
+          <div class="btns" id="rank-btns">
+            <button type="button" class="primary" data-a="better">Better</button>
+            <button type="button" data-a="worse">Worse</button>
+            <button type="button" data-a="tie">About the same</button>
+            <button type="button" data-a="skip">Haven't been</button>
+          </div>
+          <p class="meter" id="rank-meter"></p>
+        </div>
+        <button type="button" class="reset" id="rank-reset">Start over</button>
+      </div>
+    </div>
+    <span class="explainer-label">Explainer: fictional cafés · the step function is <span class="mono">nextCompareState</span> from <span class="mono">lib/rankInsert.ts</span>, unchanged</span>
+  </div>
+  <div class="prose wide">
+    <p>“Haven't been” is treated as <em>worse</em> so an unknown comparison can't stall the search, and “about the same” gives the new item the shown place’s position, just ahead of it. The function is pure and covered by unit tests; on the server, the result is written by a single database function (below) so a half-finished re-rank can never leave two places sharing a position.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s3">
+  <header><span class="num">03 — Taste twins</span><h2 id="s3">Agreement measured on what you've both ranked.</h2></header>
+  <div class="prose">
+    <p>Two people are compared only on the places both have ranked, and only when they share at least three. Each person's ranks are first re-ranked within that overlap — so a friend whose list is twice as long isn't penalised for it — and then scored with Spearman's rank correlation, clamped so that disagreement reads as 0 % rather than a negative number.</p>
+  </div>
+  <div class="filo" id="twin-demo">
+    <h3>How alike is your <em>taste</em>?</h3>
+    <p class="sub">Five places you've both ranked. Reorder your friend's list and watch the match change.</p>
+    <div class="filo-grid">
+      <div class="twins-lists">
+        <div><h4>You</h4><ol class="rank-list" id="twin-me" aria-label="Your ranking"></ol></div>
+        <div><h4>Your friend</h4><ol class="rank-list" id="twin-friend" aria-label="Friend's ranking — use the arrows to reorder"></ol></div>
+      </div>
+      <div>
+        <div class="score" aria-live="polite">
+          <span class="pct" id="twin-pct">–</span>
+          <span class="work" id="twin-work"></span>
+        </div>
+        <p class="meter">ρ = 1 − 6·Σd² / (n·(n²−1)), with d the difference in rank within the overlap.</p>
+        <button type="button" class="reset" id="twin-shuffle">Shuffle friend</button>
+      </div>
+    </div>
+    <span class="explainer-label">Explainer: fictional places · scoring is <span class="mono">spearmanPct</span> from <span class="mono">lib/tasteMatch.ts</span>, unchanged</span>
+  </div>
+</section>
+
+<section class="cs-section" id="system" aria-labelledby="s4">
+  <header><span class="num">04 — System</span><h2 id="s4">Privacy lives in the database, not the client.</h2></header>
+  <div class="prose">
+    <p>The mobile client talks directly to Supabase, so the rules about who can see what cannot live in the app — anyone can call the API with their own session. Row-level security policies, triggers and a handful of database functions carry those rules. Places come from Google Places; the map is Mapbox; a separate Next.js app holds shared-board pages and an early dashboard for venues.</p>
+  </div>
+  <figure class="diagram">
+    <svg viewBox="0 0 1040 400" role="img" aria-labelledby="fdia-t fdia-d">
+      <title id="fdia-t">Filo architecture</title>
+      <desc id="fdia-d">The Expo React Native client calls Google Places for search, renders Mapbox maps, and reads and writes Supabase through PostgREST, RPCs and Storage, with the session encrypted on device. Supabase Postgres enforces row-level security and triggers and runs RPCs for the feed, discover counts, re-ranking and follow notifications. A Next.js web app serves shared boards and a business dashboard through privacy-filtered RPCs. The recommendation engine is a separate project with its own data and API and is not connected to the app.</desc>
+      <defs><marker id="far" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#0044ff"/></marker></defs>
+      <style>.b{fill:#fff;stroke:#0a0a0a;stroke-opacity:.25}.hb{fill:#eef2ff;stroke:#0044ff}.x{fill:#fafafa;stroke:#999;stroke-dasharray:4 4}.t{font-size:13.5px;fill:#0a0a0a;font-weight:500}.s{font-size:11px;fill:#6f6f6f}.l{stroke:#0044ff;stroke-width:1.3;fill:none;marker-end:url(#far)}.lt{font-size:10px;fill:#0044ff}.zone{font-size:9.5px;letter-spacing:.14em;fill:#6f6f6f}.no{stroke:#a24b12;stroke-width:1.3;stroke-dasharray:4 4;fill:none}</style>
+      <text class="zone" x="20" y="22">DEVICE</text><text class="zone" x="400" y="22">SUPABASE</text><text class="zone" x="760" y="22">SERVICES</text>
+      <rect class="b" x="20" y="36" width="300" height="150" rx="5"/>
+      <text class="t" x="34" y="60">Expo app (React Native, iOS-first)</text>
+      <text class="s" x="34" y="80">Expo Router tabs: discover · map · pin · feed · you</text>
+      <text class="s" x="34" y="98">pin flow → search → confirm → board</text>
+      <text class="s" x="34" y="116">rank flow: nextCompareState (binary search)</text>
+      <text class="s" x="34" y="134">taste twins: spearmanPct, computed on device</text>
+      <text class="s" x="34" y="152">session: AES key in Keychain, ciphertext in storage</text>
+      <text class="s" x="34" y="170">background photo uploads</text>
+      <rect class="hb" x="400" y="36" width="300" height="190" rx="5"/>
+      <text class="t" x="414" y="60">Postgres with row-level security</text>
+      <text class="s" x="414" y="80">users · places · pins · rankings · boards · follows</text>
+      <text class="s" x="414" y="98">trigger: follow status set from target's privacy</text>
+      <text class="s" x="414" y="116">trigger: sign-up limited to campus email domains</text>
+      <text class="s" x="414" y="140">RPC rerank_place — atomic, advisory-locked</text>
+      <text class="s" x="414" y="158">RPC get_friends_feed — capped at 50</text>
+      <text class="s" x="414" y="176">RPC get_discover_counts — five lenses, one call</text>
+      <text class="s" x="414" y="194">RPC notify_new_follow — Expo push via pg_net</text>
+      <text class="s" x="414" y="212">Storage: pin-photos, avatars (own folder only)</text>
+      <rect class="b" x="760" y="36" width="260" height="58" rx="5"/><text class="t" x="774" y="60">Google Places</text><text class="s" x="774" y="78">autocomplete + details, NYC bounds</text>
+      <rect class="b" x="760" y="110" width="260" height="58" rx="5"/><text class="t" x="774" y="134">Mapbox</text><text class="s" x="774" y="152">one marker per pin · mine / friends / campus</text>
+      <rect class="b" x="400" y="262" width="300" height="74" rx="5"/><text class="t" x="414" y="286">Next.js web app</text><text class="s" x="414" y="304">shared board pages · venue dashboard</text><text class="s" x="414" y="320">analytics: public data only, k ≥ 3</text>
+      <rect class="x" x="760" y="262" width="260" height="96" rx="5"/><text class="t" x="774" y="286">Recommendation engine</text><text class="s" x="774" y="304">fine-tuned MiniLM · FastAPI /recommend</text><text class="s" x="774" y="322">own 500-venue synthetic catalogue</text><text class="s" x="774" y="342" style="fill:#a24b12">not connected to the app</text>
+      <path class="l" d="M250 186 V244 H742 V66 H758"/>
+      <path class="l" d="M210 186 V250 H732 V140 H758"/><text class="lt" x="300" y="266">map tiles · search</text>
+      <path class="l" d="M320 110 H398"/><text class="lt" x="330" y="104">PostgREST · RPC</text>
+      <path class="l" d="M550 260 V228"/>
+      <path class="no" d="M700 310 H758"/>
+    </svg>
+    <figcaption>Drawn from <span class="mono">app/</span>, <span class="mono">lib/</span>, <span class="mono">hooks/</span>, <span class="mono">supabase/migrations/</span> and <span class="mono">web/</span> at commit <span class="mono">766dcc2</span>.</figcaption>
+  </figure>
+</section>
+
+<section class="cs-section" aria-labelledby="s5">
+  <header><span class="num">05 — Decisions</span><h2 id="s5">Three things the database does so the app doesn't have to.</h2></header>
+
+  <article class="decision">
+    <div>
+      <h3>Re-ranking is one transaction.</h3>
+      <p>Inserting a place at position 3 shifts everything below it. Done from the client, that was a series of separate updates that could interleave or fail halfway. It now happens inside one database function: an advisory lock serialises re-ranks for the same person and category, and the uniqueness of (person, category, position) is checked only at commit, so positions may collide mid-transaction while rows shift.</p>
+      <p class="where">supabase/migrations/…_data_layer.sql</p>
+    </div>
+<pre><code>PERFORM pg_advisory_xact_lock(hashtext(v_user::text), hashtext(p_category));
+SET CONSTRAINTS rankings_user_id_category_position_key DEFERRED;
+DELETE FROM rankings
+  WHERE user_id = v_user AND place_id = p_place_id AND category = p_category;
+<span class="c">-- close the gap, clamp the target, open a slot, insert</span>
+WITH ordered AS (
+  SELECT id, row_number() OVER (ORDER BY position) AS rn
+  FROM rankings WHERE user_id = v_user AND category = p_category)
+UPDATE rankings r SET position = o.rn FROM ordered o WHERE r.id = o.id;
+SELECT count(*) INTO v_count FROM rankings
+  WHERE user_id = v_user AND category = p_category;
+v_pos := greatest(1, least(v_pos, v_count + 1));
+UPDATE rankings SET position = position + 1
+  WHERE user_id = v_user AND category = p_category AND position &gt;= v_pos;
+INSERT INTO rankings (user_id, place_id, category, position)
+  VALUES (v_user, p_place_id, p_category, v_pos);</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>The server decides whether a follow is pending.</h3>
+      <p>A private account's pins are visible only to followers it has accepted. If the app wrote the follow's status, any client could write “active”. Instead the app omits it, and a trigger sets it from the target's privacy setting; another trigger makes the two people in a follow immutable. Pin visibility policies then trust only that server-set status.</p>
+      <p class="where">supabase/migrations/…_security_hardening.sql</p>
+    </div>
+<pre><code>CREATE OR REPLACE FUNCTION set_follow_status() RETURNS trigger
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+  SELECT CASE WHEN u.is_private THEN 'pending' ELSE 'active' END
+    INTO NEW.status FROM users u WHERE u.id = NEW.following_id;
+  IF NEW.status IS NULL THEN
+    RAISE EXCEPTION 'Target user does not exist';
+  END IF;
+  RETURN NEW;
+END; $$;</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>Venue analytics that can't single anyone out.</h3>
+      <p>The venue dashboard shows a business how students found it. Every number is computed only from public pins by public accounts, and any count below three people is suppressed — a k-anonymity floor — so a small venue can't infer an individual's behaviour. A review pass on this code caught a <code>LEFT JOIN</code> whose filter would have leaked private rows; the fix moved the privacy predicate into an inner join, with a comment explaining why.</p>
+      <p class="where">supabase/migrations/…_phase2_discovery_rpcs.sql</p>
+    </div>
+<pre><code>select 'board'::text, board_reach.board_name, board_reach.reach::integer
+from board_reach
+where board_reach.reach &gt;= k_anon      <span class="c">-- suppress small cells</span>
+union all
+select 'follow'::text, 'word-of-mouth chain'::text, chain.n
+from ( select count(distinct recent.user_id)::integer as n
+       from pins recent join users ru on ru.id = recent.user_id
+       where recent.place_id = p_place_id and recent.is_public = true
+         and ru.is_private = false
+         and recent.created_at &gt;= now() - interval '7 days'
+         and exists ( … a followed friend pinned it earlier … ) ) chain
+where chain.n &gt;= k_anon;</code></pre>
+  </article>
+</section>
+
+<section class="cs-section" id="ml" aria-labelledby="s6">
+  <header><span class="num">06 — Search model</span><h2 id="s6">A natural-language search experiment, kept honest.</h2></header>
+  <div class="prose">
+    <p>Alongside the app I built a small semantic search service: type “late night ramen after drinks” and get venues back by meaning rather than keywords. It fine-tunes the <span class="mono">all-MiniLM-L6-v2</span> sentence embedding model with a contrastive loss, using hard negatives drawn from categories people easily confuse (a wine bar versus a cocktail bar), serves cosine-similarity search from FastAPI, and has a small React front end.</p>
+    <p>Three things matter for reading it fairly:</p>
+    <ul>
+      <li><strong>The data is synthetic.</strong> The pipeline tries a live venue API and falls back to generated venues; the catalogue committed to the repository is 500 of 500 generated, with templated descriptions — some reuse real New York venue names at random locations, so its results are not real recommendations.</li>
+      <li><strong>The evaluation is at ceiling.</strong> On its own metric (MRR@5, where a hit means the right category) the base model already scores 1.0 on the validation queries, as does the fine-tuned one, and the validation queries are also used in training. Re-measured for this page; it shows the pipeline works end to end, not that fine-tuning helps.</li>
+      <li><strong>It is not connected to Filo.</strong> The app's “saved by people like you” lens is a SQL query over overlapping rankings, not this model.</li>
+    </ul>
+    <p>Run locally for this page: the health check responds, and the ramen query returns three ramen shops from the synthetic catalogue (top similarity 0.587); an out-of-range request is rejected by validation.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s7">
+  <header><span class="num">07 — Evidence</span><h2 id="s7">What is tested, and what is still open.</h2></header>
+  <div class="table-wrap">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Unit tests (Jest)</td><td class="ok">26 / 26</td><td>Comparison ranking, taste matching, streaks — pure logic</td></tr>
+        <tr><td>TypeScript · lint (app and web)</td><td class="ok">pass</td><td>0 errors; a few hook-dependency warnings</td></tr>
+        <tr><td>Search service smoke test</td><td class="ok">pass</td><td>Health, a query and request validation, against the synthetic catalogue</td></tr>
+        <tr><td>Database policies and functions</td><td class="no">not run here</td><td>No local Supabase stack; read from the migrations only</td></tr>
+        <tr><td>App on a device or simulator</td><td class="no">not run here</td><td>Needs live Supabase, Mapbox and Google credentials</td></tr>
+        <tr><td>Component, end-to-end or policy tests</td><td class="no">none yet</td><td>The clearest next investment</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose wide">
+    <p><strong>Open work, found while preparing this page:</strong> discovery lenses show counts but don't yet open their lists; places ranked from the map in some categories are filed under keys the rankings screen doesn't read; the public board page needs an anonymous-read path; and some table policies are broader than the app needs. Each is a contained fix and is tracked privately. Billing for the venue dashboard is a static pricing page — there is no checkout yet.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s8">
+  <header><span class="num">08 — Reflection</span><h2 id="s8">What I'd tell myself at the start.</h2></header>
+  <div class="prose">
+    <p><strong>Put the rules where they can't be bypassed.</strong> Moving ranking and follow privacy into the database removed whole classes of client bugs, and made the app simpler.</p>
+    <p><strong>Test the boundaries, not just the logic.</strong> The pure functions are well tested; the places this audit found problems are the joins between layers — two category vocabularies, policies versus queries. Policy tests against a local database are next.</p>
+    <p><strong>Be strict about what a demo proves.</strong> The search model is a good learning project and a working pipeline. It isn't evidence of better recommendations until it's evaluated on real places with held-out queries.</p>
+  </div>
+</section>
+</main>
+
+<footer class="cs-footer">
+  <a href="https://github.com/Mariaareadne1/Filo">Filo on GitHub ↗</a>
+  <a href="https://github.com/Mariaareadne1/filo-recommendation-engine">Recommendation engine ↗</a>
+  <a href="../frameflow/">← FrameFlow case study</a>
+  <a href="../../index.html">Home</a>
+</footer>
+
+<script>
+/* Ported verbatim (types removed) from Filo lib/rankInsert.ts and lib/tasteMatch.ts. */
+function nextCompareState(lo, hi, answer) {
+  const mid = Math.floor((lo + hi) / 2);
+  if (answer === 'tie') return { done: true, rank: mid + 1 };
+  let nextLo = lo;
+  let nextHi = hi;
+  if (answer === 'better') nextHi = mid;
+  else nextLo = mid + 1;
+  if (nextLo >= nextHi) return { done: true, rank: nextLo + 1 };
+  return { done: false, window: { lo: nextLo, hi: nextHi } };
+}
+function spearmanPct(pairs) {
+  const n = pairs.length;
+  if (n < 2) return 0;
+  const myAbsSorted = pairs.map((p) => p[0]).sort((a, b) => a - b);
+  const fAbsSorted = pairs.map((p) => p[1]).sort((a, b) => a - b);
+  let sumD2 = 0;
+  for (const [m, f] of pairs) {
+    const myR = myAbsSorted.indexOf(m) + 1;
+    const fR = fAbsSorted.indexOf(f) + 1;
+    const d = myR - fR;
+    sumD2 += d * d;
+  }
+  const denom = n * (n * n - 1);
+  if (denom === 0) return 0;
+  const rho = 1 - (6 * sumD2) / denom;
+  return Math.max(0, Math.min(100, Math.round(rho * 100)));
+}
+
+/* ── comparison ranking explainer ── */
+(function () {
+  const POOL = ['Hollis Coffee', 'The Linden', 'Arbor Roasters', 'Morrow Café', 'Saltbox', 'Pell & Field', 'Little Quay'];
+  const NEW = 'Tamsin';
+  const list = document.getElementById('rank-list');
+  const q = document.getElementById('rank-q');
+  const meter = document.getElementById('rank-meter');
+  const btns = document.querySelectorAll('#rank-btns button');
+  let state, taps;
+  const esc = (s) => s.replace(/&/g, '&amp;');
+  function render() {
+    list.innerHTML = '';
+    if (state.done) {
+      const items = POOL.slice();
+      items.splice(state.rank - 1, 0, NEW);
+      items.forEach((name, i) => {
+        const li = document.createElement('li');
+        if (name === NEW) li.className = 'new';
+        li.innerHTML = '<span class="r">' + (i + 1) + '</span><span>' + esc(name) + '</span>' + (name === NEW ? '<span class="tag">new</span>' : '<span></span>');
+        list.appendChild(li);
+      });
+      q.innerHTML = '<b>' + NEW + '</b> is your <i>#' + state.rank + '</i> café.';
+      btns.forEach((b) => (b.disabled = true));
+    } else {
+      const { lo, hi } = state.window;
+      const mid = Math.floor((lo + hi) / 2);
+      POOL.forEach((name, i) => {
+        const li = document.createElement('li');
+        li.className = i === mid ? 'mid' : i < lo || i >= hi ? 'out' : '';
+        li.innerHTML = '<span class="r">' + (i + 1) + '</span><span>' + esc(name) + '</span>' + (i === mid ? '<span class="tag">compare</span>' : '<span></span>');
+        list.appendChild(li);
+      });
+      q.innerHTML = 'Is <b>' + NEW + '</b> better or worse than <i>' + esc(POOL[mid]) + '</i>?';
+      btns.forEach((b) => (b.disabled = false));
+    }
+    const max = Math.ceil(Math.log2(POOL.length + 1));
+    meter.innerHTML = 'Taps so far: <strong>' + taps + '</strong> · never more than <strong>' + max + '</strong> for a list of ' + POOL.length + (state.done ? '' : ' · still in contention: <strong>' + (state.window.hi - state.window.lo) + '</strong>');
+  }
+  function reset() { state = { done: false, window: { lo: 0, hi: POOL.length } }; taps = 0; render(); }
+  btns.forEach((b) => b.addEventListener('click', () => {
+    if (state.done) return;
+    taps++;
+    state = nextCompareState(state.window.lo, state.window.hi, b.dataset.a);
+    render();
+  }));
+  document.getElementById('rank-reset').addEventListener('click', reset);
+  reset();
+})();
+
+/* ── taste twins explainer ── */
+(function () {
+  const ME = ['Saltbox', 'Hollis Coffee', 'Pell & Field', 'Morrow Café', 'Little Quay'];
+  let friend = ['Hollis Coffee', 'Saltbox', 'Pell & Field', 'Little Quay', 'Morrow Café'];
+  const meEl = document.getElementById('twin-me');
+  const frEl = document.getElementById('twin-friend');
+  const pct = document.getElementById('twin-pct');
+  const work = document.getElementById('twin-work');
+  function row(name, i, controls) {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="r">' + (i + 1) + '</span><span>' + name.replace(/&/g, '&amp;') + '</span>';
+    if (controls) {
+      const m = document.createElement('span');
+      m.className = 'move';
+      [['↑', -1, 'up'], ['↓', 1, 'down']].forEach(([label, d, word]) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label;
+        b.setAttribute('aria-label', 'Move ' + name + ' ' + word);
+        b.disabled = i + d < 0 || i + d >= friend.length;
+        b.addEventListener('click', () => {
+          const j = i + d;
+          [friend[i], friend[j]] = [friend[j], friend[i]];
+          render();
+          const again = frEl.querySelectorAll('li')[j].querySelector('button[aria-label$="' + word + '"]');
+          (again && !again.disabled ? again : frEl.querySelectorAll('li')[j].querySelector('button:not(:disabled)')).focus();
+        });
+        m.appendChild(b);
+      });
+      li.appendChild(m);
+    } else li.appendChild(document.createElement('span'));
+    return li;
+  }
+  function render() {
+    meEl.innerHTML = '';
+    frEl.innerHTML = '';
+    ME.forEach((n, i) => meEl.appendChild(row(n, i, false)));
+    friend.forEach((n, i) => frEl.appendChild(row(n, i, true)));
+    const pairs = ME.map((n, i) => [i + 1, friend.indexOf(n) + 1]);
+    const d2 = pairs.reduce((s, [a, b]) => s + (a - b) * (a - b), 0);
+    pct.textContent = spearmanPct(pairs) + '%';
+    work.textContent = 'n = ' + pairs.length + ' · Σd² = ' + d2;
+  }
+  document.getElementById('twin-shuffle').addEventListener('click', () => {
+    for (let i = friend.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [friend[i], friend[j]] = [friend[j], friend[i]]; }
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>

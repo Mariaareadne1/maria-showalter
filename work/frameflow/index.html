@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FrameFlow — case study — Maria Showalter</title>
+<meta name="description" content="FrameFlow turns a raw macOS screen recording into a composed product film: native ScreenCaptureKit capture, automatic camera Moments, one renderer for preview and export."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../case-study.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="cs-nav" aria-label="Site">
+  <a class="home" href="../../index.html">Maria Showalter</a>
+  <div class="links">
+    <a href="#system">System</a>
+    <a href="#decisions">Decisions</a>
+    <a href="#testing">Testing</a>
+    <a class="primary" href="../filo/">Next: Filo →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · macOS app · 2026</span>
+  <h1 class="cs-title">From screen capture to a <em>considered</em> product film.</h1>
+  <p class="cs-lede">FrameFlow records a Mac screen through a native capture helper, finds the moments that matter from where you clicked and paused, and re-frames the recording around them — then exports exactly what the preview showed, as MP4 or GIF.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Sole designer and engineer</dd></div>
+    <div><dt>Stack</dt><dd>Electron 40 · React 19 · TypeScript · Swift (ScreenCaptureKit) · WebCodecs</dd></div>
+    <div><dt>Status</dt><dd>Version 2.3.0 · macOS 14+ · Apple silicon build, not notarized</dd></div>
+    <div><dt>Source</dt><dd><a href="https://github.com/Mariaareadne1/FrameFlow">github.com/Mariaareadne1/FrameFlow</a> (MIT)</dd></div>
+  </dl>
+</header>
+
+<div class="film">
+  <figure>
+    <video id="hero-film" src="../media/frameflow/real-capture.mp4" poster="../media/frameflow/real-capture-poster.jpg" muted loop playsinline controls preload="metadata" width="1280" height="720"
+      aria-label="A FrameFlow export: a real screen recording of a demo dashboard, framed on an ivory backdrop, with the camera easing in as the cursor types into a form."></video>
+    <figcaption><span class="label">Real capture</span> A screen recording made through FrameFlow's ScreenCaptureKit helper (of the repository's own local demo page) and exported with the Editorial art direction. Re-encoded for the web: 1280×720, 30 fps, 18 s. The original export is <a href="https://github.com/Mariaareadne1/FrameFlow/blob/main/docs/media/sample-real-capture-demo-page.mp4">in the repo</a>.</figcaption>
+  </figure>
+</div>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Journey</span><h2 id="s1">Record, find the moments, compose, export.</h2></header>
+  <div class="prose">
+    <p>The whole product is one path, and each step exists in code today. You never edit a keyframe unless you want to: the recording arrives already framed, and everything after that is a decision about taste.</p>
+  </div>
+  <ol class="steps">
+    <li><h3>Record</h3><p>Pick a display or a window, system audio, a countdown. A floating HUD (or ⌘⇧2) stops it.</p></li>
+    <li><h3>Moments</h3><p>Clicks and pauses become camera moves, each shown as a card with a real thumbnail and an honest label — “Click at 0:08”.</p></li>
+    <li><h3>Compose</h3><p>Five art directions, four camera feels, four cursor treatments, captions and arrows, cuts on a timeline.</p></li>
+    <li><h3>Export</h3><p>MP4 from 720p to 4K at 30 or 60 fps, or a looping GIF — written to a temporary file and renamed only when complete.</p></li>
+  </ol>
+</section>
+
+<section class="cs-section" aria-labelledby="s2">
+  <header><span class="num">02 — Constraint</span><h2 id="s2">A raw recording shows everything at once.</h2></header>
+  <div class="prose">
+    <p>A full-screen capture of a 1920-pixel display, watched in a 700-pixel embed, turns the interesting part — a button, a field, a number changing — into a few dozen pixels. The usual fix is manual: scrub, keyframe a zoom, ease it, keyframe the way back out, repeat for every click. That labour is why most demos are either static or over-produced.</p>
+    <p>FrameFlow's bet is that the recording already knows where the attention is. The helper excludes the system cursor from the pixels and records the pointer separately at 60 Hz with every click, on the video's own clock. That telemetry is enough to infer the camera, and to redraw the cursor cleanly at any zoom.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s3">
+  <header><span class="num">03 — Interaction</span><h2 id="s3">A canvas-first studio built around Moments.</h2></header>
+  <div class="prose">
+    <p>The Studio keeps the film large and the controls in a dock beneath it. Moments are the unit of editing: a card per camera move, which you can rename, retime, re-aim, disable, delete or add at the playhead. Anything you touch is promoted from <em>automatic</em> to <em>manual</em>, so changing the camera feel later regenerates only the moves you haven't claimed.</p>
+  </div>
+  <div class="wide">
+    <figure>
+      <img src="../media/frameflow/after-04-studio-moments.jpg" width="1440" height="900" loading="lazy" alt="FrameFlow Studio: a framed recording on an ivory backdrop above a transport bar, a dock with Moments, Design, Camera, Cursor, Sound and Timeline, and three Moment cards labelled Click at 0:02, 0:06 and 0:08."/>
+      <figcaption><span class="label fixture">Test footage</span> Real screenshot of the running app (v2.1, from its automated screenshot suite). The recording inside it is FrameFlow's synthetic capture pattern, used so the screenshots are reproducible.</figcaption>
+    </figure>
+  </div>
+  <div class="pair wide">
+    <figure>
+      <img src="../media/frameflow/after-moment-note.jpg" width="1440" height="900" loading="lazy" alt="The Moment inspector open on Moment 02 with a Note section: caption text, top or bottom placement, an arrow toggle and an arrow-tip picker. The preview shows the caption and a coral arrow."/>
+      <figcaption><strong>2.3: Notes on a Moment.</strong> A caption and a pointer arrow, positioned in frame space so they stay put while the camera moves. <span class="label fixture">Test footage</span></figcaption>
+    </figure>
+    <figure>
+      <video src="../media/frameflow/noted-clip.mp4" poster="../media/frameflow/export-annotation.jpg" muted loop playsinline controls preload="none" width="960" height="540"
+        aria-label="Seven seconds of an exported MP4 where the camera eases in on a form and a caption reading Fill in the form appears with a coral arrow."></video>
+      <figcaption><strong>The same Note in an exported MP4</strong> — 7 seconds cut from an export made by the end-to-end suite. <span class="label fixture">Test footage</span></figcaption>
+    </figure>
+  </div>
+  <div class="strip wide" role="list" aria-label="The five art directions rendering the same frame">
+    <figure role="listitem"><img src="../media/frameflow/style-editorial.jpg" width="640" height="360" loading="lazy" alt="Editorial: ivory backdrop"/><figcaption>Editorial</figcaption></figure>
+    <figure role="listitem"><img src="../media/frameflow/style-studio.jpg" width="640" height="360" loading="lazy" alt="Studio: soft grey backdrop"/><figcaption>Studio</figcaption></figure>
+    <figure role="listitem"><img src="../media/frameflow/style-aura.jpg" width="640" height="360" loading="lazy" alt="Aura: lavender-pink gradient"/><figcaption>Aura</figcaption></figure>
+    <figure role="listitem"><img src="../media/frameflow/style-canvas.jpg" width="640" height="360" loading="lazy" alt="Canvas: textured warm backdrop"/><figcaption>Canvas</figcaption></figure>
+    <figure role="listitem"><img src="../media/frameflow/style-midnight.jpg" width="640" height="360" loading="lazy" alt="Midnight: near-black backdrop with a soft glow"/><figcaption>Midnight</figcaption></figure>
+  </div>
+  <p class="note">The five art directions on the same instant of the same export (time code 00:00:10.517 burned into the test footage), taken from MP4s produced by the test suite. Same zoom, same cursor, different room.</p>
+</section>
+
+<section class="cs-section" id="system" aria-labelledby="s4">
+  <header><span class="num">04 — System</span><h2 id="s4">Four processes, one renderer.</h2></header>
+  <div class="prose">
+    <p>The capture runs in a small Swift program, not in Electron, because ScreenCaptureKit and AVAssetWriter are native APIs and the writer must keep pace with 60 fps. It speaks JSON lines on stdout and takes <code>stop</code> on stdin. Electron's main process owns files and permissions; the renderer never touches the disk directly — 29 typed IPC channels, each handler validated and checked against the sender. Every frame anyone sees, in preview or in a file, comes from one function: <code>renderFrame</code>.</p>
+  </div>
+  <figure class="diagram">
+    <svg viewBox="0 0 1040 470" role="img" aria-labelledby="dia-title dia-desc">
+      <title id="dia-title">FrameFlow architecture</title>
+      <desc id="dia-desc">ScreenCaptureKit and mouse events feed a Swift helper that writes recording.mp4 and cursor.json. Electron main spawns the helper, reads JSON-line events, validates projects and serves media through a custom range-request protocol. The preload bridge exposes typed IPC to the React renderer. The renderer's project state feeds a shared engine, which builds a scene for renderFrame. renderFrame draws both the live preview and the frames of the MP4 and GIF exporters, whose bytes return through main into a .partial file renamed on completion.</desc>
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#0044ff"/></marker></defs>
+      <style>.b{fill:#fff;stroke:#0a0a0a;stroke-opacity:.25}.hb{fill:#eef2ff;stroke:#0044ff}.t{font-size:13.5px;fill:#0a0a0a;font-weight:500}.s{font-size:11px;fill:#6f6f6f}.l{stroke:#0044ff;stroke-width:1.3;fill:none;marker-end:url(#ar)}.lt{font-size:10px;fill:#0044ff}.zone{font-size:9.5px;letter-spacing:.14em;fill:#6f6f6f}</style>
+      <text class="zone" x="20" y="22">MACOS</text>
+      <text class="zone" x="300" y="22">ELECTRON MAIN</text>
+      <text class="zone" x="560" y="22">RENDERER (SANDBOXED)</text>
+      <rect class="b" x="20" y="36" width="230" height="58" rx="5"/><text class="t" x="34" y="60">ScreenCaptureKit + NSEvent</text><text class="s" x="34" y="78">video · audio · 60 Hz pointer · clicks</text>
+      <rect class="b" x="20" y="130" width="230" height="74" rx="5"/><text class="t" x="34" y="154">FrameFlowCapture (Swift)</text><text class="s" x="34" y="172">CursorRecorder · MovieWriter (H.264)</text><text class="s" x="34" y="188">JSON lines on stdout</text>
+      <rect class="b" x="20" y="240" width="230" height="58" rx="5"/><text class="t" x="34" y="264">Recording folder</text><text class="s" x="34" y="282">recording.mp4 · cursor.json · .frameflow</text>
+      <rect class="b" x="300" y="36" width="220" height="74" rx="5"/><text class="t" x="314" y="60">capture.ts · ipc.ts</text><text class="s" x="314" y="78">spawns helper · validated handlers</text><text class="s" x="314" y="94">trusted-sender check</text>
+      <rect class="b" x="300" y="146" width="220" height="90" rx="5"/><text class="t" x="314" y="170">projects.ts · fileHandles.ts</text><text class="s" x="314" y="188">parseProject on load + save · .vN.bak</text><text class="s" x="314" y="204">atomic writes · per-file queue</text><text class="s" x="314" y="220">ffmedia:// with Range requests</text>
+      <rect class="b" x="300" y="290" width="220" height="58" rx="5"/><text class="t" x="314" y="314">preload: window.frameflow</text><text class="s" x="314" y="332">contextBridge · 29 typed channels</text>
+      <rect class="b" x="560" y="36" width="220" height="74" rx="5"/><text class="t" x="574" y="60">Studio UI (React)</text><text class="s" x="574" y="78">Moments · Design · Camera · Cursor</text><text class="s" x="574" y="94">Sound · Timeline · Export</text>
+      <rect class="b" x="560" y="146" width="220" height="74" rx="5"/><text class="t" x="574" y="170">Project v3 + undo</text><text class="s" x="574" y="188">editorStore · autosave 700 ms</text><text class="s" x="574" y="204">→ project:save</text>
+      <rect class="b" x="560" y="256" width="220" height="74" rx="5"/><text class="t" x="574" y="280">Shared engine (pure TS)</text><text class="s" x="574" y="298">autoZoom · camera · cursor paths</text><text class="s" x="574" y="314">timeline · layout · migration</text>
+      <rect class="hb" x="820" y="196" width="200" height="74" rx="5"/><text class="t" x="834" y="222">renderFrame(t)</text><text class="s" x="834" y="240">one Canvas 2D function</text><text class="s" x="834" y="256">sized from the output's short side</text>
+      <rect class="b" x="820" y="56" width="200" height="58" rx="5"/><text class="t" x="834" y="80">Preview canvas</text><text class="s" x="834" y="98">&lt;video&gt; via ffmedia://</text>
+      <rect class="b" x="820" y="340" width="200" height="74" rx="5"/><text class="t" x="834" y="364">Exporters</text><text class="s" x="834" y="382">MP4: WebCodecs H.264 + AAC</text><text class="s" x="834" y="398">GIF: gifenc, rgb565 palettes</text>
+      <path class="l" d="M135 94 V128"/>
+      <path class="l" d="M135 204 V238"/>
+      <path class="l" d="M300 80 C270 80 270 160 252 160"/><text class="lt" x="258" y="122">spawn · stop</text>
+      <path class="l" d="M252 178 C276 178 276 64 298 64"/>
+      <path class="l" d="M410 290 V238"/>
+      <path class="l" d="M558 318 C540 318 540 318 522 318"/>
+      <path class="l" d="M670 110 V144"/><path class="l" d="M670 220 V254"/>
+      <path class="l" d="M558 190 C540 190 540 190 522 190"/><text class="lt" x="526" y="140">save / open</text>
+      <path class="l" d="M780 292 C800 292 800 240 818 240"/><text class="lt" x="786" y="300">buildScene</text>
+      <path class="l" d="M920 196 V116"/>
+      <path class="l" d="M920 270 V338"/>
+      <path class="l" d="M820 400 C600 440 430 420 412 350"/><text class="lt" x="560" y="452">export:begin / write / finish → &lt;name&gt;.partial, renamed when complete</text>
+    </svg>
+    <figcaption>Drawn from the source at commit <span class="mono">a96eb18</span>: <span class="mono">native/macos/FrameFlowCapture.swift</span>, <span class="mono">src/main/*</span>, <span class="mono">src/preload/index.ts</span>, <span class="mono">src/shared/ipc.ts</span>, <span class="mono">src/renderer/src/engine/render.ts</span>.</figcaption>
+  </figure>
+</section>
+
+<section class="cs-section" id="decisions" aria-labelledby="s5">
+  <header><span class="num">05 — Decisions</span><h2 id="s5">Three choices that carry the product.</h2></header>
+
+  <article class="decision">
+    <div>
+      <h3>The camera is a function of time, not a simulation.</h3>
+      <p>Cursor and camera paths are baked once, at 120 Hz, into typed arrays using a critically damped smoothing step; the position at any time is a lookup. Nothing depends on the previous frame, so scrubbing, preview and export land on the same framing.</p>
+      <p>The camera follows a <em>leashed</em> target: it only moves by however far the pointer strays beyond a dead zone, so a hand settling on a button never nudges the shot. Zooms less than 0.8 s apart are chained, so the camera pans from one moment to the next instead of zooming out and back in.</p>
+      <p class="where">src/shared/engine/cursor.ts · camera.ts</p>
+    </div>
+<pre><code><span class="c">// cursor.ts — the camera target only moves past the dead zone</span>
+<span class="k">for</span> (let i = 0; i &lt; count; i++) {
+  const p = sampleRaw(samples, i * dt)!
+  const dx = p.x - tx
+  const dy = p.y - ty
+  const dist = Math.hypot(dx, dy)
+  <span class="k">if</span> (dist &gt; deadzone) {
+    const k = (dist - deadzone) / dist
+    tx += dx * k
+    ty += dy * k
+  }
+  leashed[i] = { t: i * dt, x: tx, y: ty }
+}
+<span class="k">return</span> buildSmoothPath(leashed, duration, smoothTime)</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>One renderer for preview, thumbnails, MP4 and GIF.</h3>
+      <p><code>renderFrame</code> draws the backdrop, the rounded frame, the zoom, the vector cursor and its treatment, and captions. The preview hands it a <code>&lt;video&gt;</code> element; the exporter hands it a decoded frame. A zoom is a crop of the <em>source</em> rectangle, so zoomed frames use full-resolution pixels, and every size is derived from the output's short side, so a 960-pixel preview and a 4K export are the same picture.</p>
+      <p>The exporter samples each output frame at the middle of its interval, mapped back through any cuts, encodes with WebCodecs, and streams 8 MB chunks to a <code>.partial</code> file that is renamed only on success — cancelling leaves nothing behind.</p>
+      <p class="where">src/renderer/src/engine/render.ts · media/exporter.ts</p>
+    </div>
+<pre><code><span class="c">// exporter.ts — sample each frame mid-interval, through cuts</span>
+<span class="k">export function</span> framePlan(segments, fps) {
+  const total = outputDuration(segments)
+  const count = Math.max(1, Math.round(total * fps))
+  <span class="k">return</span> { count, sourceTimeAt: (i) =&gt;
+    outputToSource(segments, (i + 0.5) / fps) }
+}
+
+<span class="c">// render.ts — the zoom is a crop of the source</span>
+const cam = sceneCamera(scene, t)
+const vp = viewportOf(cam)
+<span class="k">if</span> (source) ctx.drawImage(source,
+  vp.x * scene.srcW, vp.y * scene.srcH,
+  vp.w * scene.srcW, vp.h * scene.srcH,
+  v.x, v.y, v.w, v.h)</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>A redesign that cannot change old exports.</h3>
+      <p>Version 2 rebuilt the editor and the camera model, which put every project saved by 0.1 at risk. One parser, <code>parseProject</code>, now runs on every load <em>and before every save</em>, so a renderer bug can't persist a corrupt file. Old projects keep their stored zooms verbatim and are pinned to the 0.1 tuning; the first save keeps a <code>.v1.bak</code>; writes are atomic and queued per file so an autosave can't race a rename.</p>
+      <p>Project files are treated as untrusted: a path inside one is only opened if it is a real media file in the library, beside the project, or the project is in Recents.</p>
+      <p class="where">src/shared/projectModel.ts · src/main/projects.ts</p>
+    </div>
+<pre><code><span class="c">// projects.ts</span>
+<span class="k">export async function</span> saveProject(path, project, thumbnail) {
+  const p = assertProject(path)
+  <span class="c">// Validate before writing so a renderer bug can never
+  // persist a corrupt project.</span>
+  const clean = parseProject(project)
+  <span class="k">if</span> (!isReadable(clean.media.path))
+    <span class="k">throw new</span> Error('Project references a file that was not granted.')
+  <span class="k">await</span> withFile(p, () =&gt; writeProjectFile(p, clean, …))
+}
+
+<span class="c">// Writes to the same file are serialized.</span>
+<span class="k">function</span> withFile(p, fn) {
+  const next = (fileQueues.get(p) ?? Promise.resolve()).then(fn, fn)
+  fileQueues.set(p, next.catch(() =&gt; undefined))
+  <span class="k">return</span> next
+}</code></pre>
+  </article>
+</section>
+
+<section class="cs-section" aria-labelledby="s6">
+  <header><span class="num">06 — Evolution</span><h2 id="s6">From a dark utility to a light studio.</h2></header>
+  <div class="prose">
+    <p>Version 0.1 worked, but it read as a settings panel with a video attached: three named styles, an Off / Subtle / Dynamic zoom switch, and a separate “Advanced Editor” for anything finer. Version 2 made the film the page and replaced the zoom switch with Moments you can see and edit. The comparison below uses real screenshots of both versions, kept in the repository.</p>
+  </div>
+  <div class="pair wide">
+    <figure>
+      <img src="../media/frameflow/before-quick-demo.jpg" width="1440" height="900" loading="lazy" alt="FrameFlow 0.1: a dark interface with a recording on a blue gradient, and a right sidebar of Style, Automatic zoom, Background and Format controls."/>
+      <figcaption><strong>0.1</strong> — Quick Demo screen. <span class="label fixture">Test footage</span></figcaption>
+    </figure>
+    <figure>
+      <img src="../media/frameflow/after-06-design.jpg" width="1440" height="900" loading="lazy" alt="FrameFlow 2: the Design drawer with five live style cards rendering the actual recording, aspect ratio options and backdrops, under a zoomed preview with a halo cursor."/>
+      <figcaption><strong>2.x</strong> — Design drawer: each style card is a live render of your recording, not a swatch. <span class="label fixture">Test footage</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="cs-section" id="testing" aria-labelledby="s7">
+  <header><span class="num">07 — Evidence</span><h2 id="s7">What is tested, and what isn't.</h2></header>
+  <div class="prose">
+    <p>Recordings are hard to test because they need permission, a screen and a moving mouse. FrameFlow's helper has a synthetic mode that renders a moving pattern, a scripted cursor and test tones through the <em>same</em> writer, and the test videos carry a burned-in time code that the suite reads back from exported frames. That makes most of the pipeline testable without a person at the machine.</p>
+  </div>
+  <div class="table-wrap">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Unit tests (Vitest)</td><td class="ok">96 / 96</td><td>Camera, cursor paths, timeline, auto-zoom, project migration, GIF timing</td></tr>
+        <tr><td>Typecheck · lint · build (incl. Swift helper)</td><td class="ok">pass</td><td></td></tr>
+        <tr><td>End-to-end (Playwright driving the Electron app)</td><td class="ok">25 pass · 3 skipped</td><td>Skipped: real capture, real system audio, screenshot generator — they need Screen Recording permission or are opt-in</td></tr>
+        <tr><td>Preview vs exported MP4 frames</td><td class="ok">2.2–4.7 / 255</td><td>Mean absolute difference at three instants; threshold 6</td></tr>
+        <tr><td>0.1 projects vs frames exported by 0.1</td><td class="ok">0.00 / 255</td><td>3 projects × 6 instants — a sampled check, not a proof</td></tr>
+        <tr><td>GIF vs MP4 frames</td><td class="ok">2.8 / 255</td><td>Three instants</td></tr>
+        <tr><td>5-minute 1920×1200 export</td><td class="ok">3.3× realtime</td><td>392 MB peak memory, on one machine (M2 Pro); machine-dependent</td></tr>
+        <tr><td>Re-export determinism</td><td class="ok">identical</td><td>A fixture export decodes to the same video MD5 as one made nine days earlier, on the same machine</td></tr>
+        <tr><td>Real ScreenCaptureKit capture</td><td class="no">not re-run</td><td>Recorded passing in the repo's verification log; the hero film above is one such capture</td></tr>
+        <tr><td>Microphone on real hardware</td><td class="no">never verified</td><td>Code exists (macOS 15+); stated as unverified in the README</td></tr>
+        <tr><td>Notarized distribution · Intel · multiple displays</td><td class="no">not done</td><td>Builds are ad-hoc signed and rejected by Gatekeeper</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Results from a fresh run on 21 October 2026 of the repository's own suites at commit <span class="mono">a96eb18</span>. No figures here come from user research; FrameFlow has not been released to users.</p>
+</section>
+
+<section class="cs-section" aria-labelledby="s8">
+  <header><span class="num">08 — Reflection</span><h2 id="s8">What I'd keep, and what's next.</h2></header>
+  <div class="prose">
+    <p><strong>Keep:</strong> making the camera a pure function of time. It is what made a shared renderer possible, and the shared renderer is what made the preview trustworthy. Most of the hard bugs were found by measuring exported frames rather than looking at them — a 0.23× camera jump between chained zooms, colour banding from a 444 palette in GIFs, window audio that was silently −91 dB.</p>
+    <p><strong>Trade-off:</strong> the cursor is always redrawn as a vector arrow. That is what lets it stay crisp at 2× zoom and wear a halo or spotlight, but it means real cursor shapes (I-beams, resize handles) are not captured yet.</p>
+    <p><strong>Next:</strong> verify the microphone path on hardware, add a webcam layer, and sign and notarize a release so it can be installed without a Gatekeeper exception.</p>
+  </div>
+</section>
+</main>
+
+<footer class="cs-footer">
+  <a href="https://github.com/Mariaareadne1/FrameFlow">Source on GitHub ↗</a>
+  <a href="../filo/">Next case study: Filo →</a>
+  <a href="../../index.html">← Home</a>
+  <span>Media: real app screenshots and exports; footage labelled</span>
+</footer>
+
+<script>
+  // Autoplay the hero film only when the reader hasn't asked for reduced motion.
+  (function () {
+    var v = document.getElementById('hero-film')
+    if (!v) return
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!reduce) { v.autoplay = true; var p = v.play(); if (p && p.catch) p.catch(function () {}) }
+  })()
+</script>
+</body>
+</html>
