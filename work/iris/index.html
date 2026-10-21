@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Iris — studies in digital tactility — Maria Showalter</title>
+<meta name="description" content="Three browser experiments that ask what makes something on a screen feel physical: a slime you can pull, a fabric you can play, and a darkroom where prints develop."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../case-study.css"/>
+<style>
+  /* Each study gets its own room; the page between them stays the site's light ground. */
+  .study { margin-top: 96px; padding: 72px 0 80px; color: #ecebf2; }
+  .study .cs-section { padding-top: 0; }
+  .study .num { color: var(--accent); }
+  .study h2, .study h3 { color: #fff; }
+  .study .prose, .study .decision p { color: rgba(236, 235, 242, 0.82); }
+  .study .prose strong { color: #fff; }
+  .study figcaption, .study .where { color: rgba(236, 235, 242, 0.6); }
+  .study figcaption strong { color: #fff; }
+  .study .decision { border-top-color: rgba(255, 255, 255, 0.12); }
+  .study pre { background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); }
+  .study a { color: var(--accent); }
+  .study .label { background: rgba(255, 255, 255, 0.1); color: #fff; }
+  .study .note { background: rgba(255, 255, 255, 0.05); border-left-color: var(--accent); color: rgba(236, 235, 242, 0.85); }
+  .study--soft { --accent: #c9a8ff; background: radial-gradient(ellipse at 50% 0%, #2a1d4d 0%, #110d1f 55%, #0a0812 100%); }
+  .study--res { --accent: #7fd6ff; background: linear-gradient(180deg, #08111f 0%, #0b1a2c 50%, #070d17 100%); }
+  .study--aft { --accent: #ff6b5a; background: radial-gradient(ellipse at 50% 20%, #3a0b08 0%, #1a0504 55%, #0d0302 100%); }
+  .study .question { margin-top: 18px; max-width: 30ch; font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.2; color: var(--accent); }
+  .study .links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 22px 0 0 144px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .study .links a { text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+  .media-pair { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: start; }
+  .media-pair img, .media-pair video, .wide-media img, .wide-media video { width: 100%; border-radius: 6px; }
+  .audio { margin-top: 14px; display: grid; gap: 6px; }
+  .audio audio { width: 100%; max-width: 420px; }
+  .lineage { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; margin-top: 28px; }
+  .lineage div { background: var(--white); padding: 16px 16px 18px; }
+  .lineage .when { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+  .lineage .what { font-family: var(--serif); font-weight: 600; font-size: 1.1rem; margin: 6px 0 4px; }
+  .lineage p { font-size: 13px; line-height: 1.55; color: var(--muted); }
+  .compare-table td:first-child { font-weight: 500; }
+  @media (max-width: 860px) {
+    .media-pair, .lineage { grid-template-columns: 1fr; }
+    .study .links { margin-left: 0; }
+    .study { padding: 56px 0 64px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="cs-nav" aria-label="Site">
+  <a class="home" href="../../index.html">Maria Showalter</a>
+  <div class="links">
+    <a href="#soft-matter">Soft Matter</a>
+    <a href="#resonance">Resonance</a>
+    <a href="#afterimage">Afterimage</a>
+    <a class="primary" href="../frameflow/">Case studies →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Series · browser experiments · 2026</span>
+  <h1 class="cs-title">Iris: studies in <em>digital tactility</em>.</h1>
+  <p class="cs-lede">Three experiments, each built around one question about what makes something on a screen feel physical. A slime you pull: what makes a material satisfying to touch? A fabric you play: what happens when motion and sound come from the same physics? A darkroom: can exposure and development be processes, not filters? Each runs in the browser and is open source.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Design and engineering</dd></div>
+    <div><dt>Stack</dt><dd>three.js · React · TypeScript · Web Audio · custom simulation (no physics or audio libraries)</dd></div>
+    <div><dt>Built</dt><dd>All three started 12 October 2026; last commits 12–13 October</dd></div>
+    <div><dt>Lineage</dt><dd>Grows out of <a href="https://github.com/Mariaareadne1/iris-cloth">Iris</a>, an adaptation of <a href="https://github.com/dmitrykurash/holocloth">Holocloth</a> by Dmitry Kurash (MIT)</dd></div>
+  </dl>
+</header>
+
+<section class="cs-section" aria-labelledby="s0">
+  <header><span class="num">00 — Lineage</span><h2 id="s0">Three investigations from one cloth.</h2></header>
+  <div class="prose">
+    <p>The series starts from someone else's work. Holocloth is a holographic cloth simulation by Dmitry Kurash, MIT-licensed. Iris adapted it in July. The three experiments followed in October and took different parts of it with them, which their repositories credit file by file.</p>
+  </div>
+  <div class="lineage" role="list">
+    <div role="listitem"><span class="when">22 Jul 2026</span><p class="what">Holocloth</p><p>Dmitry Kurash. Verlet cloth, holographic foil shader, film grain. MIT.</p></div>
+    <div role="listitem"><span class="when">24–30 Jul 2026</span><p class="what">Iris</p><p>Adapted and rebranded; the license keeps both copyright lines.</p></div>
+    <div role="listitem"><span class="when">12–13 Oct 2026</span><p class="what">Resonance · Afterimage</p><p>Reuse the Verlet cloth structure (a fabric; a sheet of photographic paper) and the grain pass.</p></div>
+    <div role="listitem"><span class="when">12–13 Oct 2026</span><p class="what">Soft Matter</p><p>A new soft-body solver; keeps the grain pass and an adapted foil shader.</p></div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SOFT MATTER ─────────────────────────── -->
+<div class="study study--soft" id="soft-matter">
+<section class="cs-section" aria-labelledby="sm">
+  <header><span class="num">01 — Soft Matter</span><h2 id="sm">A slime you can pull, poke and squish.</h2></header>
+  <p class="question" style="margin-left:144px">When does a digital material become satisfying to touch?</p>
+  <div class="prose wide">
+    <p>One holographic blob in a dark studio. Drag it and a glob stretches out on a neck; let go and it <strong>sags</strong> back rather than snapping. Poke it and the dent springs out. Press and hold to squish. Five materials (jelly, chrome, putty, clear, butter) change how it moves, how it catches light and how it sounds.</p>
+    <p>The body is a soft-body simulation written from scratch: 2,562 particles on a sphere, solved 120 times a second. A <strong>volume constraint</strong> means a dent bulges out somewhere else. Its return to shape is split in two: a springy part that wobbles, and a slow part that creeps. The springy part is capped, so a small poke bounces back but a big stretch sags home slowly.</p>
+  </div>
+  <div class="media-pair wide">
+    <figure>
+      <img src="../media/iris/soft-matter-pull.jpg" width="1280" height="800" loading="lazy" alt="A violet holographic blob with a glob pulled out on a neck toward the upper right; the stretched skin shows brighter, paler iridescence than the body."/>
+      <figcaption><strong>Mid-pull.</strong> The stretched skin shifts hue and brightens. The shader reads strain at every vertex, so colour follows deformation. <span class="label">Captured from the live site</span></figcaption>
+    </figure>
+    <div>
+      <figure>
+        <img src="../media/iris/soft-matter-rest.jpg" width="1280" height="800" loading="lazy" alt="The same blob at rest, round, in a dark studio with the material picker below."/>
+        <figcaption><strong>At rest</strong>, for comparison. <span class="label">Captured from the live site</span></figcaption>
+      </figure>
+      <div class="audio">
+        <figcaption><strong>Its sound</strong>: rendered offline from the jelly material. Every sound is shaped noise, never an oscillator.</figcaption>
+        <audio controls preload="none" src="../media/iris/soft-matter-jelly.m4a" aria-label="Soft Matter jelly sound, 13 seconds"></audio>
+      </div>
+    </div>
+  </div>
+
+  <article class="decision">
+    <div>
+      <h3>A skin that accepts a stretch, then forgets it.</h3>
+      <p>Every 120th of a second, after the solver runs, each edge's rest length moves toward its current length and also drifts back toward its original length. While you hold a stretch, the skin takes the new length as its own, so there's no stored spring energy to fling it back. Once you let go, the rest lengths creep home and the glob sags. Both rates are frame-rate independent, and the rest length can't go below 0.4× or above 4× the original.</p>
+      <p class="where">src/sim/softBody.ts</p>
+    </div>
+<pre><code><span class="k">private</span> flowEdges() {
+  const p = this.positions, E = this.edges, L = this.edgeRest, L0 = this.edgeRest0;
+  const flow = 1 - Math.exp(-this.coeffs.edgeFlow * SUBSTEP);
+  const back = 1 - Math.exp(-this.coeffs.edgeRecover * SUBSTEP);
+  <span class="k">for</span> (let e = 0; e &lt; L.length; e++) {
+    const a = E[e * 2] * 3, b = E[e * 2 + 1] * 3;
+    const d = Math.hypot(p[b] - p[a], p[b + 1] - p[a + 1], p[b + 2] - p[a + 2]);
+    let l = L[e];
+    l += (d - l) * flow;
+    l += (L0[e] - l) * back;
+    L[e] = Math.min(L0[e] * 4, Math.max(L0[e] * 0.4, l));
+  }
+}</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>A crackle whose density is the pull.</h3>
+      <p>The "sticky" sound is made of grains: noise bursts 3–11 ms long, band-passed between 1.6 and 5.2 kHz. The number of grains per second follows how fast the body is being pulled. Leftover fractions carry from one frame to the next, so density stays right at any frame rate. Each grain starts at a random moment within its frame, so the crackle never lines up with the frame clock. It keeps crackling briefly after release, as the surface comes unstuck.</p>
+      <p class="where">src/audio/SlimeAudio.ts</p>
+    </div>
+    <div>
+      <figure>
+        <video src="../media/iris/soft-matter.mp4" poster="../media/iris/soft-matter-poster.jpg" muted loop playsinline controls preload="none" width="960" height="540"
+          aria-label="Butter Squishy: the blob's rest shape morphs into a stick of butter with a printed wrapper."></video>
+        <figcaption><strong>A variant: Butter Squishy.</strong> The same solver with its rest shape changed to a stick of butter. <span class="label">Local recording</span></figcaption>
+      </figure>
+    </div>
+  </article>
+  <p class="links"><a href="https://mariaareadne1.github.io/iris-soft-matter/">Open Soft Matter ↗</a><a href="https://github.com/Mariaareadne1/iris-soft-matter">Source ↗</a></p>
+</section>
+</div>
+
+<!-- ─────────────────────────── RESONANCE ─────────────────────────── -->
+<div class="study study--res" id="resonance">
+<section class="cs-section" aria-labelledby="res">
+  <header><span class="num">02 — Resonance</span><h2 id="res">A fabric you play as an instrument.</h2></header>
+  <p class="question" style="margin-left:144px">What happens when motion and sound come from the same physics?</p>
+  <div class="prose wide">
+    <p>One sheet of holographic fabric. Tap it and it plucks a note: left to right climbs a scale, higher up sounds brighter. Press and pull for a sustained tone that bends up as the fabric stretches. Sweep fast and your finger slips across the fabric and catches again, playing harp-like runs. There are three voices (Glass, Silk, Ether), and eleven keys play the same notes.</p>
+    <p>The coupling is literal. A cloth simulation handles big, slow shape changes. A wave equation running 240 times a second carries the ripples you see; every ripple on screen is simulation state. A <strong>background drone</strong> follows the measured energy of those ripples, not a list of notes played. Each voice's ring time sets both how long the ripples last and how long the sound decays, "so eyes and ears agree".</p>
+  </div>
+  <div class="wide-media wide">
+    <figure>
+      <video src="../media/iris/resonance.mp4" poster="../media/iris/resonance-poster.jpg" loop playsinline controls preload="none" width="960" height="540"
+        aria-label="Resonance demo with sound: the fabric is plucked and stretched, rippling with violet light while notes and a bending sustained tone play."></video>
+      <figcaption><strong>With sound</strong>: plucks, a stretch and a release. The audio is what the instrument actually generated during the recording. <span class="label">Local recording · press play</span></figcaption>
+    </figure>
+  </div>
+  <div class="media-pair wide">
+    <figure>
+      <img src="../media/iris/resonance-stretch.jpg" width="1200" height="750" loading="lazy" alt="The fabric pulled toward the viewer into a deep fold with iridescent highlights."/>
+      <figcaption><strong>Stretching</strong> bends the pitch up, smoothly capped at two semitones. <span class="label">Repository screenshot</span></figcaption>
+    </figure>
+    <div class="audio">
+      <figcaption><strong>The Glass voice</strong>, a showcase phrase rendered offline from the instrument's own code.</figcaption>
+      <audio controls preload="none" src="../media/iris/resonance-glass.m4a" aria-label="Resonance Glass preset phrase, 13 seconds"></audio>
+    </div>
+  </div>
+
+  <article class="decision">
+    <div>
+      <h3>The ripples are a damped wave equation.</h3>
+      <p>Strikes go into a height field on the cloth grid, which evolves under a damped wave equation, with a restoring force so it rings like a drumhead. The edges are fixed, so waves reflect back. Wave speed is clamped so the simulation stays stable. The damping comes straight from the voice's ring time, and the field's total energy is what drives the background drone.</p>
+      <p class="where">src/physics/waveField.ts</p>
+    </div>
+<pre><code><span class="c">// c² in cells²/s²; clamp for stability (c·dt &lt; 0.7 cells)</span>
+const c = Math.min(params.speed, 0.7 / WAVE_SUBSTEP);
+const c2 = c * c;
+const w0 = 2 * Math.PI * Math.max(0, params.restoreHz);
+const k = w0 * w0;
+const damp = Math.exp(-WAVE_SUBSTEP / Math.max(0.05, params.decay));
+<span class="k">for</span> (let y = 1; y &lt; rows - 1; y++) {
+  const row = y * cols;
+  <span class="k">for</span> (let x = 1; x &lt; cols - 1; x++) {
+    const i = row + x;
+    const lap = h[i - 1] + h[i + 1] + h[i - cols] + h[i + cols] - 4 * h[i];
+    const acc = c2 * lap - k * h[i];
+    let v = h[i] + (h[i] - hp[i]) * damp + acc * dt2;</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>Gesture-to-music mapping as small, tested functions.</h3>
+      <p>Position picks a scale step, height picks brightness, stretch bends pitch. The bend curve flattens out at two semitones, so pulling harder stays musical. When your finger rests on the boundary between two notes, a small hysteresis margin stops it flickering between them. These mappings are pure functions, covered by the unit tests.</p>
+      <p class="where">src/music/mapping.ts</p>
+    </div>
+<pre><code><span class="c">/** Positive strain (stretch) → upward bend in semitones, smoothly capped. */</span>
+<span class="k">export function</span> bendForStrain(strain: number): number {
+  const s = clamp(strain, 0, 10);
+  <span class="k">return</span> MAX_BEND_SEMITONES * Math.tanh(s * 9);
+}</code></pre>
+  </article>
+  <p class="links"><a href="https://iris-resonance.vercel.app">Open Resonance ↗</a><a href="https://github.com/Mariaareadne1/Iris-Resonance">Source ↗</a></p>
+</section>
+</div>
+
+<!-- ─────────────────────────── AFTERIMAGE ─────────────────────────── -->
+<div class="study study--aft" id="afterimage">
+<section class="cs-section" aria-labelledby="aft">
+  <header><span class="num">03 — Afterimage</span><h2 id="aft">A darkroom where prints develop.</h2></header>
+  <p class="question" style="margin-left:144px">Can exposure and development be processes instead of filters?</p>
+  <div class="prose wide">
+    <p>Pick a negative, focus the enlarger, set the time and contrast grade, and expose. While it exposes you can hold back light from part of the print (dodging), and afterwards add more to another part (burning). Slide the sheet into the developer and the image comes up under red safelight, <strong>shadows first</strong>. Then stop, fix, and hang it to dry. A finished print downloads at 2,400 px.</p>
+    <p>Each stage models a real process. The negative is stored as <strong>density</strong>. Exposure builds up as a map of seconds. The paper responds along a characteristic curve whose contrast grades all pivot on the same mid-tone, as multigrade filters do. Development is a function of time with a slight delay that agitating the tray evens out.</p>
+  </div>
+  <div class="wide-media wide">
+    <figure>
+      <video src="../media/iris/afterimage.mp4" poster="../media/iris/afterimage-poster.jpg" muted loop playsinline controls preload="none" width="960" height="540"
+        aria-label="Under red safelight, a blank sheet in the developer tray gradually reveals a landscape print, darkest areas first."></video>
+      <figcaption><strong>Development.</strong> The blank sheet fills in, shadows first. 14 seconds from the repository's automated demo (silent). Photograph: Ansel Adams, <em>The Tetons and the Snake River</em> (1942), public domain. <span class="label">Local recording</span></figcaption>
+    </figure>
+  </div>
+  <div class="media-pair wide">
+    <figure>
+      <img src="../media/iris/afterimage-04-dodging-during-exposure.jpg" width="1200" height="750" loading="lazy" alt="The enlarger exposing a print, a countdown showing 3.7 seconds, and a dodging disc on a wire held over the projected image."/>
+      <figcaption><strong>Dodging during exposure</strong>: the disc holds back light from part of the print. <span class="label">Repository screenshot</span></figcaption>
+    </figure>
+    <figure>
+      <img src="../media/iris/afterimage-10-finished-print.jpg" width="1200" height="750" loading="lazy" alt="The finished print hanging on a drying line, captioned 6.5 s exposure, grade 2½, dodged 6.4 s, with download buttons."/>
+      <figcaption><strong>The finished print</strong> keeps a record of how it was made. <span class="label">Repository screenshot</span></figcaption>
+    </figure>
+  </div>
+
+  <article class="decision">
+    <div>
+      <h3>One development formula, shared by CPU and GPU.</h3>
+      <p>Each point in the tray develops along the same exponential curve, starting after a delay that depends on when the developer reached it and on how unevenly it covered the sheet. Agitating the tray only ever evens development out; it never undoes it. The shader that draws the tray and the code that renders the downloaded print use the <strong>same formula</strong>, with constants inserted from the same objects. A unit test checks the shader contains those constants. So a print pulled out early looks the same on screen and in the file.</p>
+      <p class="where">src/photography/development.ts</p>
+    </div>
+<pre><code><span class="k">export function</span> developedFraction(clock: number, onsetBase: number, uneven: number, evenness: number): number {
+  const onset = onsetBase + uneven * (1 - evenness);
+  const p = Math.max(0, clock - onset);
+  <span class="k">return</span> 1 - Math.exp(-p / DEVELOPER.tau);
+}
+
+<span class="k">export const</span> DEVELOP_GLSL = <span class="c">/* glsl */</span> `
+float developedFraction(float clock, float onsetBase, float uneven, float evenness) {
+  float onset = onsetBase + uneven * (1.0 - evenness);
+  float p = max(0.0, clock - onset);
+  return 1.0 - exp(-p / ${DEVELOPER.tau.toFixed(4)});
+}`;</code></pre>
+  </article>
+
+  <article class="decision">
+    <div>
+      <h3>Dodging and burning edit a map of time.</h3>
+      <p>The enlarger settings lock when exposure starts. That means every point's exposure is just the light coming through the negative there, multiplied by the seconds it received. Dodging and burning only edit a coarse map of those seconds: dodging subtracts, burning adds, and nothing goes below zero. Every stroke is recorded and replayed to build the full-resolution file. The end-to-end test checks the downloaded print itself: its size, its tonal range, its similarity to the source photo, and proof that it went through the paper model.</p>
+      <p class="where">src/photography/exposureField.ts · tests/e2e/journey.spec.ts</p>
+    </div>
+  </article>
+  <p class="links"><a href="https://mariaareadne1.github.io/Iris-Afterimage/">Open Afterimage ↗</a><a href="https://github.com/Mariaareadne1/Iris-Afterimage">Source ↗</a></p>
+</section>
+</div>
+
+<section class="cs-section" aria-labelledby="s4">
+  <header><span class="num">04 — Evidence</span><h2 id="s4">What is tested.</h2></header>
+  <div class="table-wrap">
+    <table class="evidence compare-table">
+      <thead><tr><th>Experiment</th><th>Unit tests</th><th>End-to-end</th><th>Deploy</th></tr></thead>
+      <tbody>
+        <tr><td>Soft Matter</td><td class="ok">37 / 37</td><td>22 tests; pass in CI</td><td>GitHub Pages, tests gate the deploy</td></tr>
+        <tr><td>Resonance</td><td class="ok">52 / 52</td><td>19 tests; not re-run here</td><td>Vercel; no CI yet, so deploys aren't gated on tests</td></tr>
+        <tr><td>Afterimage</td><td class="ok">43 / 43</td><td>31 tests, including checks on the exported print's pixels; not re-run here</td><td>GitHub Pages, type check and tests gate the deploy</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Unit tests re-run on 21 October 2026. All three live sites respond. No user research is claimed; these are experiments, not products.</p>
+</section>
+
+<section class="cs-section" aria-labelledby="s5">
+  <header><span class="num">05 — Credits</span><h2 id="s5">Whose work this builds on.</h2></header>
+  <div class="prose">
+    <p><strong>Holocloth</strong> by Dmitry Kurash (MIT) is the origin of the cloth simulation, the holographic foil shader and the film-grain pass. Resonance and Afterimage keep its Verlet cloth structure, and every repository's licence keeps his copyright line. Resonance lists the adapted files in a third-party notices file. The grain pass uses a widely shared "hash without sine" pattern, which came in through Holocloth.</p>
+    <p>Soft Matter's solver draws on published methods: XPBD (Macklin et al.), shape matching (Müller et al.) and PN triangles (Vlachos et al.). Afterimage's negatives are public-domain photographs, credited in the repository.</p>
+  </div>
+</section>
+</main>
+
+<footer class="cs-footer">
+  <a href="../frameflow/">FrameFlow case study →</a>
+  <a href="../filo/">Filo case study →</a>
+  <a href="../../index.html">← Home</a>
+  <span>Media labelled by source</span>
+</footer>
+</body>
+</html>
