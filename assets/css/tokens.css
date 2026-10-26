@@ -1,0 +1,51 @@
+/* Design tokens — provisional (see DESIGN-DECISIONS.md §3). Change values here only. */
+@font-face { font-family: 'Fraunces Local'; src: url('/Fraunces-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+:root {
+  /* Paper and ink */
+  --paper: #F6F6F2;
+  --paper-2: #EDF0F4;
+  --mat: #FBFBF8;
+  --ink: #161A22;
+  --text: #313942;
+  --meta: #5F6977;          /* 5.14:1 on paper, 4.87:1 on paper-2 */
+  --rule: #D7DCE3;
+  --rule-strong: #161A22;
+
+  /* Signature — used for links, active labels, numerals, the italic surname. Never as a fill. */
+  --cobalt: #2348C7;        /* 6.87:1 on paper */
+  --cobalt-wash: rgba(35, 72, 199, 0.07);
+
+  /* Media environments (per project, not site themes) */
+  --stage-dark: #0C1022;    /* Iris */
+  --stage-audio: #0B0E14;   /* Orbit */
+  --on-dark: #E8EBF0;
+  --on-dark-meta: #9BA3B8;  /* 7.48:1 on stage-dark */
+
+  /* Type */
+  --serif: 'Fraunces', 'Fraunces Local', Georgia, serif;
+  --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --step--1: 13px;
+  --step-0: 16px;
+  --step-1: clamp(18px, 1.3vw, 20px);
+  --step-2: clamp(21px, 1.7vw, 25px);
+  --step-3: clamp(28px, 3vw, 44px);
+  --step-4: clamp(40px, 5.4vw, 84px);
+  --step-5: clamp(62px, 12.4vw, 196px);
+  --measure: 66ch;
+
+  /* Space and grid */
+  --gutter: clamp(18px, 4.2vw, 64px);
+  --col-gap: clamp(14px, 1.6vw, 24px);
+  --section: clamp(64px, 9vw, 136px);
+  --max: 1520px;
+
+  /* Motion — short and responsive only */
+  --t-fast: 140ms;
+  --t-med: 220ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 0ms; --t-med: 0ms; }
+}

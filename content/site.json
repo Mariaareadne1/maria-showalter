@@ -1,0 +1,152 @@
+{
+  "_readme": "Single source for project, writing, photo and 'currently' content. Edit here, then run `npm run content` to rewrite the marked regions in the HTML pages. Only verified facts: every claim below is traceable to a repo README, a case study on this site, or the pre-redesign homepage copy.",
+
+  "person": {
+    "name": "Maria Showalter",
+    "fullName": "Maria Carla Ariadne Showalter",
+    "role": "Design engineer · creative technologist",
+    "line": "I build interactive software that behaves like material — springs you can tune, cloth you can play, prints that develop — and the tools that turn it into something people can use.",
+    "study": "Computer Science, Barnard College of Columbia University · Hellenic Studies minor · Class of 2028",
+    "email": "m.showalter@columbia.edu",
+    "links": [
+      { "label": "GitHub", "href": "https://github.com/Mariaareadne1", "text": "Mariaareadne1" },
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/maria-showalter-16a905240/", "text": "maria-showalter" },
+      { "label": "YouTube", "href": "https://www.youtube.com/@Mariaareadne1", "text": "@Mariaareadne1" }
+    ]
+  },
+
+  "projects": [
+    {
+      "id": "frameflow",
+      "name": "FrameFlow",
+      "kind": "product",
+      "statement": "Turns a raw macOS screen recording into a composed product film: clicks and pauses become editable camera Moments, and one renderer drives preview, MP4 and GIF.",
+      "medium": "macOS app · Electron · React · Swift (ScreenCaptureKit) · WebCodecs",
+      "role": "Sole designer and engineer",
+      "status": "v2.3.0 · macOS 14+ · not notarized",
+      "links": { "case": "/work/frameflow/", "source": "https://github.com/Mariaareadne1/FrameFlow" },
+      "media": { "type": "video", "src": "/work/media/frameflow/real-capture.mp4", "poster": "/work/media/frameflow/real-capture-poster.jpg", "still": "/work/media/frameflow/after-04-studio-moments.jpg", "alt": "FrameFlow studio: a recorded demo page on the canvas with its camera Moments on the timeline" },
+      "accent": "#2348C7"
+    },
+    {
+      "id": "hinge",
+      "name": "Hinge",
+      "kind": "product",
+      "statement": "Tune hover, press and drag by handling a component and shaping its spring, then export a React component that moves exactly the way it did on the stage.",
+      "medium": "Web app · React · TypeScript · closed-form spring solver · code generation",
+      "role": "Design and engineering",
+      "status": "Live · MIT",
+      "links": { "live": "https://mariaareadne1.github.io/hinge/", "source": "https://github.com/Mariaareadne1/hinge" },
+      "media": { "type": "image", "src": "/assets/media/projects/hinge-drag-1600.jpg", "small": "/assets/media/projects/hinge-drag-800.jpg", "w": 1600, "h": 1000, "alt": "Hinge editor: a card on the stage beside its drag-and-release spring curve", "note": "Capture from before Hinge's current redesign" },
+      "accent": "#E8622C"
+    },
+    {
+      "id": "iris",
+      "name": "Iris",
+      "kind": "experiment",
+      "statement": "Three browser studies in digital tactility: a slime you pull, a fabric you play as an instrument, and a darkroom where prints develop under your hand.",
+      "medium": "Series · three.js · TypeScript · Web Audio · custom simulation",
+      "role": "Design and engineering · builds on Holocloth by Dmitry Kurash (MIT)",
+      "status": "Three live experiments",
+      "links": { "case": "/work/iris/", "live": "https://mariaareadne1.github.io/iris-soft-matter/" },
+      "media": { "type": "video", "src": "/work/media/iris/resonance.mp4", "poster": "/work/media/iris/resonance-poster.jpg", "still": "/work/media/iris/resonance-poster.jpg", "alt": "Iris Resonance: a translucent violet membrane rippling on a dark blue ground" },
+      "accent": "#6A4BD8"
+    },
+    {
+      "id": "edition",
+      "name": "Edition",
+      "kind": "product",
+      "statement": "A photograph becomes a two-ink print: editable halftone plates set at their own angles, overprinted on paper and deliberately out of register, exported at full resolution.",
+      "medium": "Web app · TypeScript · image processing · Web Workers",
+      "role": "Design and engineering",
+      "status": "Live · runs entirely in the browser · MIT",
+      "links": { "live": "https://mariaareadne1.github.io/edition/", "source": "https://github.com/Mariaareadne1/edition" },
+      "media": { "type": "image", "src": "/assets/media/projects/edition-loupe-1600.jpg", "small": "/assets/media/projects/edition-loupe-800.jpg", "w": 1600, "h": 1000, "alt": "Edition loupe view: cobalt and coral halftone dots overprinting on paper", "note": "Capture from before Edition's current redesign" },
+      "accent": "#D9573F"
+    },
+    {
+      "id": "orbit",
+      "name": "Orbit",
+      "kind": "product",
+      "statement": "Choreograph sounds around a listener on a top-down stage. Positions drive real HRTF panning, and the arrangement renders to a WAV that pans the way playback did.",
+      "medium": "Web app · Web Audio (PannerNode, OfflineAudioContext) · TypeScript",
+      "role": "Design and engineering",
+      "status": "Live · headphones · MIT",
+      "links": { "live": "https://mariaareadne1.github.io/orbit/", "source": "https://github.com/Mariaareadne1/orbit" },
+      "media": { "type": "image", "src": "/assets/media/projects/orbit-figure-eight-1600.jpg", "small": "/assets/media/projects/orbit-figure-eight-800.jpg", "w": 1600, "h": 1000, "alt": "Orbit soundstage: three voices around a listener, one following a drawn figure-eight", "note": "Capture from before Orbit's current redesign" },
+      "accent": "#9FB4FF"
+    },
+    {
+      "id": "filo",
+      "name": "Filo",
+      "kind": "product",
+      "statement": "A campus map of places ranked by people you trust: rank by comparison in about log₂(n) taps, find your taste twins, with privacy enforced in the database.",
+      "medium": "Mobile app (prototype) · React Native / Expo · Supabase (Postgres, RLS) · Mapbox",
+      "role": "Founder · product, design and engineering",
+      "status": "Prototype · not released",
+      "links": { "case": "/work/filo/", "source": "https://github.com/Mariaareadne1/Filo" },
+      "media": { "type": "diagram", "alt": "Diagram: a new place is compared against the midpoint of a ranked list, halving the list each tap" },
+      "accent": "#1F7A5A"
+    }
+  ],
+
+  "otherWork": [
+    { "name": "TONUS", "kind": "experiment", "statement": "Polyphonic web synthesizer: FM, AM, additive and subtractive synthesis crossfaded in real time, with a chord generator, scope and recorder.", "medium": "Web Audio · JavaScript, zero dependencies", "links": { "live": "https://mariaareadne1.github.io/webaudio-synth/" } },
+    { "name": "Global Plastics Recycling Dashboard", "kind": "professional", "statement": "AI automation pipeline that keeps a recycling-facility dashboard current from press releases and live feeds; presented at ACC's 2025 Geneva conference.", "medium": "Python · n8n · Excel · American Chemistry Council, summer 2025", "links": { "live": "https://plasticscircularity.org/our-progress/" } },
+    { "name": "Filo recommendation engine", "kind": "experiment", "statement": "Semantic search over a synthetic NYC venue catalogue with a MiniLM model fine-tuned by contrastive loss; not connected to the app.", "medium": "PyTorch · Sentence Transformers · FastAPI · React", "links": { "source": "https://github.com/Mariaareadne1/filo-recommendation-engine" } },
+    { "name": "REINFORCE from scratch", "kind": "experiment", "statement": "A two-joint arm learns to reach with a policy-gradient loop written by hand — no RL libraries — with a browser visualiser of training.", "medium": "PyTorch · reinforcement learning", "links": { "source": "https://github.com/Mariaareadne1/rl-reacher", "writing": "/blog-cartpole.html" } },
+    { "name": "Inverted pendulum PID", "kind": "experiment", "statement": "Cart-pole physics and a PID controller written from scratch, with a dashboard for tuning Kp, Ki and Kd while it runs.", "medium": "Python · control systems", "links": { "source": "https://github.com/Mariaareadne1/inverted-pendulum-pid", "writing": "/blog-pid.html" } },
+    { "name": "Stencil", "kind": "professional", "statement": "Team hackathon project, 1st place at the NYU EEG Hackathon: a handle becomes a full brand identity, assets and a printable guide.", "medium": "Next.js · FastAPI · Supabase · OpenAI", "links": { "source": "https://github.com/LKRamen/eeg-hackathon" } },
+    { "name": "Sheet Music to Strudel", "kind": "experiment", "statement": "Sheet music, MusicXML and MIDI to live-coded Strudel patterns through a staged pipeline with validation.", "medium": "React · Vite · Claude API", "links": { "source": "https://github.com/Mariaareadne1/sheet-music-to-strudel" } },
+    { "name": "SafeScan", "kind": "professional", "statement": "Team of four: QR and URL scanner combining Google Safe Browsing with an 11-rule heuristic engine for typosquatting and phishing.", "medium": "Flutter · Dart", "links": { "source": "https://github.com/Umme-R/safe_scan_flutter" } }
+  ],
+
+  "playground": [
+    { "name": "Soft Matter", "verb": "Pull", "line": "A slime you can pull, poke and squish — a skin that accepts a stretch, then forgets it.", "status": "Iris · live", "href": "https://mariaareadne1.github.io/iris-soft-matter/", "still": "/work/media/iris/soft-matter-pull.jpg", "alt": "Soft Matter: a butter-yellow block stretched by a pointer", "tone": "violet" },
+    { "name": "Resonance", "verb": "Pluck", "line": "A fabric you play as an instrument; the ripples are a damped wave equation and the sound comes from the same physics.", "status": "Iris · live", "href": "https://iris-resonance.vercel.app", "still": "/work/media/iris/resonance-stretch.jpg", "alt": "Resonance: a violet membrane stretched into a ridge", "tone": "blue" },
+    { "name": "Afterimage", "verb": "Expose", "line": "A darkroom where prints develop; dodging and burning edit a map of exposure time.", "status": "Iris · live", "href": "https://mariaareadne1.github.io/Iris-Afterimage/", "still": "/work/media/iris/afterimage-04-dodging-during-exposure.jpg", "alt": "Afterimage: a print developing under red safelight while being dodged", "tone": "red" },
+    { "name": "TONUS", "verb": "Play", "line": "A polyphonic synthesizer you play from the keyboard; four synthesis methods crossfaded live.", "status": "Live", "href": "https://mariaareadne1.github.io/webaudio-synth/", "still": null, "alt": "", "tone": "ink" },
+    { "name": "DJ deck", "verb": "Mix", "line": "Two decks, filters and an equal-power crossfader, on this site.", "status": "On the homepage", "href": "/#deck", "still": null, "alt": "", "tone": "ink" }
+  ],
+
+  "currently": [
+    { "label": "Studying", "text": "Computer Science at Barnard College of Columbia University, with a Hellenic Studies minor." },
+    { "label": "Building", "text": "Filo, a place-ranking app, from prototype toward an iOS build." },
+    { "label": "Co-founding", "text": "The Audacity Project, a startups-and-VC programme for high-school girls.", "href": "/audacity/" },
+    { "label": "Organising", "text": "Algoraves at Columbia — live-coded music performed from projected code." },
+    { "label": "Committee", "text": "Operating Committee, Almaworks Accelerator." }
+  ],
+
+  "writing": [
+    { "title": "On code, creativity, and languages", "date": "May 2026", "topic": "Essay", "href": "/blog-creativity.html", "dek": "Greek, French, Mandarin, Spanish, violin since five — and then code, which turned out to be another language." },
+    { "title": "What it took to get a pole to stop falling", "date": "May 2026", "topic": "Reinforcement learning", "href": "/blog-cartpole.html", "dek": "Three failed training runs and one implementation detail about variance." },
+    { "title": "Three terms that control everything", "date": "May 2026", "topic": "Control systems", "href": "/blog-pid.html", "dek": "Building a PID controller from scratch, and finding feedback loops everywhere." },
+    { "title": "I built a social discovery app from my dorm room", "date": "2026", "topic": "Product", "href": "/blog-filo.html", "dek": "From Echo Link to Numi to Loci to a working React Native app." },
+    { "title": "From the Chaconne to Web Audio", "date": "May 2026", "topic": "Sound", "href": "https://github.com/Mariaareadne1/webaudio-synth/blob/main/BLOG_POST.md", "dek": "Building a synth that does its own music theory.", "external": true },
+    { "title": "Algorave & workshop: bringing live coding to campus", "date": "Spring 2026", "topic": "Live coding", "href": "https://coolkidaedy.github.io/blogfinalcompsound/", "dek": "Columbia's first Algorave; five people from the crowd tried live coding.", "external": true },
+    { "title": "What happens when you let a grid compose your music", "date": "Spring 2026", "topic": "Generative music", "href": "https://github.com/Mariaareadne1/cellular-automata/blob/main/blog.html", "dek": "Three rules, and music no one wrote.", "external": true }
+  ],
+
+  "photos": [
+    { "id": "000000010015", "alt": "Liliha Bakery's roadside sign in Honolulu, a man in the crosswalk beneath it", "film": "bw", "orient": "landscape" },
+    { "id": "000000010026", "alt": "A figure sitting in a chair against a bright curtained window", "film": "bw", "orient": "landscape" },
+    { "id": "img_0422", "alt": "Sun setting behind a headland across the water, Oahu", "film": "colour", "orient": "landscape" },
+    { "id": "000000010020", "alt": "Two friends leaning on a car in a parking lot", "film": "bw", "orient": "landscape" },
+    { "id": "img_0386", "alt": "Students on the steps of Low Library, Columbia University", "film": "colour", "orient": "landscape" },
+    { "id": "000000010024", "alt": "Friends sparring in a garden under a tree", "film": "bw", "orient": "landscape" },
+    { "id": "img_0387", "alt": "A person crouching under a porch, petting two corgis", "film": "colour", "orient": "landscape" },
+    { "id": "img_0383", "alt": "Looking down a New York avenue lined with brick apartment buildings", "film": "colour", "orient": "landscape" },
+    { "id": "img_0426", "alt": "Waves breaking over dark volcanic rocks in a cove, Oahu", "film": "colour", "orient": "landscape" },
+    { "id": "000000010005", "alt": "An open-sided tour bus parked under palm trees", "film": "bw", "orient": "landscape" },
+    { "id": "img_0394", "alt": "A faint rainbow over a green field and low trees", "film": "colour", "orient": "landscape" },
+    { "id": "img_0396-2", "alt": "Columns and carved cornice of a library facade with a green lamp post", "film": "colour", "orient": "landscape" },
+    { "id": "img_0427", "alt": "A beach below a steep green headland, Oahu", "film": "colour", "orient": "landscape" },
+    { "id": "img_0435", "alt": "A wide beach with a small island offshore, Oahu", "film": "colour", "orient": "landscape" }
+  ],
+
+  "process": [
+    { "id": "img_9084_bw", "alt": "A strip of film negative on a scanner, a street visible in the frame" },
+    { "id": "img_f8d2fad1_bw", "alt": "The internals of a film camera, opened up on a table" },
+    { "id": "img_5bfd1833_bw", "alt": "A film holder with negatives, held up to light" }
+  ]
+}

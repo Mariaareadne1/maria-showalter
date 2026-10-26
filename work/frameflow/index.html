@@ -4,16 +4,32 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FrameFlow — case study — Maria Showalter</title>
+<link rel="canonical" href="https://mariashowalter.com/work/frameflow/"/>
 <meta name="description" content="FrameFlow turns a raw macOS screen recording into a composed product film: native ScreenCaptureKit capture, automatic camera Moments, one renderer for preview and export."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
+<link rel="stylesheet" href="/assets/css/tokens.css"/>
+<link rel="stylesheet" href="/assets/css/base.css"/>
+<link rel="stylesheet" href="/assets/css/nav.css"/>
 <link rel="stylesheet" href="../case-study.css"/>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<nav class="cs-nav" aria-label="Site">
-  <a class="home" href="../../index.html">Maria Showalter</a>
+<!-- region:nav current=work -->
+<header class="mast"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li><li><a class="contact" href="mailto:m.showalter@columbia.edu">Contact</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/">Home</a></li><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta">Write to <a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<nav class="cs-nav" aria-label="Case study sections">
   <div class="links">
     <a href="#system">System</a>
     <a href="#decisions">Decisions</a>
@@ -273,9 +289,18 @@ const vp = viewportOf(cam)
   <a href="https://github.com/Mariaareadne1/FrameFlow">Source on GitHub ↗</a>
   <a href="../filo/">Next case study: Filo →</a>
   <a href="../iris/">Iris series →</a>
-  <a href="../../index.html">← Home</a>
+  <a href="/">← Home</a>
   <span>Media: real app screenshots and exports; footage labelled</span>
 </footer>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap grid">
+<p class="say">Say hello — <a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+<nav aria-label="Footer"><ul><li><a href="/">Home</a></li><li><a href="/work/">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<div class="else"><ul><li><a href="https://github.com/Mariaareadne1">GitHub ↗</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn ↗</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube ↗</a></li></ul></div>
+<p class="small meta"><span>Maria Carla Ariadne Showalter · Computer Science, Barnard College of Columbia University · Hellenic Studies minor · Class of 2028</span><a href="#top">Back to top ↑</a></p>
+</div></footer>
+<!-- /region:foot -->
+<script src="/assets/js/site.js" defer></script>
 
 <script>
   // Autoplay the hero film only when the reader hasn't asked for reduced motion.

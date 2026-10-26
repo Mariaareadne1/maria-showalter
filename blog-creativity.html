@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>On code, creativity, and languages — Maria Showalter</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet"/>
-<style>
-@font-face{font-family:'Fraunces';src:url('Fraunces-Regular.ttf') format('truetype');font-weight:400;font-style:normal;}
-@font-face{font-family:'Fraunces';src:url('Fraunces-Italic.ttf') format('truetype');font-weight:400;font-style:italic;}
-@font-face{font-family:'Fraunces';src:url('Fraunces-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;}
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--blue:#0044ff;--black:#0a0a0a;--white:#fff;--muted:#888;--serif:'Fraunces','Georgia',serif;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;}
-body{background:var(--white);color:var(--black);font-family:var(--sans);cursor:none;}
-.cursor{position:fixed;width:9px;height:9px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.4;}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.06);}
-.nav-home{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);text-decoration:none;}
-.nav-home:hover{opacity:.6;}
-.nav-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:var(--blue);}
-.post-wrap{max-width:660px;margin:0 auto;padding:120px 24px 100px;}
-.post-tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block;}
-.post-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px;}
-.post-date{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:52px;display:block;}
-.post-body{font-family:var(--serif);font-size:1.15rem;line-height:1.85;color:#222;}
-.post-body p{margin-bottom:1.6em;}
-.post-body em{font-style:italic;color:var(--blue);}
-.post-footer{margin-top:60px;padding-top:28px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-.pf-author{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
-.pf-back{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(0,68,255,.3);padding-bottom:2px;transition:opacity .2s;}
-.pf-back:hover{opacity:.6;}
-</style>
+<meta name="description" content="Greek, French, Mandarin, Spanish, violin since five — and then code, which turned out to be another language.">
+<link rel="canonical" href="https://mariashowalter.com/blog-creativity.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="On code, creativity, and languages — Maria Showalter">
+<meta property="og:description" content="Greek, French, Mandarin, Spanish, violin since five — and then code, which turned out to be another language.">
+<meta property="og:url" content="https://mariashowalter.com/blog-creativity.html">
+<meta property="og:image" content="https://mariashowalter.com/work/media/iris/resonance-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F6F6F2">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/nav.css">
+<link rel="stylesheet" href="/assets/css/media.css">
+<link rel="stylesheet" href="/assets/css/pages.css">
 </head>
-<body>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<nav>
-  <a class="nav-home" href="index.html">Maria Showalter</a>
-  <a class="nav-back" href="index.html#writing">← back to writing</a>
-</nav>
-<div class="post-wrap">
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<!-- region:nav current=writing -->
+<header class="mast"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/" aria-current="page">Writing</a></li><li><a href="/about/">About</a></li><li><a class="contact" href="mailto:m.showalter@columbia.edu">Contact</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/">Home</a></li><li><a href="/work/">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/" aria-current="page">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta">Write to <a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<main id="main">
+<article class="post">
   <span class="post-tag">Essay · Languages · Code · Creativity</span>
   <h1 class="post-title">On code, creativity, and languages</h1>
   <span class="post-date">May 2026 · Maria Showalter</span>
@@ -55,12 +54,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 10vw;display:fle
   </div>
   <div class="post-footer">
     <span class="pf-author">Maria Carla Ariadne Showalter · Barnard College, Columbia University</span>
-    <a class="pf-back" href="index.html#writing">← all writing</a>
+    <a class="pf-back" href="/writing/">← All writing</a>
   </div>
-</div>
-<script>
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},55);});
-</script>
+</article>
+</main>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap grid">
+<p class="say">Say hello — <a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+<nav aria-label="Footer"><ul><li><a href="/">Home</a></li><li><a href="/work/">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<div class="else"><ul><li><a href="https://github.com/Mariaareadne1">GitHub ↗</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn ↗</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube ↗</a></li></ul></div>
+<p class="small meta"><span>Maria Carla Ariadne Showalter · Computer Science, Barnard College of Columbia University · Hellenic Studies minor · Class of 2028</span><a href="#top">Back to top ↑</a></p>
+</div></footer>
+<!-- /region:foot -->
+<script src="/assets/js/site.js" defer></script>
 </body>
 </html>

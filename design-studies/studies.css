@@ -1,0 +1,42 @@
+/* Shared base for the three design studies. Preview-only; not the site's CSS. */
+:root {
+  --paper: #F6F6F2;
+  --paper-2: #EDF0F4;
+  --ink: #161A22;
+  --text: #313942;
+  --meta: #5F6977;
+  --rule: #D7DCE3;
+  --cobalt: #2348C7;
+  --cobalt-ink: #1D3BA6;
+  --dark: #0E1116;
+  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --gutter: clamp(18px, 4.2vw, 64px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--text); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, video, canvas, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -48px; z-index: 200; background: var(--ink); color: var(--paper); padding: 10px 14px; font: 500 12px var(--mono); }
+.skip:focus { top: 12px; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Portrait slot: the boundary around the owner's halftone engine. */
+.portrait-slot { position: relative; overflow: hidden; background: var(--paper); }
+.portrait-slot [data-halftone-stage] { position: absolute; inset: 0; }
+.portrait-slot .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 18%; filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.portrait-slot[data-state="live"] .fallback { display: none; }
+
+/* Media: keep aspect before load; posters and stills do the work under reduced motion. */
+.media { position: relative; background: var(--paper-2); overflow: hidden; }
+.media video, .media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Study review bar — preview chrome, not part of any design. */
+.study-bar { position: fixed; z-index: 150; left: 12px; bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; max-width: calc(100vw - 24px); padding: 8px 12px; background: rgba(14, 17, 22, 0.92); color: #E8EBF0; font: 11px/1.3 var(--mono); border-radius: 4px; }
+.study-bar a, .study-bar button { color: inherit; font: inherit; background: none; border: 0; padding: 4px 6px; cursor: pointer; text-decoration: none; border-radius: 2px; }
+.study-bar [aria-current="page"], .study-bar [aria-pressed="true"] { background: #E8EBF0; color: #0E1116; }
+.study-bar .group { display: flex; gap: 2px; align-items: center; }
+.study-bar .label { opacity: 0.6; margin-right: 4px; }
+@media (max-width: 600px) { .study-bar { left: 8px; right: 8px; bottom: 8px; font-size: 10px; } .study-bar .hide-sm { display: none; } }
+@media print { .study-bar { display: none; } }

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Study C · Field Notes — Maria Showalter (design study)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="studies.css">
+<style>
+  :root { --sans: 'Schibsted Grotesk', 'Helvetica Neue', sans-serif; --col: 14px; }
+  body { font: 400 16px/1.55 var(--sans); }
+  .mono { font: 400 11.5px/1.55 var(--mono); color: var(--meta); }
+  .sheet { position: relative; padding: 0 var(--gutter); }
+  /* Column rules: the grid is drawn, and modules sit on it. */
+  .sheet::before { content: ''; position: absolute; inset: 0 var(--gutter); pointer-events: none; z-index: 0; background-image: repeating-linear-gradient(to right, transparent 0, transparent calc((100% - 11 * 20px) / 12), var(--rule) calc((100% - 11 * 20px) / 12), var(--rule) calc((100% - 11 * 20px) / 12 + 1px), transparent calc((100% - 11 * 20px) / 12 + 1px), transparent calc((100% - 11 * 20px) / 12 + 20px)); opacity: 0.55; }
+  .grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; }
+
+  .mast { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: baseline; padding: 20px var(--gutter) 16px; border-bottom: 1px solid var(--ink); }
+  .mast .who { grid-column: 1 / span 4; margin: 0; font-weight: 750; font-size: 22px; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
+  .mast .who small { display: block; margin-top: 6px; font: 400 11.5px var(--mono); color: var(--meta); letter-spacing: 0; }
+  .mast nav { grid-column: 6 / span 7; }
+  .mast ul { display: flex; justify-content: space-between; list-style: none; margin: 0; padding: 0; font-weight: 500; font-size: 15px; }
+  .mast a { color: var(--ink); text-decoration: none; padding: 6px 0; }
+  .mast a:hover, .mast a:focus-visible { color: var(--cobalt); }
+
+  /* First fold: modular composition */
+  .fold { padding: 28px var(--gutter) 56px; margin: 0 calc(-1 * var(--gutter)); row-gap: 20px; overflow: hidden; }
+  .fold > canvas { z-index: 0; }
+  .m { position: relative; z-index: 1; }
+  .m-portrait { grid-column: 1 / span 3; grid-row: 1 / span 2; }
+  .m-portrait .portrait-slot { aspect-ratio: 3 / 4; }
+  .m-lede { grid-column: 4 / span 6; grid-row: 1; align-self: end; }
+  .m-lede h1 { margin: 0; font-weight: 700; font-size: clamp(44px, 5.6vw, 92px); line-height: 0.92; letter-spacing: -0.045em; color: var(--ink); }
+  .m-lede h1 span { color: var(--cobalt); }
+  .m-lede p { margin: 18px 0 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.45; color: var(--ink); max-width: 38ch; }
+  .m-spring { grid-column: 10 / span 3; grid-row: 1 / span 2; align-self: start; border: 1px solid var(--ink); background: var(--paper); display: flex; flex-direction: column; }
+  .m-spring header { display: flex; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+  .m-spring canvas { width: 100%; height: 300px; touch-action: none; cursor: grab; }
+  .m-spring canvas:active { cursor: grabbing; }
+  .m-spring .ctl { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: center; padding: 10px; border-top: 1px solid var(--rule); }
+  .m-spring input[type=range] { width: 100%; accent-color: var(--cobalt); }
+  .m-note { grid-column: 4 / span 3; grid-row: 2; }
+  .m-feature { grid-column: 7 / span 3; grid-row: 2; }
+  .m-feature .media { aspect-ratio: 4 / 3; background: #0C1022; }
+  .m-note p, .m-feature p { margin: 8px 0 0; font-size: 14px; line-height: 1.5; }
+  .m-feature a { color: var(--cobalt); font: 500 12px var(--mono); text-decoration: none; }
+  .m-feature a:hover { text-decoration: underline; }
+  .label { font: 500 11.5px var(--mono); color: var(--cobalt); letter-spacing: 0.02em; }
+
+  /* Index that expands */
+  .sec { padding: 64px 0 0; }
+  .sec-head { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; }
+  .sec-head h2 { grid-column: 1 / span 4; margin: 0; font-weight: 700; font-size: 30px; letter-spacing: -0.03em; color: var(--ink); line-height: 1.1; }
+  .sec-head p { grid-column: 7 / span 6; margin: 0; color: var(--meta); font-size: 15px; }
+  .index { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; }
+  .index > li { border-bottom: 1px solid var(--rule); }
+  .index button.head { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: baseline; padding: 14px 0; cursor: pointer; }
+  .index button.head:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+  .index .n { grid-column: 1; } .index .t { grid-column: 2 / span 3; font-weight: 650; font-size: clamp(22px, 2.2vw, 32px); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; }
+  .index .md { grid-column: 5 / span 5; } .index .st { grid-column: 10 / span 2; } .index .ex { grid-column: 12; text-align: right; font: 500 18px var(--mono); color: var(--cobalt); transition: transform 180ms ease; }
+  .index button[aria-expanded="true"] .ex { transform: rotate(45deg); }
+  .index button:hover .t { color: var(--cobalt); }
+  .index .panel { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding: 6px 0 28px; }
+  .index .panel[hidden] { display: none; }
+  .index .panel .media { grid-column: 2 / span 7; aspect-ratio: 16 / 9; }
+  .index .panel .txt { grid-column: 9 / span 4; }
+  .index .panel p { margin: 0 0 12px; font-size: 16px; color: var(--ink); }
+  .links { display: flex; flex-wrap: wrap; gap: 4px 16px; font: 500 12px var(--mono); }
+  .links a { color: var(--cobalt); text-decoration: none; padding: 5px 0; border-bottom: 1px solid transparent; }
+  .links a:hover, .links a:focus-visible { border-bottom-color: currentColor; }
+
+  .notes { grid-column: 1 / span 6; list-style: none; margin: 0; padding: 0; }
+  .notes li { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+  .exp { grid-column: 7 / span 6; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-left: 1px solid var(--ink); }
+  .exp a { display: block; padding: 12px 14px; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); }
+  .exp a b { display: block; font-weight: 650; font-size: 18px; letter-spacing: -0.01em; }
+  .exp a:hover b, .exp a:focus-visible b { color: var(--cobalt); }
+  .film { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+  .film figure { margin: 0; } .film img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+  .film figure.w2 { grid-column: span 2; }
+  .end { grid-column: 1 / -1; padding: 72px 0 120px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; }
+  .end h2 { grid-column: 1 / span 7; margin: 0; font-weight: 700; font-size: clamp(36px, 4.6vw, 72px); letter-spacing: -0.04em; line-height: 0.95; color: var(--ink); }
+  .end h2 a { color: var(--cobalt); text-decoration: none; }
+  .end ul { grid-column: 9 / span 4; list-style: none; padding: 0; margin: 0; }
+  .end li { border-bottom: 1px solid var(--rule); padding: 8px 0; }
+  .end li a { text-decoration: none; color: var(--ink); } .end li a:hover { color: var(--cobalt); }
+
+  @media (max-width: 1024px) {
+    .m-portrait { grid-column: 1 / span 4; } .m-lede { grid-column: 5 / span 8; } .m-spring { grid-column: 9 / span 4; grid-row: 2 / span 2; }
+    .m-note { grid-column: 5 / span 4; } .m-feature { grid-column: 1 / span 8; grid-row: 3; }
+    .index .md { grid-column: 5 / span 6; } .index .st { display: none; }
+  }
+  @media (max-width: 680px) {
+    .sheet::before { display: none; }
+    .grid, .mast, .sec-head, .index button.head, .index .panel, .end { grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: 12px; }
+    .mast .who { grid-column: 1 / -1; } .mast nav { grid-column: 1 / -1; margin-top: 12px; } .mast ul { gap: 4px 14px; flex-wrap: wrap; justify-content: flex-start; font-size: 14px; }
+    .m-portrait { grid-column: 1 / span 3; grid-row: 1; } .m-note { grid-column: 4 / -1; grid-row: 1; align-self: end; }
+    .m-lede { grid-column: 1 / -1; grid-row: 2; } .m-spring { grid-column: 1 / -1; grid-row: 3; } .m-feature { grid-column: 1 / -1; grid-row: 4; }
+    .m-spring canvas { height: 200px; }
+    .sec-head h2 { grid-column: 1 / -1; } .sec-head p { grid-column: 1 / -1; margin-top: 6px; }
+    .index .n { grid-column: 1; } .index .t { grid-column: 2 / span 4; } .index .md { grid-column: 2 / span 5; grid-row: 2; margin-top: 4px; } .index .ex { grid-column: 6; grid-row: 1; }
+    .index .panel .media, .index .panel .txt { grid-column: 1 / -1; } .index .panel .txt { margin-top: 14px; }
+    .notes, .exp { grid-column: 1 / -1; } .exp { border-left: 0; margin-top: 24px; border-top: 1px solid var(--ink); }
+    .notes li { grid-template-columns: 1fr; gap: 0; }
+    .film { grid-template-columns: repeat(2, minmax(0, 1fr)); } .film figure.w2 { grid-column: 1 / -1; }
+    .end h2, .end ul { grid-column: 1 / -1; } .end h2 a { overflow-wrap: anywhere; } .end ul { margin-top: 28px; }
+  }
+</style>
+</head>
+<body data-study="c">
+<a class="skip" href="#main">Skip to content</a>
+<header class="mast">
+  <p class="who"><a href="c.html" style="color:inherit">Maria Showalter</a><small>design engineering · sound · photographic process</small></p>
+  <nav aria-label="Primary"><ul><li><a href="#work">Work</a></li><li><a href="#notes">Playground</a></li><li><a href="#film">Art</a></li><li><a href="#notes">Writing</a></li><li><a href="#end">About</a></li><li><a href="mailto:m.showalter@columbia.edu">Contact</a></li></ul></nav>
+</header>
+<main id="main" class="sheet">
+  <section class="grid fold" aria-labelledby="lede" data-atmosphere='{"anchor":{"x":0.62,"y":0.55,"r":0.6},"sources":[{"x":0.62,"y":0.6,"a":1,"s":0.4,"k":22,"p":0},{"x":0.95,"y":0.1,"a":0.5,"s":0.35,"k":26,"p":1.4}]}'>
+    <figure class="m m-portrait" style="margin:0">
+      <div class="portrait-slot" data-halftone-slot><div data-halftone-stage></div><img class="fallback" src="/photo_main.png" alt="Maria Showalter" width="912" height="558"></div>
+      <figcaption class="mono" style="margin-top:6px">fig. 0 — halftone portrait slot (static fallback)</figcaption>
+    </figure>
+    <div class="m m-lede">
+      <span class="label">Design engineer · creative technologist</span>
+      <h1 id="lede">Software that behaves like <span>material</span>.</h1>
+      <p>I build precise, playful, working interactive systems — instruments for motion, sound and print — and test that what you feel is what ships.</p>
+    </div>
+    <div class="m m-spring" aria-labelledby="spring-h">
+      <header><span class="label" id="spring-h">fig. 1 — a spring, live</span><span class="mono" id="springRead">at rest</span></header>
+      <canvas id="spring" tabindex="0" aria-label="Interactive spring. Drag the dot, or use arrow keys to displace it; it settles with the stiffness and damping below."></canvas>
+      <div class="ctl mono">
+        <label for="k">stiffness</label><input id="k" type="range" min="40" max="600" value="180"><output for="k" id="kOut">180</output>
+        <label for="c">damping</label><input id="c" type="range" min="2" max="40" value="9"><output for="c" id="cOut">9</output>
+      </div>
+    </div>
+    <div class="m m-note">
+      <span class="label">note</span>
+      <p>The spring in fig. 1 is the kind of motion <a href="https://mariaareadne1.github.io/hinge/">Hinge</a> lets you tune and export. Drag it.</p>
+    </div>
+    <figure class="m m-feature" style="margin:0">
+      <div class="media"><video data-inline muted loop playsinline preload="none" poster="/work/media/iris/afterimage-poster.jpg" aria-label="Afterimage: a print developing under safelight"><source src="/work/media/iris/afterimage.mp4" type="video/mp4"></video></div>
+      <p><span class="label">fig. 2 — Afterimage</span><br>A darkroom where prints develop. <a href="/work/iris/">Iris series →</a></p>
+    </figure>
+  </section>
+
+  <section class="grid sec" id="work" aria-labelledby="work-h">
+    <header class="sec-head"><h2 id="work-h">Index of work</h2><p>Open a row for media, the statement and links. Everything listed can be tried or read today.</p></header>
+    <ol class="index" id="index">
+      <li><button class="head" aria-expanded="true" aria-controls="p1"><span class="n mono">01</span><span class="t">FrameFlow</span><span class="md mono">macOS · Electron · Swift · WebCodecs</span><span class="st mono">case study</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p1"><div class="media"><video data-inline muted loop playsinline preload="none" poster="/work/media/frameflow/real-capture-poster.jpg" aria-label="FrameFlow reframing a real capture"><source src="/work/media/frameflow/real-capture.mp4" type="video/mp4"></video></div><div class="txt"><p>Turns a raw macOS screen recording into a composed product film; one renderer drives preview, MP4 and GIF.</p><div class="links"><a href="/work/frameflow/">Case study →</a><a href="https://github.com/Mariaareadne1/FrameFlow">GitHub ↗</a></div></div></div></li>
+      <li><button class="head" aria-expanded="false" aria-controls="p2"><span class="n mono">02</span><span class="t">Hinge</span><span class="md mono">React · TypeScript · spring solver · codegen</span><span class="st mono">live</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p2" hidden><div class="media"><img loading="lazy" src="/assets/media/projects/hinge-drag-1600.jpg" alt="Hinge editor with a card and its spring curve" width="1600" height="1000"></div><div class="txt"><p>Tune hover, press and drag by handling a component, then export a React component that moves the same way.</p><p class="mono">Capture predates Hinge's current redesign.</p><div class="links"><a href="https://mariaareadne1.github.io/hinge/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/hinge">GitHub ↗</a></div></div></div></li>
+      <li><button class="head" aria-expanded="false" aria-controls="p3"><span class="n mono">03</span><span class="t">Iris</span><span class="md mono">three.js · Web Audio · custom simulation</span><span class="st mono">series · live</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p3" hidden><div class="media" style="background:#0C1022"><img loading="lazy" src="/work/media/iris/resonance-poster.jpg" alt="Resonance: a violet membrane on dark blue"></div><div class="txt"><p>A slime you pull, a fabric you play, a darkroom where prints develop. Builds on Holocloth by Dmitry Kurash (MIT).</p><div class="links"><a href="/work/iris/">Case study →</a></div></div></div></li>
+      <li><button class="head" aria-expanded="false" aria-controls="p4"><span class="n mono">04</span><span class="t">Edition</span><span class="md mono">TypeScript · Web Workers · halftone</span><span class="st mono">live</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p4" hidden><div class="media"><img loading="lazy" src="/assets/media/projects/edition-print-1600.jpg" alt="Edition: a two-ink print of a harbour at dusk" width="1600" height="1000"></div><div class="txt"><p>A photograph becomes a two-ink print, deliberately out of register, exported at full resolution.</p><p class="mono">Capture predates Edition's current redesign.</p><div class="links"><a href="https://mariaareadne1.github.io/edition/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/edition">GitHub ↗</a></div></div></div></li>
+      <li><button class="head" aria-expanded="false" aria-controls="p5"><span class="n mono">05</span><span class="t">Orbit</span><span class="md mono">Web Audio · HRTF · offline WAV render</span><span class="st mono">live</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p5" hidden><div class="media" style="background:#0B0E14"><img loading="lazy" src="/assets/media/projects/orbit-playing-1600.jpg" alt="Orbit soundstage during playback" width="1600" height="1000"></div><div class="txt"><p>Choreograph sounds around a listener; the WAV export pans the way playback did.</p><p class="mono">Capture predates Orbit's current redesign.</p><div class="links"><a href="https://mariaareadne1.github.io/orbit/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/orbit">GitHub ↗</a></div></div></div></li>
+      <li><button class="head" aria-expanded="false" aria-controls="p6"><span class="n mono">06</span><span class="t">Filo</span><span class="md mono">React Native · Supabase · Mapbox</span><span class="st mono">prototype</span><span class="ex" aria-hidden="true">+</span></button>
+        <div class="panel" id="p6" hidden><div class="media" style="background:#fff;box-shadow:0 0 0 1px var(--rule)"><svg viewBox="0 0 400 225" width="100%" height="100%" fill="none" stroke="#2348C7" font-family="IBM Plex Mono" font-size="11" role="img" aria-label="Diagram: each comparison halves the remaining list"><line x1="30" y1="55" x2="370" y2="55"/><line x1="115" y1="100" x2="285" y2="100"/><line x1="157" y1="145" x2="243" y2="145"/><line x1="189" y1="190" x2="211" y2="190"/><g fill="#2348C7" stroke="none"><circle cx="200" cy="55" r="4"/><circle cx="200" cy="100" r="4"/><circle cx="200" cy="145" r="4"/><circle cx="200" cy="190" r="4"/></g></svg></div><div class="txt"><p>Places ranked by people you trust; rank by comparison in about log₂(n) taps. Not released.</p><div class="links"><a href="/work/filo/">Case study →</a><a href="https://github.com/Mariaareadne1/Filo">GitHub ↗</a></div></div></div></li>
+    </ol>
+  </section>
+
+  <section class="grid sec" id="notes" aria-labelledby="notes-h">
+    <header class="sec-head"><h2 id="notes-h">Currently / experiments</h2><p>What is in progress, and small things to try.</p></header>
+    <ul class="notes">
+      <li><span class="mono">studying</span><span>CS, Barnard College of Columbia University; Hellenic Studies minor.</span></li>
+      <li><span class="mono">building</span><span>Filo, toward an iOS build.</span></li>
+      <li><span class="mono">co-founding</span><span><a href="/audacity/">The Audacity Project</a>.</span></li>
+      <li><span class="mono">organising</span><span>Algoraves at Columbia.</span></li>
+      <li><span class="mono">writing</span><span><a href="/blog-cartpole.html">What it took to get a pole to stop falling</a></span></li>
+    </ul>
+    <div class="exp">
+      <a href="https://mariaareadne1.github.io/iris-soft-matter/"><b>Soft Matter ↗</b><span class="mono">pull · Iris</span></a>
+      <a href="https://iris-resonance.vercel.app"><b>Resonance ↗</b><span class="mono">pluck · Iris</span></a>
+      <a href="https://mariaareadne1.github.io/Iris-Afterimage/"><b>Afterimage ↗</b><span class="mono">expose · Iris</span></a>
+      <a href="https://mariaareadne1.github.io/webaudio-synth/"><b>TONUS ↗</b><span class="mono">play · synth</span></a>
+    </div>
+  </section>
+
+  <section class="grid sec" id="film" aria-labelledby="film-h">
+    <header class="sec-head"><h2 id="film-h">Film</h2><p>35 mm, lab-scanned. A contact strip; open the archive for full frames.</p></header>
+    <div class="film">
+      <figure class="w2"><img loading="lazy" src="/assets/media/photos/000000010020-800.jpg" alt="Two friends leaning on a car in a parking lot" width="800" height="530"></figure>
+      <figure><img loading="lazy" src="/assets/media/photos/img_0387-800.jpg" alt="A person crouching under a porch, petting two corgis" width="800" height="530"></figure>
+      <figure><img loading="lazy" src="/assets/media/photos/img_0427-800.jpg" alt="A beach below a steep green headland, Oahu" width="800" height="530"></figure>
+      <figure class="w2"><img loading="lazy" src="/assets/media/photos/000000010024-800.jpg" alt="Friends sparring in a garden under a tree" width="800" height="530"></figure>
+    </div>
+  </section>
+
+  <section class="grid end" id="end" aria-labelledby="end-h">
+    <h2 id="end-h">Write to <a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></h2>
+    <ul><li><a href="https://github.com/Mariaareadne1">GitHub ↗</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn ↗</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube ↗</a></li></ul>
+  </section>
+</main>
+<script src="/assets/js/atmosphere.js"></script>
+<script src="/assets/js/hero-slot.js"></script>
+<script src="studies.js"></script>
+<script>
+  // Disclosure index: one panel open at a time is NOT enforced; each row is independent.
+  document.getElementById('index').addEventListener('click', function (e) {
+    var b = e.target.closest('button.head'); if (!b) return
+    var open = b.getAttribute('aria-expanded') === 'true'
+    b.setAttribute('aria-expanded', String(!open))
+    document.getElementById(b.getAttribute('aria-controls')).hidden = open
+  })
+
+  // fig. 1 — a damped spring, integrated with semi-implicit Euler at a fixed step.
+  ;(function () {
+    var cv = document.getElementById('spring'), ctx = cv.getContext('2d')
+    var kIn = document.getElementById('k'), cIn = document.getElementById('c'), read = document.getElementById('springRead')
+    var x = 0, y = 0, vx = 0, vy = 0, drag = false, raf = 0, last = 0
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    function size () { var r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = r.width * d; cv.height = r.height * d; ctx.setTransform(d, 0, 0, d, 0, 0); draw() }
+    function draw () {
+      var w = cv.clientWidth, h = cv.clientHeight, cx = w / 2, cy = h / 2
+      ctx.clearRect(0, 0, w, h)
+      ctx.strokeStyle = '#D7DCE3'; ctx.lineWidth = 1
+      ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke()
+      // coil drawn as a zig-zag from anchor to mass
+      var n = 14, px = cx + x, py = cy + y, dx = px - cx, dy = py - cy, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len
+      ctx.strokeStyle = '#161A22'; ctx.beginPath(); ctx.moveTo(cx, cy)
+      for (var i = 1; i < n; i++) { var t = i / n, a = (i % 2 ? 1 : -1) * 6; ctx.lineTo(cx + dx * t + nx * a, cy + dy * t + ny * a) }
+      ctx.lineTo(px, py); ctx.stroke()
+      ctx.fillStyle = '#161A22'; ctx.fillRect(cx - 3, cy - 3, 6, 6)
+      ctx.fillStyle = '#2348C7'; ctx.beginPath(); ctx.arc(px, py, 9, 0, Math.PI * 2); ctx.fill()
+    }
+    function step (t) {
+      var k = +kIn.value, c = +cIn.value, dt = Math.min(0.032, (t - last) / 1000 || 0.016); last = t
+      if (!drag) {
+        for (var s = 0; s < 4; s++) { var h = dt / 4; vx += (-k * x - c * vx) * h; vy += (-k * y - c * vy) * h; x += vx * h; y += vy * h }
+      }
+      draw()
+      var e = Math.hypot(x, y) + Math.hypot(vx, vy) / 20
+      read.textContent = drag ? 'held' : e < 0.2 ? 'at rest' : 'settling · ζ ' + (c / (2 * Math.sqrt(k))).toFixed(2)
+      if (drag || e > 0.05) raf = requestAnimationFrame(step); else { x = y = vx = vy = 0; draw(); raf = 0 }
+    }
+    function kick () { if (!raf) { last = performance.now(); raf = requestAnimationFrame(step) } }
+    function release () { if (reduce) { x = y = vx = vy = 0; draw(); read.textContent = 'at rest (reduced motion)'; return } kick() }
+    cv.addEventListener('pointerdown', function (e) { drag = true; cv.setPointerCapture(e.pointerId); move(e); kick() })
+    cv.addEventListener('pointermove', function (e) { if (drag) move(e) })
+    cv.addEventListener('pointerup', function () { drag = false; release() })
+    cv.addEventListener('pointercancel', function () { drag = false; release() })
+    function move (e) { var r = cv.getBoundingClientRect(); x = e.clientX - r.left - r.width / 2; y = e.clientY - r.top - r.height / 2; vx = vy = 0; draw() }
+    cv.addEventListener('keydown', function (e) {
+      var d = { ArrowLeft: [-40, 0], ArrowRight: [40, 0], ArrowUp: [0, -40], ArrowDown: [0, 40] }[e.key]
+      if (!d) return; e.preventDefault(); x += d[0]; y += d[1]; release()
+    })
+    ;[kIn, cIn].forEach(function (el) { el.addEventListener('input', function () { document.getElementById(el.id + 'Out').textContent = el.value }) })
+    new ResizeObserver(size).observe(cv)
+  })()
+</script>
+</body>
+</html>

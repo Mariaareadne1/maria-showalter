@@ -1,20 +1,13 @@
-/* Case-study pattern for mariashowalter.com — shares the site's type and blue. */
-@font-face { font-family: 'Fraunces'; src: url('../Fraunces-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Fraunces'; src: url('../Fraunces-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: 'Fraunces'; src: url('../Fraunces-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+/* Case-study pattern for mariashowalter.com — re-skinned onto the redesign tokens (preview branch). */
 
 :root {
-  --blue: #0044ff;
-  --blue-wash: rgba(0, 68, 255, 0.06);
-  --black: #0a0a0a;
-  --ink: #222;
-  --white: #fff;
-  --offwhite: #f8f6f3;
-  --muted: #6f6f6f;
-  --rule: rgba(0, 0, 0, 0.08);
-  --serif: 'Fraunces', Georgia, serif;
-  --mono: 'IBM Plex Mono', 'Courier New', monospace;
-  --sans: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+  /* Aliases onto the site tokens (assets/css/tokens.css), so case studies follow the redesign. */
+  --blue: var(--cobalt);
+  --blue-wash: var(--cobalt-wash);
+  --black: var(--ink);
+  --white: var(--paper);
+  --offwhite: var(--paper-2);
+  --muted: var(--meta);
   --measure: 680px;
   --wide: 1120px;
 }
@@ -29,9 +22,9 @@ a { color: var(--blue); }
 .skip { position: absolute; left: 12px; top: -40px; background: var(--blue); color: #fff; padding: 8px 12px; font-family: var(--mono); font-size: 11px; z-index: 100; }
 .skip:focus { top: 10px; }
 
-/* nav */
-.cs-nav { position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px max(24px, 6vw); background: rgba(255, 255, 255, 0.93); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
-.cs-nav a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+/* in-page contents bar (the global masthead sits above it) */
+.cs-nav { position: sticky; top: 0; z-index: 15; display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding: 10px max(24px, 6vw); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.cs-nav a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-decoration: none; padding: 6px 0; }
 .cs-nav .home { color: var(--blue); }
 .cs-nav .links { display: flex; gap: 22px; }
 .cs-nav .links a { color: var(--muted); transition: color 0.2s; }
@@ -39,12 +32,12 @@ a { color: var(--blue); }
 
 /* hero */
 .cs-hero { max-width: var(--wide); margin: 0 auto; padding: 72px 24px 40px; }
-.eyebrow { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 18px; }
-.cs-title { font-family: var(--serif); font-weight: 600; font-size: clamp(2.4rem, 6.5vw, 5.2rem); line-height: 0.95; letter-spacing: -0.03em; max-width: 14ch; }
-.cs-title em { font-weight: 400; font-style: italic; color: var(--blue); }
+.eyebrow { display: block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--blue); margin-bottom: 18px; }
+.cs-title { font-family: var(--serif); font-weight: 340; font-variation-settings: 'opsz' 144; font-size: clamp(2.4rem, 6.5vw, 5.2rem); line-height: 0.95; letter-spacing: -0.03em; max-width: 14ch; }
+.cs-title em { font-weight: 300; font-style: italic; color: var(--blue); }
 .cs-lede { margin-top: 26px; max-width: 60ch; font-family: var(--serif); font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.55; color: var(--ink); }
 .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px 28px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--rule); }
-.facts dt { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.facts dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .facts dd { font-size: 14px; line-height: 1.5; }
 .facts a { text-decoration: none; border-bottom: 1px solid rgba(0, 68, 255, 0.3); }
 
@@ -60,8 +53,8 @@ figcaption strong { color: var(--black); font-weight: 500; }
 /* sections */
 .cs-section { max-width: var(--wide); margin: 0 auto; padding: 88px 24px 0; }
 .cs-section > header { display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: baseline; margin-bottom: 28px; }
-.num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
-.cs-section h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.6rem, 3.4vw, 2.4rem); line-height: 1.05; letter-spacing: -0.02em; }
+.num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--blue); }
+.cs-section h2 { font-family: var(--serif); font-weight: 400; font-variation-settings: 'opsz' 72; font-size: clamp(1.6rem, 3.4vw, 2.4rem); line-height: 1.05; letter-spacing: -0.02em; }
 .prose { max-width: var(--measure); margin-left: 144px; font-size: 1.04rem; line-height: 1.8; color: var(--ink); }
 .prose p + p { margin-top: 1.1em; }
 .prose strong { font-weight: 500; color: var(--black); }
@@ -105,7 +98,7 @@ table.evidence td.no { color: #a24b12; font-family: var(--mono); font-size: 12px
 .note { margin: 28px 0 0 144px; max-width: var(--measure); padding: 16px 20px; background: var(--offwhite); border-left: 3px solid var(--blue); font-size: 14px; line-height: 1.7; color: var(--ink); }
 
 .cs-footer { max-width: var(--wide); margin: 120px auto 0; padding: 32px 24px 60px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.cs-footer a, .cs-footer span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; }
+.cs-footer a, .cs-footer span { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-decoration: none; }
 .cs-footer span { color: var(--muted); }
 
 @media (max-width: 860px) {
@@ -116,6 +109,7 @@ table.evidence td.no { color: #a24b12; font-family: var(--mono); font-size: 12px
   .strip { grid-template-columns: repeat(2, 1fr); }
   .cs-nav .links { gap: 14px; }
   .cs-nav .links a:not(.primary) { display: none; }
+  .cs-nav { justify-content: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Study B · Exhibition Catalogue — Maria Showalter (design study)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="studies.css">
+<style>
+  :root { --serif: 'Newsreader', Georgia, serif; --mat: #FBFBF8; }
+  body { font: 400 18px/1.55 var(--serif); font-variation-settings: 'opsz' 16; }
+  .cap { font: 400 11px/1.55 var(--mono); color: var(--meta); letter-spacing: 0.02em; }
+  .cap b { font-weight: 500; color: var(--ink); }
+
+  /* Running head: small, catalogue-like, sticky but quiet */
+  .run { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 12px var(--gutter); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); font: 400 12px var(--mono); }
+  .run a { text-decoration: none; color: var(--meta); padding: 6px 0; }
+  .run a:hover, .run a:focus-visible { color: var(--cobalt); }
+  .run .home { color: var(--ink); }
+  .run ul { display: flex; gap: clamp(12px, 2vw, 26px); margin: 0; padding: 0; list-style: none; }
+
+  /* Opening spread: portrait and name as two equal voices */
+  .spread { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: min(88vh, 860px); border-bottom: 1px solid var(--rule); overflow: hidden; }
+  .spread > *:not(canvas) { position: relative; z-index: 1; }
+  .verso { display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 5vw, 80px); border-right: 1px solid var(--rule); }
+  .mat { background: var(--mat); padding: clamp(18px, 2.4vw, 36px); box-shadow: 0 1px 0 var(--rule), 0 24px 48px -32px rgba(22, 26, 34, 0.35); max-width: 460px; width: 100%; margin: 0 auto; }
+  .mat .portrait-slot { aspect-ratio: 4 / 5; background: var(--mat); }
+  .mat .cap { margin-top: 14px; }
+  .recto { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding: clamp(32px, 5vw, 80px); }
+  .catno { font: 400 12px var(--mono); color: var(--meta); display: flex; justify-content: space-between; }
+  .title { margin: 0; font-weight: 300; font-variation-settings: 'opsz' 72; font-size: clamp(60px, 8.6vw, 148px); line-height: 0.88; letter-spacing: -0.035em; color: var(--ink); }
+  .title i { font-weight: 300; color: var(--cobalt); }
+  .sub { font-size: clamp(20px, 1.8vw, 26px); line-height: 1.35; color: var(--ink); max-width: 26ch; margin: 28px 0 0; font-style: italic; }
+  .contents { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .contents li { display: grid; grid-template-columns: 3em 1fr auto; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 17px; }
+  .contents a { text-decoration: none; color: var(--ink); }
+  .contents a:hover { color: var(--cobalt); }
+  .contents span { font: 400 12px/1.9 var(--mono); color: var(--meta); }
+
+  /* Chapters */
+  .chapter { padding: clamp(72px, 10vw, 160px) var(--gutter) 0; }
+  .ch-head { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: end; margin-bottom: clamp(36px, 5vw, 72px); }
+  .ch-no { font-weight: 300; font-variation-settings: 'opsz' 72; font-size: clamp(80px, 11vw, 180px); line-height: 0.8; color: var(--cobalt); letter-spacing: -0.04em; }
+  .ch-head h2 { margin: 0 0 8px; font-weight: 400; font-variation-settings: 'opsz' 60; font-size: clamp(34px, 4vw, 60px); line-height: 1; letter-spacing: -0.02em; color: var(--ink); }
+  .ch-head p { margin: 0; max-width: 52ch; color: var(--text); }
+
+  .work { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(14px, 2vw, 32px); row-gap: 18px; margin-bottom: clamp(72px, 9vw, 140px); }
+  .work .plate { margin: 0; }
+  .work h3 { margin: 0; font-weight: 400; font-variation-settings: 'opsz' 60; font-size: clamp(38px, 4.4vw, 68px); line-height: 0.95; letter-spacing: -0.025em; color: var(--ink); }
+  .work .body p { margin: 0 0 12px; max-width: 40ch; color: var(--ink); }
+  .links { display: flex; flex-wrap: wrap; gap: 4px 18px; font: 500 12px var(--mono); margin-top: 12px; }
+  .links a { color: var(--cobalt); text-decoration: none; padding: 5px 0; border-bottom: 1px solid transparent; }
+  .links a:hover, .links a:focus-visible { border-bottom-color: currentColor; }
+
+  /* Full-width film on a dark stage (Iris) */
+  .film-dark { grid-column: 1 / -1; background: #0C1022; padding: clamp(18px, 3vw, 44px); }
+  .film-dark .media { aspect-ratio: 16 / 9; background: #0C1022; }
+  .film-dark .cap { color: #9BA3B8; margin-top: 12px; } .film-dark .cap b { color: #E8EBF0; }
+  .inset-row { grid-column: 1 / -1; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(12px, 2vw, 28px); align-items: start; }
+  .inset-row figure { margin: 0; }
+  .inset-row img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  /* Edition: oversize print, crop deliberately to the dots */
+  .print { grid-column: 1 / span 8; }
+  .print .media { aspect-ratio: 1 / 1; background: var(--mat); }
+  .print img { object-position: 52% 46%; transform: scale(2.1); }
+  .print-text { grid-column: 9 / span 4; align-self: end; }
+  /* Hinge: white space and a measured detail */
+  .ui { grid-column: 4 / span 9; }
+  .ui .media { aspect-ratio: 16 / 10; box-shadow: 0 0 0 1px var(--rule); }
+  .ui-text { grid-column: 1 / span 3; grid-row: 1; align-self: start; padding-top: 6px; }
+  /* Orbit: dark audio stage */
+  .stage { grid-column: 1 / span 7; background: #0B0E14; }
+  .stage .media { aspect-ratio: 16 / 10; background: #0B0E14; }
+  .stage-text { grid-column: 9 / span 4; align-self: center; }
+  /* FrameFlow: cinematic */
+  .cine { grid-column: 1 / -1; }
+  .cine .media { aspect-ratio: 21 / 9; background: #E6E8EC; }
+  .cine video { object-fit: cover; object-position: 50% 35%; }
+  .cine-text { grid-column: 1 / span 5; } .cine-body { grid-column: 7 / span 6; }
+  .filo-dia { grid-column: 1 / span 6; background: var(--mat); padding: 28px; box-shadow: 0 0 0 1px var(--rule); }
+  .filo-text { grid-column: 8 / span 5; align-self: center; }
+
+  .sketch { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 22px); }
+  .sketch a { text-decoration: none; color: var(--ink); display: block; }
+  .sketch .media { aspect-ratio: 3 / 4; background: var(--ink); }
+  .sketch .media.blank { display: grid; place-items: center; color: var(--paper); font-style: italic; font-size: 34px; }
+  .sketch h4 { margin: 10px 0 2px; font-weight: 500; font-size: 18px; }
+  .sketch a:hover h4, .sketch a:focus-visible h4 { color: var(--cobalt); }
+
+  .plates { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(14px, 2vw, 32px); row-gap: 48px; }
+  .plates figure { margin: 0; }
+  .plates img { width: 100%; height: auto; }
+  .pl1 { grid-column: 2 / span 6; } .pl2 { grid-column: 9 / span 4; align-self: end; } .pl3 { grid-column: 4 / span 5; } .pl4 { grid-column: 10 / span 3; align-self: start; }
+
+  .colophon { margin-top: clamp(80px, 10vw, 160px); padding: 48px var(--gutter) 96px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+  .colophon h2 { margin: 0 0 12px; font: 500 12px var(--mono); color: var(--meta); letter-spacing: 0.04em; }
+  .colophon a { color: var(--ink); text-decoration: none; }
+  .colophon a:hover { color: var(--cobalt); }
+  .colophon .big { font-size: clamp(26px, 2.8vw, 40px); line-height: 1.1; letter-spacing: -0.01em; }
+  .colophon ul { list-style: none; margin: 0; padding: 0; }
+  .colophon li { padding: 6px 0; border-bottom: 1px solid var(--rule); }
+
+  @media (max-width: 1024px) {
+    .sketch { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ui { grid-column: 1 / -1; } .ui-text { grid-column: 1 / -1; grid-row: auto; }
+  }
+  @media (max-width: 720px) {
+    .run ul { display: none; }
+    .spread { grid-template-columns: 1fr; min-height: 0; }
+    .verso { border-right: 0; border-bottom: 1px solid var(--rule); padding: 28px 18px 32px; }
+    .mat { max-width: 300px; }
+    .recto { padding: 28px 18px 40px; gap: 36px; }
+    .ch-head { grid-template-columns: 1fr; gap: 6px; }
+    .work { grid-template-columns: 1fr; }
+    .work > * { grid-column: 1 / -1 !important; grid-row: auto !important; }
+    .inset-row { grid-template-columns: 1fr 1fr; } .inset-row figure:first-child { grid-column: 1 / -1; }
+    .print .media { aspect-ratio: 4 / 3; }
+    .cine .media { aspect-ratio: 4 / 3; }
+    .stage-text, .print-text { order: -1; }
+    .sketch { grid-template-columns: 1fr 1fr; }
+    .plates { grid-template-columns: 1fr 1fr; row-gap: 24px; }
+    .pl1, .pl3 { grid-column: 1 / -1; } .pl2 { grid-column: 1; } .pl4 { grid-column: 2; }
+    .colophon { grid-template-columns: 1fr; }
+    .colophon .big { overflow-wrap: anywhere; }
+  }
+</style>
+</head>
+<body data-study="b">
+<a class="skip" href="#main">Skip to content</a>
+<header class="run">
+  <a class="home" href="b.html">Maria Showalter</a>
+  <nav aria-label="Primary"><ul><li><a href="#ch1">Work</a></li><li><a href="#sketchbook">Playground</a></li><li><a href="#plates">Art</a></li><li><a href="#colophon">Writing</a></li><li><a href="#colophon">About</a></li><li><a href="mailto:m.showalter@columbia.edu">Contact</a></li></ul></nav>
+</header>
+<main id="main">
+<section class="spread" aria-labelledby="title" data-atmosphere='{"anchor":{"x":0.25,"y":0.5,"r":0.7},"sources":[{"x":0.25,"y":0.5,"a":1,"s":0.45,"k":17,"p":0},{"x":-0.1,"y":1.0,"a":0.5,"s":0.4,"k":21,"p":1}]}'>
+  <div class="verso">
+    <figure class="mat">
+      <div class="portrait-slot" data-halftone-slot><div data-halftone-stage></div><img class="fallback" src="/photo_main.png" alt="Maria Showalter" width="912" height="558"></div>
+      <figcaption class="cap"><b>Cover.</b> Halftone portrait, live video (slot — the owner's engine mounts here; static photograph shown).</figcaption>
+    </figure>
+  </div>
+  <div class="recto">
+    <div class="catno"><span>Selected works</span><span>2025 — 2026</span></div>
+    <div>
+      <h1 class="title" id="title">Maria <i>Showalter</i></h1>
+      <p class="sub">Design engineer and creative technologist. Software that behaves like material; instruments for motion, sound and print.</p>
+    </div>
+    <ol class="contents" aria-label="Contents">
+      <li><span>I</span><a href="#ch1">Instruments — Hinge, Orbit</a><span>01–02</span></li>
+      <li><span>II</span><a href="#ch2">Materials — Iris, Edition</a><span>03–04</span></li>
+      <li><span>III</span><a href="#ch3">Products — FrameFlow, Filo</a><span>05–06</span></li>
+      <li><span>—</span><a href="#sketchbook">Sketchbook</a><span>Playground</span></li>
+      <li><span>—</span><a href="#plates">Plates</a><span>Film</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="chapter" id="ch1" aria-labelledby="ch1-h">
+  <header class="ch-head"><div class="ch-no" aria-hidden="true">I</div><div><h2 id="ch1-h">Instruments</h2><p>Tools you learn by handling. Each exports something that behaves the way the instrument did.</p></div></header>
+  <article class="work">
+    <div class="ui-text"><div class="cap">01</div><h3>Hinge</h3></div>
+    <figure class="plate ui"><div class="media"><img loading="lazy" src="/assets/media/projects/hinge-drag-1600.jpg" alt="Hinge editor: a card on the stage beside its spring curve" width="1600" height="1000"></div><figcaption class="cap"><b>Fig. 1.</b> Drag-and-release on the stage; the model curve and the measured motion overlap. Capture predates Hinge's current redesign.</figcaption></figure>
+    <div class="body" style="grid-column:4 / span 6"><p>Tune hover, press and drag by handling a component and shaping its spring, then export a React component that moves exactly as it did on the stage.</p><div class="cap">Web app · React · TypeScript · closed-form spring solver</div><div class="links"><a href="https://mariaareadne1.github.io/hinge/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/hinge">GitHub ↗</a></div></div>
+  </article>
+  <article class="work">
+    <figure class="plate stage"><div class="media"><img loading="lazy" src="/assets/media/projects/orbit-playing-1600.jpg" alt="Orbit playing: voices moving around the listener on a dark stage" width="1600" height="1000"></div></figure>
+    <div class="stage-text"><div class="cap">02</div><h3>Orbit</h3><p style="margin-top:14px">Choreograph sounds around a listener. Positions drive real HRTF panning; the arrangement renders to a WAV that pans the way playback did.</p><div class="cap">Web Audio · TypeScript · use headphones</div><div class="links"><a href="https://mariaareadne1.github.io/orbit/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/orbit">GitHub ↗</a></div><p class="cap" style="margin-top:10px">Capture predates Orbit's current redesign.</p></div>
+  </article>
+</section>
+
+<section class="chapter" id="ch2" aria-labelledby="ch2-h">
+  <header class="ch-head"><div class="ch-no" aria-hidden="true">II</div><div><h2 id="ch2-h">Materials</h2><p>What makes something on a screen feel physical — or on paper, printed.</p></div></header>
+  <article class="work">
+    <div style="grid-column:1 / span 5"><div class="cap">03</div><h3>Iris</h3></div>
+    <div class="body" style="grid-column:7 / span 6"><p>Three studies in digital tactility: a slime you pull, a fabric you play as an instrument, a darkroom where prints develop. Built on Holocloth by Dmitry Kurash (MIT).</p><div class="links"><a href="/work/iris/">Case study →</a><a href="#sketchbook">Try them →</a></div></div>
+    <figure class="plate film-dark"><div class="media"><video data-inline muted loop playsinline preload="none" poster="/work/media/iris/resonance-poster.jpg" aria-label="Resonance: plucking a violet membrane"><source src="/work/media/iris/resonance.mp4" type="video/mp4"></video></div><figcaption class="cap"><b>Fig. 3.</b> Resonance. The ripples are a damped wave equation; the sound comes from the same physics. Muted here.</figcaption></figure>
+    <div class="inset-row">
+      <figure><img loading="lazy" src="/work/media/iris/afterimage-10-finished-print.jpg" alt="Afterimage: a finished print under red safelight"><figcaption class="cap"><b>3a.</b> Afterimage, a finished print.</figcaption></figure>
+      <figure><img loading="lazy" src="/work/media/iris/soft-matter-rest.jpg" alt="Soft Matter at rest"><figcaption class="cap"><b>3b.</b> Soft Matter, at rest.</figcaption></figure>
+      <figure><img loading="lazy" src="/work/media/iris/soft-matter-pull.jpg" alt="Soft Matter pulled by the pointer"><figcaption class="cap"><b>3c.</b> Pulled.</figcaption></figure>
+    </div>
+  </article>
+  <article class="work">
+    <figure class="plate print"><div class="media"><img loading="lazy" src="/assets/media/projects/edition-loupe-1600.jpg" alt="Edition: cobalt and coral halftone dots overprinting, seen close" width="1600" height="1000"></div><figcaption class="cap"><b>Fig. 4.</b> Two plates, overprinted and out of register. Detail. Capture predates Edition's current redesign.</figcaption></figure>
+    <div class="print-text"><div class="cap">04</div><h3>Edition</h3><p style="margin-top:14px">A photograph becomes a two-ink print: halftone plates at their own angles, exported at full resolution from the same engine as the preview.</p><div class="cap">TypeScript · Web Workers · runs in the browser</div><div class="links"><a href="https://mariaareadne1.github.io/edition/">Live demo ↗</a><a href="https://github.com/Mariaareadne1/edition">GitHub ↗</a></div></div>
+  </article>
+</section>
+
+<section class="chapter" id="ch3" aria-labelledby="ch3-h">
+  <header class="ch-head"><div class="ch-no" aria-hidden="true">III</div><div><h2 id="ch3-h">Products</h2><p>Software with users in mind, documented with what is and isn't finished.</p></div></header>
+  <article class="work">
+    <figure class="plate cine"><div class="media"><video data-inline muted loop playsinline preload="none" poster="/work/media/frameflow/real-capture-poster.jpg" aria-label="FrameFlow reframing a real capture"><source src="/work/media/frameflow/real-capture.mp4" type="video/mp4"></video></div><figcaption class="cap"><b>Fig. 5.</b> A real capture, reframed by camera Moments.</figcaption></figure>
+    <div class="cine-text"><div class="cap">05</div><h3>FrameFlow</h3></div>
+    <div class="body cine-body"><p>Turns a raw macOS screen recording into a composed product film. One renderer drives preview, MP4 and GIF.</p><div class="cap">Electron · React · Swift (ScreenCaptureKit) · WebCodecs · v2.3.0, not notarized</div><div class="links"><a href="/work/frameflow/">Case study →</a><a href="https://github.com/Mariaareadne1/FrameFlow">GitHub ↗</a></div></div>
+  </article>
+  <article class="work">
+    <figure class="plate filo-dia" role="img" aria-label="Diagram: inserting a place by comparison halves the list each tap"><svg viewBox="0 0 400 220" width="100%" fill="none" stroke="#2348C7" font-family="IBM Plex Mono" font-size="11"><line x1="30" y1="50" x2="370" y2="50"/><line x1="115" y1="95" x2="285" y2="95"/><line x1="157" y1="140" x2="243" y2="140"/><line x1="189" y1="185" x2="211" y2="185"/><g fill="#2348C7" stroke="none"><circle cx="200" cy="50" r="4"/><circle cx="200" cy="95" r="4"/><circle cx="200" cy="140" r="4"/><circle cx="200" cy="185" r="4"/><text x="30" y="38" fill="#5F6977">n places, ranked</text><text x="295" y="99" fill="#5F6977">n/2</text><text x="253" y="144" fill="#5F6977">n/4</text><text x="221" y="189" fill="#5F6977">≈ log₂ n taps</text></g></svg><figcaption class="cap" style="margin-top:10px"><b>Fig. 6.</b> Explainer, not a screenshot — the app has no public data to show.</figcaption></figure>
+    <div class="filo-text"><div class="cap">06</div><h3>Filo</h3><p style="margin-top:14px">A campus map of places ranked by people you trust, with privacy enforced in the database. Prototype; not released.</p><div class="cap">React Native · Supabase · Mapbox</div><div class="links"><a href="/work/filo/">Case study →</a><a href="https://github.com/Mariaareadne1/Filo">GitHub ↗</a></div></div>
+  </article>
+</section>
+
+<section class="chapter" id="sketchbook" aria-labelledby="sk-h">
+  <header class="ch-head"><div class="ch-no" aria-hidden="true">—</div><div><h2 id="sk-h">Sketchbook</h2><p>Playable experiments, not products.</p></div></header>
+  <div class="sketch">
+    <a href="https://mariaareadne1.github.io/iris-soft-matter/"><div class="media"><img loading="lazy" src="/work/media/iris/soft-matter-pull.jpg" alt=""></div><h4>Pull · Soft Matter ↗</h4><div class="cap">Iris · live</div></a>
+    <a href="https://iris-resonance.vercel.app"><div class="media"><img loading="lazy" src="/work/media/iris/resonance-stretch.jpg" alt=""></div><h4>Pluck · Resonance ↗</h4><div class="cap">Iris · live</div></a>
+    <a href="https://mariaareadne1.github.io/Iris-Afterimage/"><div class="media"><img loading="lazy" src="/work/media/iris/afterimage-04-dodging-during-exposure.jpg" alt=""></div><h4>Expose · Afterimage ↗</h4><div class="cap">Iris · live</div></a>
+    <a href="https://mariaareadne1.github.io/webaudio-synth/"><div class="media blank" aria-hidden="true">play</div><h4>Play · TONUS ↗</h4><div class="cap">Web synthesizer · live</div></a>
+    <a href="/#deck"><div class="media blank" aria-hidden="true">mix</div><h4>Mix · DJ deck</h4><div class="cap">On the homepage</div></a>
+  </div>
+</section>
+
+<section class="chapter" id="plates" aria-labelledby="pl-h">
+  <header class="ch-head"><div class="ch-no" aria-hidden="true">—</div><div><h2 id="pl-h">Plates</h2><p>35 mm film, lab-scanned. Shown uncropped.</p></div></header>
+  <div class="plates">
+    <figure class="pl1"><img loading="lazy" src="/assets/media/photos/000000010026-1600.jpg" alt="A figure sitting in a chair against a bright curtained window" width="1600" height="1061"><figcaption class="cap"><b>Pl. 1</b> · black-and-white film</figcaption></figure>
+    <figure class="pl2"><img loading="lazy" src="/assets/media/photos/img_0426-800.jpg" alt="Waves breaking over dark volcanic rocks in a cove, Oahu" width="800" height="530"><figcaption class="cap"><b>Pl. 2</b> · Oahu · colour film</figcaption></figure>
+    <figure class="pl3"><img loading="lazy" src="/assets/media/photos/000000010015-1600.jpg" alt="Liliha Bakery's roadside sign in Honolulu" width="1600" height="1061"><figcaption class="cap"><b>Pl. 3</b> · Liliha Bakery, Honolulu</figcaption></figure>
+    <figure class="pl4"><img loading="lazy" src="/assets/media/photos/img_9084_bw-800.jpg" alt="A strip of film negative on a scanner" width="800" height="800"><figcaption class="cap"><b>Pl. 4</b> · process, the negative</figcaption></figure>
+  </div>
+</section>
+
+<footer class="colophon" id="colophon">
+  <div><h2>Correspondence</h2><a class="big" href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a><p class="cap" style="margin-top:12px">Computer Science, Barnard College of Columbia University.</p></div>
+  <div><h2>Writing</h2><ul><li><a href="/blog-creativity.html">On code, creativity, and languages</a></li><li><a href="/blog-cartpole.html">What it took to get a pole to stop falling</a></li><li><a href="/blog-pid.html">Three terms that control everything</a></li><li><a href="/blog-filo.html">A social discovery app from my dorm room</a></li></ul></div>
+  <div><h2>Elsewhere</h2><ul><li><a href="https://github.com/Mariaareadne1">GitHub ↗</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn ↗</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube ↗</a></li></ul></div>
+</footer>
+</main>
+<script src="/assets/js/atmosphere.js"></script>
+<script src="/assets/js/hero-slot.js"></script>
+<script src="studies.js"></script>
+</body>
+</html>

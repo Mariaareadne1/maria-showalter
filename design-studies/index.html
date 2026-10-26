@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Design studies — Maria Showalter (preview)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="studies.css">
+<style>
+  body { font: 400 16px/1.6 'IBM Plex Sans', sans-serif; padding: 48px var(--gutter) 96px; max-width: 1180px; margin: 0 auto; }
+  h1 { font-weight: 500; font-size: 28px; color: var(--ink); margin: 0 0 8px; letter-spacing: -0.01em; }
+  .lede { max-width: 70ch; color: var(--text); }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 36px; }
+  .card { display: block; text-decoration: none; color: var(--ink); border-top: 2px solid var(--ink); padding-top: 12px; }
+  .card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border: 1px solid var(--rule); margin-top: 12px; }
+  .card b { font-size: 20px; font-weight: 500; }
+  .card:hover b, .card:focus-visible b { color: var(--cobalt); }
+  .card p { margin: 6px 0 0; font-size: 14px; color: var(--meta); }
+  .rank { font: 500 12px 'IBM Plex Mono', monospace; color: var(--cobalt); }
+  h2 { font-weight: 500; font-size: 20px; margin: 56px 0 8px; color: var(--ink); }
+  .bg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .bg figure { margin: 0; } .bg img { width: 100%; border: 1px solid var(--rule); }
+  .bg figcaption { font: 400 12px 'IBM Plex Mono', monospace; color: var(--meta); margin-top: 6px; }
+  ul { padding-left: 1.1em; } li + li { margin-top: 4px; }
+  @media (max-width: 760px) { .grid, .bg { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Design studies — preview only</h1>
+  <p class="lede">Three different compositions of the same real content, built as working pages. None of them is an approved design. The ranking and the provisional choice are in <a href="https://github.com/Mariaareadne1/maria-showalter/blob/design/portfolio-editorial-explorations/DESIGN-DECISIONS.md">DESIGN-DECISIONS.md</a>; the provisional site built from them starts at <a href="/">the preview homepage</a>. Each study has a review bar (bottom left) to switch studies and background intensity.</p>
+  <div class="grid">
+    <a class="card" href="a.html"><span class="rank">Ranked 1 · provisional basis</span><br><b>A · Editorial Index</b><p>Typographic masthead on an off-axis grid, framed portrait, one statement project then compact rows of very different scale.</p><img src="/docs/screenshots/studies/design-studies-a-html--1440--chromium.jpg" alt="Study A at 1440 px" loading="lazy"></a>
+    <a class="card" href="b.html"><span class="rank">Ranked 2 · chapters adopted</span><br><b>B · Exhibition Catalogue</b><p>Opening spread with portrait and name as equal voices; projects grouped into three chapters with films, plates and captions.</p><img src="/docs/screenshots/studies/design-studies-b-html--1440--chromium.jpg" alt="Study B at 1440 px" loading="lazy"></a>
+    <a class="card" href="c.html"><span class="rank">Ranked 3 · index adopted for /work/</span><br><b>C · Field Notes</b><p>Compact masthead, modular first fold with a live spring, drawn column grid, a work index that expands in place.</p><img src="/docs/screenshots/studies/design-studies-c-html--1440--chromium.jpg" alt="Study C at 1440 px" loading="lazy"></a>
+  </div>
+  <h2>Background intensity, same page (Study A hero)</h2>
+  <div class="bg">
+    <figure><img src="/docs/screenshots/studies/bg-whisper.jpg" alt="Whisper background" loading="lazy"><figcaption>Whisper — fragments, nearly white</figcaption></figure>
+    <figure><img src="/docs/screenshots/studies/bg-balanced.jpg" alt="Balanced background" loading="lazy"><figcaption>Balanced — localized to the portrait (recommended)</figcaption></figure>
+    <figure><img src="/docs/screenshots/studies/bg-sculptural.jpg" alt="Sculptural background" loading="lazy"><figcaption>Sculptural — more relief, stronger parallax</figcaption></figure>
+  </div>
+  <h2>What these studies do not decide</h2>
+  <ul>
+    <li>The portrait: every study shows the static fallback photo inside the slot where the owner's halftone engine mounts.</li>
+    <li>Final typefaces, exact cobalt, navigation treatment and project order.</li>
+  </ul>
+</main>
+</body>
+</html>
