@@ -7,7 +7,9 @@
   function initMenu () {
     var btn = document.querySelector('[data-menu-open]')
     var dlg = document.getElementById('menu')
-    if (!btn || !dlg || typeof dlg.showModal !== 'function') return
+    if (!btn || !dlg) return
+    // Without <dialog> support (Safari < 15.4), show the plain nav instead of a dead button.
+    if (typeof dlg.showModal !== 'function') { document.documentElement.classList.add('no-dialog'); return }
     btn.addEventListener('click', function () {
       dlg.showModal()
       btn.setAttribute('aria-expanded', 'true')

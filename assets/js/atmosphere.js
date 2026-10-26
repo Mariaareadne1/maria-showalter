@@ -246,6 +246,7 @@
       setMode: function (mode) { if (MODES[mode]) { state.mode = mode; render(state) } },
       destroy: function () {
         ro.disconnect()
+        clearTimeout(resizeTimer)
         global.removeEventListener('pointermove', onMove)
         cancelAnimationFrame(raf)
         canvas.remove()

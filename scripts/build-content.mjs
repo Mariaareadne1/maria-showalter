@@ -163,7 +163,10 @@ let stale = 0
 for (const rel of PAGES) {
   const file = join(root, rel)
   let html
-  try { html = await readFile(file, 'utf8') } catch { continue }
+  try { html = await readFile(file, 'utf8') } catch (err) {
+    if (err.code === 'ENOENT') { console.warn(`skip (missing): ${rel}`); continue }
+    throw err
+  }
   const out = html.replace(RE, (_, name, rawArgs) => {
     const fn = R[name]
     if (!fn) throw new Error(`${rel}: unknown region "${name}"`)

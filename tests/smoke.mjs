@@ -71,7 +71,8 @@ for (const engine of engines) {
   check(reset, 'aria-expanded resets')
   // Keyboard: skip link is the first tab stop on a fresh load.
   await page.goto(base, { waitUntil: 'domcontentloaded' })
-  await page.keyboard.press('Tab')
+  // WebKit (like Safari) only tabs to links with Option held; that is the platform's convention.
+  await page.keyboard.press(engine === 'webkit' ? 'Alt+Tab' : 'Tab')
   check(await page.evaluate(() => document.activeElement.classList.contains('skip')), 'skip link is first tab stop')
   await page.close()
 

@@ -68,12 +68,13 @@
   function load (d, file) {
     var track = TRACKS.filter(function (t) { return t.file === file })[0]
     teardown(d)
+    // Bump the token first so any in-flight load (including one being deselected) is discarded.
+    var token = ++d.loadToken
     d.buffer = null; d.offset = 0; d.track = track || null
     updateDeckUI(d)
     if (!track) { status(d, 'No track loaded'); return Promise.resolve() }
     var c
     try { c = audio() } catch (e) { status(d, e.message); return Promise.resolve() }
-    var token = ++d.loadToken
     status(d, 'Loading ' + track.short + '…')
     return fetch('/' + track.file)
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer() })
@@ -108,6 +109,7 @@
   }
 
   function start (d) {
+    if (!d.buffer || !d.nodes) return
     var c = audio()
     var src = c.createBufferSource()
     src.buffer = d.buffer
@@ -291,8 +293,18 @@
     btn.setAttribute('aria-pressed', 'false')
   })
 
+  // Leaving the page releases audio. A page restored from the back-forward cache comes back
+  // empty rather than with decks whose nodes belonged to the closed context.
   window.addEventListener('pagehide', function () {
-    teardown(decks.A); teardown(decks.B)
+    ;['A', 'B'].forEach(function (k) {
+      var d = decks[k]
+      teardown(d)
+      d.loadToken++
+      d.buffer = null; d.track = null; d.offset = 0; d.nudge = 0
+      document.getElementById('sel' + k).value = ''
+      status(d, 'No track loaded')
+      updateDeckUI(d)
+    })
     if (ctx) { ctx.close(); ctx = null; master = null }
   })
 

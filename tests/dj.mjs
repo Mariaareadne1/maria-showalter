@@ -122,6 +122,13 @@ for (const engine of engines) {
   const released = (await state(page)).A.rate
   check(held > 1.25 && near(released, 1.25, 0.002), `platter drag nudges the rate (${held.toFixed(3)}) and releases back (${released.toFixed(3)})`)
 
+  // Regression (review finding): deselecting during a load must discard the in-flight decode.
+  await page.selectOption('#selB', 'track-no-scrubs.mp3')
+  await page.selectOption('#selB', '')
+  await page.waitForTimeout(1200)
+  check(await page.locator('[data-play="B"]').isDisabled(), 'deselecting mid-load leaves deck B empty (Play disabled)')
+  check((await page.locator('[data-status="B"]').textContent()) === 'No track loaded', 'status stays “No track loaded” after the stale decode finishes')
+
   // Error state: Bills is answered with 404 by the route above.
   await page.selectOption('#selB', 'track-bills.mp3')
   await page.waitForFunction(() => /Couldn’t load/.test(document.querySelector('[data-status="B"]').textContent), null, { timeout: 10000 })
