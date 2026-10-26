@@ -16,7 +16,7 @@ FULL=1 node tests/capture.mjs http://127.0.0.1:5451/ docs/screenshots/<dir> / wo
 ## Milestones
 
 - [x] P0 — preflight, audit (`SITE-AUDIT.md`), live baseline screenshots (`docs/screenshots/baseline/`)
-- [ ] P1 — three design studies (`/design-studies/`) + `DESIGN-DECISIONS.md`
+- [x] P1 — three design studies (`/design-studies/`) + `DESIGN-DECISIONS.md`
 - [ ] P2 — provisional shell + homepage
 - [ ] P3 — secondary pages + case studies
 - [ ] P4 — DJ deck restyle + microinteractions
@@ -25,6 +25,7 @@ FULL=1 node tests/capture.mjs http://127.0.0.1:5451/ docs/screenshots/<dir> / wo
 ## Log
 
 - 2026-10-25 P0: audit + baseline. Media derivatives generated under `assets/media/`.
+- 2026-10-26 P1: studies A/B/C, atmosphere module (3 modes), hero slot loader, content registry `content/site.json`. Captures in `docs/screenshots/studies/`.
 
 ## Next safe action
 
