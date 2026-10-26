@@ -66,7 +66,9 @@ for (const engine of engines) {
   await page.keyboard.press('Escape')
   check(!(await page.locator('#menu').evaluate((d) => d.open)), 'Escape closes the menu')
   check(await btn.evaluate((b) => b === document.activeElement), 'focus returns to the Menu button')
-  check((await btn.getAttribute('aria-expanded')) === 'false', 'aria-expanded resets')
+  // The dialog's close event is async; wait for the handler rather than racing it.
+  const reset = await page.waitForFunction(() => document.querySelector('[data-menu-open]').getAttribute('aria-expanded') === 'false', null, { timeout: 2000 }).then(() => true, () => false)
+  check(reset, 'aria-expanded resets')
   // Keyboard: skip link is the first tab stop on a fresh load.
   await page.goto(base, { waitUntil: 'domcontentloaded' })
   await page.keyboard.press('Tab')
