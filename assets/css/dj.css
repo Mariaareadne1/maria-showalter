@@ -1,0 +1,108 @@
+/* DJ deck — a clear-acrylic instrument: layered translucent sheet, engraved scale marks,
+   machined platters. Cobalt only marks live state. Provisional (DESIGN-DECISIONS §7). */
+.deck-section { background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 18%, var(--paper-2) 82%, var(--paper) 100%); padding-bottom: var(--section); }
+.deck-layout { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; }
+.deck-notes { grid-column: 1 / span 3; }
+.deck-notes > p { margin: 0 0 18px; font-size: 15px; }
+.deck-map { margin: 0 0 18px; }
+.deck-map div { padding: 8px 0; border-top: 1px solid var(--rule); }
+.deck-map dt { font: 500 12px var(--mono); color: var(--ink); }
+.deck-map dd { margin: 2px 0 0; font-size: 14px; color: var(--text); }
+.deck { grid-column: 5 / span 8; }
+
+.presets { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 14px; }
+.chip { font: 500 12.5px var(--mono); color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 6px 0; cursor: pointer; }
+.chip:hover, .chip:focus-visible { border-bottom-color: var(--ink); }
+.chip[aria-pressed="true"] { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+
+/* The sheet */
+.console {
+  position: relative; display: grid; grid-template-columns: 1fr minmax(150px, 0.62fr) 1fr; gap: 0;
+  border-radius: 14px; padding: 18px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.35) 38%, rgba(255, 255, 255, 0.55) 100%),
+    linear-gradient(0deg, rgba(35, 72, 199, 0.035), rgba(35, 72, 199, 0.035));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 0 0 1px rgba(22, 26, 34, 0.10),
+    0 1px 0 rgba(22, 26, 34, 0.06), 0 30px 60px -36px rgba(22, 26, 34, 0.45), 0 8px 18px -12px rgba(22, 26, 34, 0.20);
+  backdrop-filter: blur(2px);
+}
+/* edge of the acrylic: a second, offset sheet line */
+.console::before { content: ''; position: absolute; inset: 6px; border-radius: 10px; border: 1px solid rgba(22, 26, 34, 0.07); pointer-events: none; }
+/* four screws */
+.console::after { content: ''; position: absolute; inset: 9px; pointer-events: none; background:
+  radial-gradient(circle at 4px 4px, #9AA3B1 0 2px, transparent 2.6px) top left / 50% 50% no-repeat,
+  radial-gradient(circle at calc(100% - 4px) 4px, #9AA3B1 0 2px, transparent 2.6px) top right / 50% 50% no-repeat,
+  radial-gradient(circle at 4px calc(100% - 4px), #9AA3B1 0 2px, transparent 2.6px) bottom left / 50% 50% no-repeat,
+  radial-gradient(circle at calc(100% - 4px) calc(100% - 4px), #9AA3B1 0 2px, transparent 2.6px) bottom right / 50% 50% no-repeat; }
+
+.unit { padding: 10px 14px 6px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.unit-head { display: flex; align-items: center; gap: 10px; }
+.deck-id { font: 500 12px var(--mono); color: var(--paper); background: var(--ink); width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; flex: none; }
+.unit.is-playing .deck-id { background: var(--cobalt); }
+.track { flex: 1; min-width: 0; font: 400 13px var(--mono); color: var(--ink); background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(22, 26, 34, 0.18); border-radius: 4px; padding: 8px 10px; }
+.track:focus-visible { outline-offset: 1px; }
+
+/* Platter: machined rings + a calibration ring of 60 ticks. */
+.platter { position: relative; width: min(100%, 220px); aspect-ratio: 1; margin: 4px auto; border-radius: 50%; touch-action: none; cursor: default;
+  background: repeating-conic-gradient(from 0deg, rgba(22, 26, 34, 0.45) 0 0.5deg, transparent 0.5deg 6deg); padding: 7px; }
+.unit.is-playing .platter { cursor: ew-resize; }
+.platter .disc { position: relative; width: 100%; height: 100%; border-radius: 50%;
+  background:
+    radial-gradient(circle, #fff 0 16%, transparent 16.5%),
+    repeating-radial-gradient(circle, rgba(22, 26, 34, 0.055) 0 1px, rgba(255, 255, 255, 0) 1px 7px),
+    radial-gradient(circle at 35% 30%, #FFFFFF, #E6EAF0 60%, #D3D8E1);
+  box-shadow: inset 0 0 0 1px rgba(22, 26, 34, 0.15), 0 6px 14px -8px rgba(22, 26, 34, 0.5); }
+.platter .mark { position: absolute; left: 50%; top: 6%; width: 2px; height: 30%; margin-left: -1px; background: var(--ink); border-radius: 1px; }
+.unit.is-playing .platter .mark { background: var(--cobalt); }
+.platter .hub { position: absolute; left: 50%; top: 50%; width: 9%; height: 9%; transform: translate(-50%, -50%); border-radius: 50%; background: var(--ink); }
+.platter.is-held { filter: drop-shadow(0 0 0 var(--cobalt)); }
+.platter.is-held .disc { box-shadow: inset 0 0 0 2px var(--cobalt); }
+
+.status { margin: 0; min-height: 1.6em; text-align: center; }
+.pos { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; }
+.transport { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.play { font: 500 13px var(--mono); color: var(--ink); background: rgba(255, 255, 255, 0.8); border: 1px solid var(--ink); border-radius: 4px; padding: 10px 18px; min-width: 88px; cursor: pointer; }
+.play:hover:not(:disabled) { color: var(--cobalt); border-color: var(--cobalt); }
+.play.is-on { background: var(--ink); color: var(--paper); }
+.play:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.mixer { display: flex; flex-direction: column; gap: 14px; padding: 12px 16px; border-left: 1px solid rgba(22, 26, 34, 0.10); border-right: 1px solid rgba(22, 26, 34, 0.10); }
+.sync { font: 500 13px var(--mono); color: var(--ink); background: rgba(255, 255, 255, 0.8); border: 1px solid var(--ink); border-radius: 4px; padding: 9px; cursor: pointer; }
+.sync[aria-pressed="true"] { color: #fff; background: var(--cobalt); border-color: var(--cobalt); }
+.meter { width: 100%; height: 40px; border-radius: 3px; }
+
+/* Faders with engraved scale marks under the track */
+.fader { display: flex; flex-direction: column; gap: 4px; }
+.fader label { display: flex; justify-content: space-between; }
+.fader output, .mixer output { color: var(--ink); }
+.console input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; background:
+  linear-gradient(rgba(22, 26, 34, 0.55), rgba(22, 26, 34, 0.55)) center / 100% 2px no-repeat,
+  repeating-linear-gradient(90deg, rgba(22, 26, 34, 0.35) 0 1px, transparent 1px 10%) center bottom / 100% 6px no-repeat;
+  cursor: pointer; margin: 0; }
+.console input[type=range]:disabled { opacity: 0.4; cursor: not-allowed; }
+.console input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 22px; border-radius: 3px; background: linear-gradient(#fff, #E3E7EE); border: 1px solid var(--ink); box-shadow: inset 0 -6px 0 -5px var(--ink); }
+.console input[type=range]::-moz-range-thumb { width: 14px; height: 22px; border-radius: 3px; background: linear-gradient(#fff, #E3E7EE); border: 1px solid var(--ink); }
+.console input[type=range]:focus-visible { outline-offset: 2px; }
+
+.xfade { grid-column: 1 / -1; margin: 10px 14px 4px; padding-top: 12px; border-top: 1px solid rgba(22, 26, 34, 0.10); }
+.xfade label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+
+@media (max-width: 1024px) {
+  .deck-notes { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; margin-bottom: 24px; }
+  .deck-notes > p:last-child { grid-column: 1 / -1; }
+  .deck { grid-column: 1 / -1; }
+}
+@media (max-width: 680px) {
+  .deck-layout { grid-template-columns: 1fr; }
+  .deck-notes { grid-template-columns: 1fr; }
+  .console { grid-template-columns: 1fr 1fr; padding: 14px 8px; }
+  .unit { padding: 8px 6px; }
+  .platter { width: min(100%, 140px); }
+  .mixer { grid-column: 1 / -1; grid-row: 2; border: 0; border-top: 1px solid rgba(22, 26, 34, 0.10); border-bottom: 1px solid rgba(22, 26, 34, 0.10); display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; padding: 12px 6px; }
+  .mixer .meter { grid-column: 1 / -1; }
+  .transport { flex-direction: column; align-items: stretch; gap: 4px; text-align: center; }
+  .pos { grid-template-columns: 1fr; }
+  .pos label { display: none; }
+  .xfade { margin: 10px 6px 4px; }
+}

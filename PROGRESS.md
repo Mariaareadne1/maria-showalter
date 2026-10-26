@@ -17,7 +17,7 @@ FULL=1 node tests/capture.mjs http://127.0.0.1:5451/ docs/screenshots/<dir> / wo
 
 - [x] P0 — preflight, audit (`SITE-AUDIT.md`), live baseline screenshots (`docs/screenshots/baseline/`)
 - [x] P1 — three design studies (`/design-studies/`) + `DESIGN-DECISIONS.md`
-- [ ] P2 — provisional shell + homepage
+- [x] P2 — provisional shell + homepage (secondary routes land in P3)
 - [ ] P3 — secondary pages + case studies
 - [ ] P4 — DJ deck restyle + microinteractions
 - [ ] P5 — QA, regression, `DESIGN-REVIEW.md`
@@ -26,7 +26,8 @@ FULL=1 node tests/capture.mjs http://127.0.0.1:5451/ docs/screenshots/<dir> / wo
 
 - 2026-10-25 P0: audit + baseline. Media derivatives generated under `assets/media/`.
 - 2026-10-26 P1: studies A/B/C, atmosphere module (3 modes), hero slot loader, content registry `content/site.json`. Captures in `docs/screenshots/studies/`.
+- 2026-10-26 P2: tokens/base/nav/media/home/dj CSS, site.js (menu dialog, video previews), dj.js (real tempo/sync, pause/seek, nudge, volume), content build script, new homepage. Smoke on `/` chromium: only failures were links to P3 routes not yet built.
 
 ## Next safe action
 
-Continue with P1 from this worktree. Do not run git commands that write in the protected checkout.
+Continue with P3 (secondary pages) from this worktree. Do not run git commands that write in the protected checkout.
