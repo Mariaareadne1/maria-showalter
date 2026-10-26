@@ -101,3 +101,57 @@ or also at section transitions.
 - Fallback: `photo_main.png` (existing, authentic), greyscale, multiplied onto paper. It is low resolution
   (912×558), so it looks pixelated when framed large — acceptable as a fallback, not as the final hero.
 - **OPEN:** portrait scale, crop and whether the name overlaps the frame (A overlaps only on phones).
+
+## 6. Homepage composition (provisional)
+
+| Chapter | Treatment | Why |
+| --- | --- | --- |
+| 1 Masthead | Study A: name at opsz 144 on an off-axis grid, italic cobalt surname, framed portrait slot, role + one concrete sentence, "Selected work ↓", margin index | Identity in under two seconds; one explicit route to the work |
+| 2 Selected work | FrameFlow lead on an ink mat (16:9 film) → Hinge (7 cols, white space) + Edition (4 cols, crop to the dots, offset down) → Iris full-bleed dark stage with the three live links → Orbit and Filo as compact rows | Six projects with four different rhythms; each medium gets its environment; no card grid |
+| 3 Currently | Labelled rows from `content/site.json` + one italic aside | Honest, editable in one place |
+| 4 Playground | Five verbs (Pull, Pluck, Expose, Play, Mix) — text-first strip | Experiments read as experiments |
+| 5 Deck | Acrylic instrument (see §8) with a plain-language control map beside it | Every control explained without hovering |
+| 6 Art + Writing | Three photographs at their own ratio; four essays; footer with direct email | Personal close, not a wall of social buttons |
+
+Order of the six is provisional: FrameFlow first because it has the strongest real footage and a
+full case study. **OPEN:** final lineup and order; whether Iris belongs in Work or only Playground.
+
+## 7. Navigation, cards, gallery
+
+- **Navigation:** fine-line horizontal masthead (Study A/B treatment) on every page, `aria-current`
+  underline in cobalt, Contact as a mailto in cobalt. Not sticky. Phone (<760 px): a "Menu" button opens a
+  native modal `<dialog>` (focus contained, Escape closes, focus returns to the button — tested).
+  Case studies keep their own section list as a sticky sub-bar. The "characterful anchored project
+  index" alternative was tried as Study A's margin index and Study C's index; kept only as the
+  homepage margin list. **OPEN:** sticky masthead; whether the margin index stays.
+- **Cards:** none. Projects are editorial objects (title as a design element, statement, medium,
+  role, text links). Hover = cobalt title + underline draw + 3 % media scale (≤220 ms); focus shows
+  the same state plus the outline.
+- **Work index:** Study C's expanding rows, grouped Product / Experimental / Professional. Statement is
+  visible in the closed row; media and links open in place; "Open all"; `/work/#<id>` deep links open a row.
+- **Art:** both treatments are built on `/art/`: (a) *Sequence* — five placements that repeat, frames at
+  native ratio, generous pacing (default); (b) *Contact sheet* — equal frames on a dark sheet
+  (`/art/?view=contact`). Both open a modal lightbox (arrows, Escape, focus returns to the frame,
+  `#id` deep link). Chosen default: Sequence, because the film frames are all 3:2 and the sequence
+  creates pacing the contact sheet cannot. **OPEN:** default view; the retired 3-D point-cloud viewer
+  from the old `gallery.html` (could return as a Playground piece).
+- `gallery.html` now redirects to `/art/` (meta refresh + JS, canonical to `/art/`).
+
+## 8. DJ deck
+
+Material: a clear-acrylic sheet (layered translucent gradients, inner edge line, four screw heads),
+machined platters with a 60-tick calibration ring and a single index mark, faders with engraved scale
+ticks. Cobalt only when live (deck ID, platter mark, Sync on). No glow, no neon.
+
+Behaviour changes are listed at the top of `assets/js/dj.js`; DSP curves are the original ones. The
+`~/Development/Personal/acrylic-deck` prototype (isometric SVG, worklet player, original synthesised
+tracks) is a stronger long-term answer and would also solve the rights question. **OPEN:** replace
+this deck with acrylic-deck at `/deck/`, or keep this one.
+
+## 9. Copy
+
+- Hero sentence and Work/Playground/Art ledes are mine, written from verified project facts —
+  **review the wording**.
+- About page body is the owner's existing text from the old About panel, unedited; experience rows
+  are from the old Experience panel.
+- Essays are migrated byte-for-byte in their text (checked by stripping tags before/after).

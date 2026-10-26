@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /design-studies/
+Disallow: /docs/
+Sitemap: https://mariashowalter.com/sitemap.xml

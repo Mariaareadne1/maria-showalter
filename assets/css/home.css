@@ -15,7 +15,7 @@
 .to-work:hover, .to-work:focus-visible { color: var(--cobalt); border-color: var(--cobalt); }
 .to-work span[aria-hidden] { transition: transform var(--t-med) var(--ease); }
 .to-work:hover span[aria-hidden] { transform: translateY(3px); }
-.marg { grid-column: 1; grid-row: 2; margin: clamp(30px, 4.2vw, 60px) 0 0; padding: 0; list-style: none; font: 400 12px/2 var(--mono); }
+.marg { grid-column: 1; grid-row: 2; margin: clamp(30px, 4.2vw, 60px) 0 0; padding: 0; list-style: none; font: 400 11.5px/2 var(--mono); white-space: nowrap; }
 .marg a { color: var(--meta); text-decoration: none; }
 .marg a:hover, .marg a:focus-visible { color: var(--cobalt); }
 

@@ -139,8 +139,8 @@ R['work-index'] = () => {
       n++
       const pid = `wi-${p.id}`
       const mediaHtml = p.other ? '' : media(p, { cls: p.id === 'iris' || p.id === 'orbit' ? 'dark' : '', sizes: '(max-width: 680px) 100vw, 55vw' })
-      return `<li><button type="button" class="wi-head" data-disclosure aria-expanded="false" aria-controls="${pid}"><span class="n meta">${String(n).padStart(2, '0')}</span><span class="t">${esc(p.name)}</span><span class="md meta">${esc(p.medium)}</span><span class="ex" aria-hidden="true">+</span></button>
-<div class="wi-panel${p.other ? ' text-only' : ''}" id="${pid}" hidden>${mediaHtml}<div class="wi-text"><p>${esc(p.statement)}</p>${p.role ? `<p class="meta">${esc(p.role)}${p.status ? ' · ' + esc(p.status) : ''}</p>` : ''}${links(p.links)}${p.media?.note ? `<p class="note-tag">${esc(p.media.note)}.</p>` : ''}</div></div></li>`
+      return `<li><button type="button" class="wi-head" data-disclosure aria-expanded="false" aria-controls="${pid}"><span class="n meta">${String(n).padStart(2, '0')}</span><span class="t">${esc(p.name)}</span><span class="d"><span class="sm">${esc(p.statement)}</span><span class="md meta">${esc(p.medium)}</span></span><span class="ex" aria-hidden="true">+</span></button>
+<div class="wi-panel${p.other ? ' text-only' : ''}" id="${pid}" hidden>${mediaHtml}<div class="wi-text">${p.role ? `<p class="meta">${esc(p.role)}${p.status ? ' · ' + esc(p.status) : ''}</p>` : ''}${links(p.links)}${p.media?.note ? `<p class="note-tag">${esc(p.media.note)}.</p>` : ''}</div></div></li>`
     }).join('\n')
     return `<section class="wi-group" aria-labelledby="g-${kind}"><header class="opener"><span class="no">${kind === 'product' ? 'A' : kind === 'experiment' ? 'B' : 'C'}</span><h2 id="g-${kind}">${title}</h2><p>${desc}</p></header><ol class="wi">${rows}</ol></section>`
   }).join('\n')
