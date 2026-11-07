@@ -130,7 +130,8 @@ R['work-index'] = () => {
   return groups.map(([kind, title]) => {
     const rows = all.filter((p) => p.kind === kind).map((p) => {
       const text = p.other ? p.statement : p.line
-      const thumbHtml = p.other ? '' : `<a class="wi-thumb" href="${esc(primaryHref(p))}" tabindex="-1" aria-hidden="true"><img loading="lazy" decoding="async" src="${esc(p.media.thumb || p.media.poster || p.media.src || '')}" alt=""></a>`
+      const inner = p.media?.type === 'diagram' ? filoDiagram() : `<img loading="lazy" decoding="async" src="${esc(p.media?.thumb || p.media?.poster || p.media?.src)}" alt="">`
+      const thumbHtml = p.other ? '' : `<a class="wi-thumb${p.media.type === 'diagram' ? ' diagram' : ''}" href="${esc(primaryHref(p))}" tabindex="-1" aria-hidden="true">${inner}</a>`
       return `<li class="wi-row${p.other ? ' text-only' : ''}" id="${esc(p.id)}">${thumbHtml}<div class="wi-body"><h3><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p>${esc(text)}</p><p class="meta">${esc(p.medium)}</p></div>${links(p.links)}</li>`
     }).join('\n')
     return `<section class="wi-group" aria-labelledby="g-${kind}"><h2 class="group-h" id="g-${kind}">${title}</h2><ol class="wi">${rows}</ol></section>`

@@ -1,0 +1,343 @@
+[
+  {
+    "file": "edition-loop.mp4",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": 22.47,
+    "codec": "h264",
+    "pix_fmt": "yuv420p",
+    "has_audio": false,
+    "crop": null,
+    "bytes": 2228359,
+    "sha256": "a848b06b3c6686a12650fff96d7adec7f9c592aa32f0eb24e3ecf458f18f9680",
+    "kind": "video",
+    "scenario": "import → separations → misregistration → loupe → split compare",
+    "steps": [
+      "Open ▸ Image… (real file chooser) imports img_0422-1600.jpg, replacing the sample print",
+      "Plate 1 view (cobalt key), Plate 2 view (vermilion accent)",
+      "Hold Separate: the two plates lift apart",
+      "Drag plate 2 across the sheet (to 6.00 / 6.00 mm), then Register plate 2 exactly",
+      "Loupe at 2:1 swept over the sun (export pixels)",
+      "Split view: drag the source/print wipe handle"
+    ],
+    "capture_method": "Playwright 1.64 Chromium headless, CDP Page.startScreencast (JPEG q90), frames placed by metadata.timestamp, static frames capped at 0.8s, resampled to 30 fps CFR, libx264 CRF 26 preset veryslow, +faststart, -an",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app. Timeline marks (s): {\"start\":0,\"imported\":2.63,\"separated\":6.93,\"dragged\":10.78,\"loupe\":17.9,\"split\":21.53}."
+  },
+  {
+    "file": "edition-loop-poster.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 254912,
+    "sha256": "79f5451df6acaa4124f687880282faa00b501dc3f353686cef786e827173168a",
+    "kind": "poster",
+    "scenario": "loop poster (imported print)",
+    "steps": [
+      "frame at 3.63 s of edition-loop.mp4"
+    ],
+    "capture_method": "ffmpeg frame extract, JPEG ≈q82",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-loop-poster.webp",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 211716,
+    "sha256": "1ef1622aa4530aab2ce4d37f05aa6ca0abafe07a6837b3c5bb7ec8748233d431",
+    "kind": "poster",
+    "scenario": "loop poster (imported print)",
+    "steps": [
+      "WebP of edition-loop-poster.jpg"
+    ],
+    "capture_method": "ffmpeg libwebp quality 82",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-step-1.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 465496,
+    "sha256": "479e4cb67d38d1d4db09da98b8ca44218a66ab34e8d9503ffcdbdf4d9f1d2fba",
+    "kind": "still",
+    "scenario": "import",
+    "steps": [
+      "Open ▸ Image… loads the owner’s film photo; the two-ink print (cobalt key + vermilion accent) is proofed on the sheet"
+    ],
+    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-step-2.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 248276,
+    "sha256": "e7f306e6b4fdf9c5bce3fa2528058b9f171679c31b147b9cb6f2a28001d473ed",
+    "kind": "still",
+    "scenario": "separations",
+    "steps": [
+      "Holding Separate lifts the two plates apart, each rendered alone by the engine with its registration"
+    ],
+    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-step-3.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 442824,
+    "sha256": "4cd454018f82658da5a2b5b268f93020e6b2915e3b138c06584eb9820059a992",
+    "kind": "still",
+    "scenario": "loupe",
+    "steps": [
+      "Loupe at 2:1 over the sun: export-resolution (A4/300 dpi) pixels, halftone dots and overprint"
+    ],
+    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-step-4.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 468676,
+    "sha256": "7d040a55f6b84d8736abe3364351a387bed94d85e197b9a15786996ee5b34fba",
+    "kind": "still",
+    "scenario": "misregistration",
+    "steps": [
+      "Mid-drag of plate 2 with the live millimetre readout; registration marks double up"
+    ],
+    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+  },
+  {
+    "file": "edition-step-5.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 168348,
+    "sha256": "9c11b6b1eb2723f5fed1a55217a768d5c39523468f1ee4cc98cb27c4982f7718",
+    "kind": "still",
+    "scenario": "export",
+    "steps": [
+      "Export dialog after rendering the three A4/300 dpi files"
+    ],
+    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "notes": "Native <dialog> renders in the top layer, above the injected cursor dot."
+  },
+  {
+    "file": "edition-export-print-1600.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1600,
+      "height": 1136
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": null,
+    "bytes": 1202281,
+    "sha256": "e985241634615315b036069fdcfd9af40813b955109c6b5f9998329b2fa9177e",
+    "kind": "export-derivative",
+    "scenario": "real export: merged print",
+    "steps": [
+      "Export ▸ A4 · 300 dpi ▸ Render 3 files ▸ Download; print-composite.png (3508×2492) downscaled to 1600 wide"
+    ],
+    "capture_method": "page.waitForEvent(\"download\") → saveAs media-raw/edition/exports; ffmpeg lanczos downscale",
+    "notes": "Native export files: {\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}. Plate 2 register at export: 0.60 / -0.40 mm (app default, after undoing the demo drag). Parity: {\"readout\":\"3508 × 2492 px · 297 × 211 mm\",\"composite\":{\"width\":3508,\"height\":2492},\"dims_match_readout\":true,\"long_edge_3508\":true,\"proof_aspect\":1.4075,\"export_aspect\":1.4077,\"loupe_pixels\":{\"compared\":35344,\"differing\":0,\"at\":[1052,1171],\"span\":188},\"block_means\":{\"proof\":\"860x611\",\"block_px\":8,\"blocks\":8132,\"mean_abs_diff_255\":0.241,\"worst_255\":1.72},\"files\":{\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}}"
+  },
+  {
+    "file": "edition-export-crop.jpg",
+    "source_url": "https://mariaareadne1.github.io/edition/",
+    "source_repo": "https://github.com/mariaareadne1/edition",
+    "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
+    "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
+    "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
+    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "capture_date": "2026-11-07T16:36:04.766Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 1,
+    "dimensions": {
+      "width": 1000,
+      "height": 625
+    },
+    "duration_s": null,
+    "codec": null,
+    "pix_fmt": null,
+    "has_audio": false,
+    "crop": {
+      "source": "print-composite.png 3508×2492",
+      "w": 1000,
+      "h": 625,
+      "x": 842,
+      "y": 897
+    },
+    "bytes": 489035,
+    "sha256": "e0a4d84af583347a9f486d19600a08e3104c86b1cb31531e4162d9724f44b054",
+    "kind": "export-derivative",
+    "scenario": "real export: 1:1 crop showing halftone dots",
+    "steps": [
+      "Native-resolution crop of the downloaded print-composite.png"
+    ],
+    "capture_method": "ffmpeg crop of the exported PNG, JPEG q≈90",
+    "notes": "No scaling: one image pixel = one 300 dpi export pixel."
+  }
+]

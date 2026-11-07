@@ -60,13 +60,13 @@
         "source": "https://github.com/Mariaareadne1/hinge"
       },
       "media": {
-        "type": "image",
-        "src": "/assets/media/projects/hinge-drag-1600.jpg",
-        "small": "/assets/media/projects/hinge-drag-800.jpg",
+        "type": "video",
+        "src": "/assets/media/hinge/hinge-loop.mp4",
+        "poster": "/assets/media/hinge/hinge-loop-poster.jpg",
+        "thumb": "/assets/media/hinge/hinge-step-3.jpg",
         "w": 1600,
         "h": 1000,
-        "alt": "Hinge editor: a card on the stage beside its drag-and-release spring curve",
-        "note": "Capture from before Hinge's current redesign"
+        "alt": "Hinge: a card is dragged and released, the release spring is retuned to low damping, and the same throw now oscillates home"
       },
       "detail": "Tune hover, press and drag by handling a component and shaping its spring, then export a React component that moves exactly the way it did on the stage.",
       "line": "Design how interfaces move, then export the code."
@@ -84,13 +84,13 @@
         "source": "https://github.com/Mariaareadne1/edition"
       },
       "media": {
-        "type": "image",
-        "src": "/assets/media/projects/edition-loupe-1600.jpg",
-        "small": "/assets/media/projects/edition-loupe-800.jpg",
+        "type": "video",
+        "src": "/assets/media/edition/edition-loop.mp4",
+        "poster": "/assets/media/edition/edition-loop-poster.jpg",
+        "thumb": "/assets/media/edition/edition-step-1.jpg",
         "w": 1600,
         "h": 1000,
-        "alt": "Edition loupe view: cobalt and coral halftone dots overprinting on paper",
-        "note": "Capture from before Edition's current redesign"
+        "alt": "Edition: a film photograph becomes a cobalt and vermilion halftone print; the plates are lifted apart, one is pushed out of register, and the loupe reads the dots"
       },
       "detail": "A photograph becomes a two-ink print: editable halftone plates set at their own angles, overprinted on paper and deliberately out of register, exported at full resolution.",
       "line": "Turn photographs into two-color halftone prints."
@@ -281,7 +281,7 @@
       "line": "Drag a card and tune its spring.",
       "series": "Motion",
       "href": "https://mariaareadne1.github.io/hinge/",
-      "still": null,
+      "still": "/assets/media/hinge/hinge-step-2.jpg",
       "alt": ""
     }
   ],

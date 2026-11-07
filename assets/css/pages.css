@@ -7,6 +7,8 @@
 .wi-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: start; padding: 20px 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 80px; }
 .wi-thumb { grid-column: 1 / span 3; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule); }
 .wi-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms var(--ease); }
+.wi-thumb.diagram { display: grid; place-items: center; padding: 8px 14px; background: var(--mat); color: var(--cobalt); }
+.wi-thumb.diagram svg { width: 100%; height: 100%; }
 .wi-row:hover .wi-thumb img { transform: scale(1.03); }
 .wi-body { grid-column: 4 / span 6; }
 .wi-row.text-only .wi-body { grid-column: 1 / span 9; }

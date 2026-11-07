@@ -59,7 +59,7 @@
   <figure>
     <video id="hero-film" src="/assets/media/hinge/hinge-loop.mp4" poster="/assets/media/hinge/hinge-loop-poster.jpg" muted loop playsinline controls preload="metadata"
       aria-label="Hinge: a card on the stage is dragged and released, then the spring is retuned and the release motion changes."></video>
-    <figcaption><span class="label">New capture</span> Recorded from the live app in a real Chromium session with scripted pointer input. Silent loop.</figcaption>
+    <figcaption><span class="label">New capture</span> Recorded from the live app (Hinge @ 41c0ddd) in Chromium with scripted pointer input: a throw with the default release spring, then the same throw after damping is lowered to 6. The grey ring is a capture-only pointer marker. Silent loop.</figcaption>
   </figure>
 </div>
 
@@ -74,7 +74,11 @@
 <section class="cs-section" aria-labelledby="s2">
   <header><span class="num">02 — Interaction</span><h2 id="s2">Touch the object, pick a state, shape the spring, export.</h2></header>
   <ol class="steps"><li><h3>Touch</h3><p>Hover, press, drag and throw the specimen with a mouse, finger or keyboard.</p></li><li><h3>Pick a state</h3><p>The rail on the left selects Rest, Hover, Press or Drag; the object shows which state it is in now.</p></li><li><h3>Shape</h3><p>Drag the peak of the response curve, or scrub stiffness, damping and mass. Measured dots trace the real motion.</p></li><li><h3>Export</h3><p>The export bench shows the generated files: the component, its CSS, the runtime and a config. React is the only dependency.</p></li></ol>
-  <!-- step-figures -->
+  <div class="pair wide">
+    <figure><img src="/assets/media/hinge/hinge-step-2.jpg" width="1600" height="1000" loading="lazy" alt="Hinge with the Drag state selected: the card held about 250 pixels to the right, the release curve showing damping ratio 0.54."/><figcaption><strong>Drag, default spring.</strong> ζ 0.54, 13 % overshoot.</figcaption></figure>
+    <figure><img src="/assets/media/hinge/hinge-step-3.jpg" width="1600" height="1000" loading="lazy" alt="Hinge after retuning: stiffness 320 and damping 6, the release curve now oscillating strongly before it settles."/><figcaption><strong>Retuned.</strong> Stiffness 320, damping 6: the curve now rings before it settles.</figcaption></figure>
+  </div>
+  <div class="wide"><figure><img src="/assets/media/hinge/hinge-step-4.jpg" width="1600" height="1000" loading="lazy" alt="Hinge export bench showing the generated HingeCard.tsx source with the tuned drag spring values."/><figcaption><strong>Export bench.</strong> The generated component carries the tuned values; the runtime files are copied verbatim.</figcaption></figure></div>
 </section>
 
 <section class="cs-section" id="system" aria-labelledby="s3">
@@ -118,11 +122,11 @@ const damping = 2 * zeta * Math.sqrt(stiffness * m)</code></pre>
   <div class="prose">
     <p>The repository’s export-parity test builds generated components into a fresh Vite app outside the repo, drives the stage and the export with identical input, and compares the element’s computed transform frame by frame.</p>
   </div>
-  <!-- evidence-media -->
+  <div class="prose"><p>For this page, the exported <code>HingeCard</code> zip was downloaded from the live app, unpacked into a clean copy of the repository’s fixture app, type-checked, built and served. Driven with Playwright, the exported card rested at 0 / 0, rose to −10 px at scale 1.02 on hover, and after a release overshot to −90.8 px with 13 sign changes before settling — consistent with the tuned damping ratio of about 0.15. <a href="/assets/media/hinge/hinge-export-sample.tsx">The exported component source</a>.</p></div>
   <div class="table-wrap">
     <table class="evidence">
       <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
-      <tbody><tr><td>Unit tests: spring math, graph handle, schema, codegen</td><td class="ok">EVIDENCE_HINGE_UNIT</td><td>Run for this page; see note</td></tr><tr><td>Export parity, editor vs exported component</td><td class="ok">≤ 0.43 px</td><td>Largest raw difference across five motions, recorded 2026-10-21 in the repo; not re-run here</td></tr><tr><td>Editor + axe E2E, Chromium and WebKit</td><td class="ok">recorded pass</td><td>Repo PROGRESS.md; not re-run here</td></tr><tr><td>Physical touch devices, Firefox, iOS Safari</td><td class="no">not verified</td><td>Touch is emulated in tests</td></tr></tbody>
+      <tbody><tr><td>Unit tests: spring math, graph handle, schema, codegen</td><td class="ok">35 / 35</td><td>vitest, run 7 Nov 2026 for this page</td></tr><tr><td>Exported component built and driven for this page</td><td class="ok">pass</td><td>tsc, vite build, hover pose and release overshoot as above; not a frame-by-frame comparison</td></tr><tr><td>Export parity, editor vs exported component</td><td class="ok">≤ 0.43 px</td><td>Largest raw difference across five motions, recorded 2026-10-21 in the repo; not re-run here</td></tr><tr><td>Editor + axe E2E, Chromium and WebKit</td><td class="ok">recorded pass</td><td>Repo PROGRESS.md; not re-run here</td></tr><tr><td>Physical touch devices, Firefox, iOS Safari</td><td class="no">not verified</td><td>Touch is emulated in tests</td></tr></tbody>
     </table>
   </div>
   <p class="note">Hinge @ <span class="mono">41c0ddd</span>. Parity figures are from the repository’s own dated test record. No user research or usage figures are claimed.</p>
