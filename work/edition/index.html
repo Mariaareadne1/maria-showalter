@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edition — case study — Maria Showalter</title>
+<link rel="canonical" href="https://mariashowalter.com/work/edition/"/>
+<meta name="description" content="Edition turns a photograph into a two-ink halftone print with editable plates, deliberate misregistration and full-resolution export, entirely in the browser."/>
+<meta property="og:title" content="Edition — case study — Maria Showalter"/>
+<meta property="og:description" content="Edition turns a photograph into a two-ink halftone print with editable plates, deliberate misregistration and full-resolution export, entirely in the browser."/>
+<meta property="og:image" content="https://mariashowalter.com/assets/media/edition/edition-loop-poster.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
+<link rel="stylesheet" href="/assets/css/tokens.css"/>
+<link rel="stylesheet" href="/assets/css/base.css"/>
+<link rel="stylesheet" href="/assets/css/nav.css"/>
+<link rel="stylesheet" href="../case-study.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- region:nav current=work -->
+<header class="mast"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta"><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<nav class="cs-nav" aria-label="Case study sections">
+  <div class="links">
+    <a href="#system">Engineering</a>
+    <a href="#testing">Evidence</a>
+    <a class="primary" href="/work/iris/">Next: Iris →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · web app · 2026</span>
+  <h1 class="cs-title">Edition</h1>
+  <p class="cs-sub">Turn photographs into two-color halftone prints.</p>
+  <p class="cs-lede">Edition turns a photograph into a print made of two inks. Each ink is a real halftone plate at its own screen angle; you can pick a plate up and push it out of register, then export the composite and both films at print resolution. Images never leave the browser.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Design and engineering</dd></div>
+    <div><dt>Stack</dt><dd>TypeScript · React · Web Workers · OKLab colour · analytic halftone</dd></div>
+    <div><dt>Status</dt><dd>Live · MIT · runs entirely in the browser</dd></div>
+    <div><dt>Links</dt><dd><a href="https://mariaareadne1.github.io/edition/">Try it ↗</a> · <a href="https://github.com/Mariaareadne1/edition">Source ↗</a></dd></div>
+  </dl>
+</header>
+
+<div class="film">
+  <figure>
+    <video id="hero-film" src="/assets/media/edition/edition-loop.mp4" poster="/assets/media/edition/edition-loop-poster.jpg" muted loop playsinline controls preload="metadata"
+      aria-label="Edition: a photograph becomes a two-ink halftone print; a plate is dragged out of register and the loupe shows the ink dots."></video>
+    <figcaption><span class="label">New capture</span> Recorded from the live app in a real Chromium session with scripted pointer input. Silent loop.</figcaption>
+  </figure>
+</div>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Overview</span><h2 id="s1">A printmaking table, not a filter.</h2></header>
+  <div class="prose">
+    <p>Most “halftone effects” are a single screen laid over a photo. Edition models the parts of printing that make a two-colour print look like one: a separation into two plates, round dots at each plate’s angle, transparent inks overprinting, paper tooth, and plates that sit slightly off register.</p>
+    <p>Everything is defined in sheet units, so the preview, the loupe and a 2905 × 3508 export describe the same print.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s2">
+  <header><span class="num">02 — Interaction</span><h2 id="s2">Open a photo, see the plates, move one, export.</h2></header>
+  <ol class="steps"><li><h3>Open</h3><p>Open or drop a JPEG, PNG or WebP. Files are validated by size, magic bytes and header before decoding.</p></li><li><h3>Separate</h3><p>Two plates appear as tabs under the sheet. Hold Separate to lift them apart, each rendered alone.</p></li><li><h3>Register</h3><p>Drag the print to move the plate in hand; a millimetre readout follows the pointer, and the registration marks double up.</p></li><li><h3>Inspect</h3><p>The loupe shows the export’s own pixels at 300 dpi, drawn 1:1.</p></li><li><h3>Export</h3><p>Composite and two films as PNG at A4 300 dpi, rendered in a worker with progress and cancel.</p></li></ol>
+  <!-- step-figures -->
+</section>
+
+<section class="cs-section" id="system" aria-labelledby="s3">
+  <header><span class="num">03 — Engineering</span><h2 id="s3">Separation, an exact dot, and registration in the plate’s frame.</h2></header>
+  <div class="prose">
+    <p><strong>Separation.</strong> Each pixel is composited over the paper in linear light and converted to OKLab. The key plate takes tone; the accent plate takes colour leaning toward the second ink’s hue; the key gives way under the accent. It is an interpretive mapping, not a colour-accurate separation, and the README says so.</p>
+    <p><strong>Halftone.</strong> Each screen cell inks the round dot whose area — the circle clipped to the square cell — equals the sampled coverage exactly, so a flat field of coverage <em>c</em> inks a fraction <em>c</em> of the paper.</p>
+    <p><strong>Registration.</strong> A plate’s offset and rotation are applied by mapping output pixels into that plate’s frame before the screen is evaluated, so the dots and the plate’s own marks move — never a shifted bitmap.</p>
+  </div>
+  <div class="diagram" role="img" aria-label="The source image is separated into two coverage maps; each map is screened at its own angle in its own frame; the screened plates are overprinted multiplicatively on paper to produce the preview, loupe and export from one engine."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="84">photo</text><text x="110" y="62">separations.ts</text><text x="110" y="80" fill="#5F6977">OKLab → key, accent</text><text x="320" y="40">plate 1 · angle · offset</text><text x="320" y="128">plate 2 · angle · offset</text><text x="540" y="62">render.ts</text><text x="540" y="80" fill="#5F6977">overprint on paper</text><text x="540" y="140" fill="#5F6977">preview · loupe · export</text></g><path d="M50 80h50M270 74l40-34M270 74l40 50M500 40l30 30M500 124l30-50" stroke="#2348C7"/><rect x="100" y="44" width="170" height="50" rx="3"/><rect x="530" y="44" width="170" height="50" rx="3"/></svg></div>
+  <article class="decision">
+    <div>
+      <h3>Dot area solved exactly, then tabulated.</h3>
+      <p>Once a dot grows past half the cell it touches its neighbours, and a naive radius-from-coverage formula darkens midtones. The area function subtracts the four circular segments outside the cell; an inverse table built by bisection gives the radius for any coverage in constant time.</p>
+      <p class="where">src/engine/halftone.ts · Edition @ 12e9b60</p>
+    </div>
+<pre><code>export function dotArea(r: number): number {
+  if (r &lt;= 0) return 0
+  if (r &lt;= 0.5) return Math.PI * r * r
+  if (r &gt;= R_MAX) return 1
+  const segment = r * r * Math.acos(0.5 / r) - 0.5 * Math.sqrt(r * r - 0.25)
+  return Math.PI * r * r - 4 * segment
+}</code></pre>
+  </article>
+  <article class="decision">
+    <div>
+      <h3>The loupe renders the export, not the preview.</h3>
+      <p>A zoomed preview would show smoothing and screen moiré that the file doesn’t have. The loupe asks the worker to render the window under the pointer at export resolution and draws it with no smoothing. The repository test compares those pixels with the same window of the downloaded PNG.</p>
+      <p class="where">src/worker/render.worker.ts · src/ui/Loupe</p>
+    </div>
+<pre><code>// The same engine renders three scales of one print:
+//   preview bands  (≈650 px, latest-wins lane)
+//   loupe windows  (export dpi, cropped)
+//   export         (A4 300 dpi, progress + cancel)
+// Sheet units: 1 = the sheet&#x27;s long edge (297 mm).</code></pre>
+  </article>
+</section>
+
+<section class="cs-section" id="testing" aria-labelledby="s4">
+  <header><span class="num">04 — Evidence</span><h2 id="s4">What is tested, and what isn’t.</h2></header>
+  <div class="prose">
+    <p>Exports are inspected outside the browser, and the redesign was held to a golden test: five fixtures rendered in every mode against hashes recorded before the redesign.</p>
+  </div>
+  <!-- evidence-media -->
+  <div class="table-wrap">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody><tr><td>Unit: engine, import, golden outputs, studio state</td><td class="ok">EVIDENCE_EDITION_UNIT</td><td>Run for this page; see note</td></tr><tr><td>Loupe pixels vs downloaded PNG</td><td class="ok">0 differing</td><td>Chromium and WebKit, recorded 2026-10-26 in the repo; not re-run here</td></tr><tr><td>Export vs on-screen proof</td><td class="ok">0.09 / 255 mean</td><td>Chromium, linear light, recorded 2026-10-26</td></tr><tr><td>Colour accuracy against physical inks</td><td class="no">not claimed</td><td>No ICC proofing; inks are screen colours</td></tr></tbody>
+    </table>
+  </div>
+  <p class="note">Edition @ <span class="mono">12e9b60</span>. Figures marked “recorded” are from the repository’s dated verification table.</p>
+</section>
+
+<section class="cs-section" aria-labelledby="s5">
+  <header><span class="num">05 — Status</span><h2 id="s5">Limitations and what isn’t shipped.</h2></header>
+  <div class="prose">
+    <p>Two inks only, AM round dots only. Colour is decoded to sRGB (wide-gamut sources are clipped) and there is no ICC proofing, so prints are a visual approximation of overprinted ink, not a press proof. Tested in Chromium and WebKit; Firefox and real phones were not tested.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s6">
+  <header><span class="num">06 — Links</span><h2 id="s6">Try it, read the source.</h2></header>
+  <div class="prose">
+    <ul>
+      <li><a href="https://mariaareadne1.github.io/edition/">mariaareadne1.github.io/edition/</a> — the live app</li>
+      <li><a href="https://github.com/Mariaareadne1/edition">github.com/Mariaareadne1/edition</a> — source, MIT</li>
+    </ul>
+    <p>Fonts: Libre Caslon Text, Archivo, DM Mono (SIL OFL). Zip: fflate (MIT). OKLab after Björn Ottosson’s published formulae.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="cs-footer">
+  <a href="https://github.com/Mariaareadne1/edition">Source on GitHub ↗</a>
+  <a href="/work/iris/">Next case study: Iris →</a>
+  <a href="/work/">All work</a>
+  <a href="/">← Home</a>
+</footer>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap">
+<div class="foot-row">
+<p class="foot-name">Maria Showalter</p>
+<ul class="foot-links"><li><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></li><li><a href="https://github.com/Mariaareadne1">GitHub</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube</a></li></ul>
+<a class="top-link" href="#top">Back to top</a>
+</div>
+</div></footer>
+<!-- /region:foot -->
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

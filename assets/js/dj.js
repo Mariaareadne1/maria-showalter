@@ -17,13 +17,11 @@
   var root = document.getElementById('djDeck')
   if (!root) return
 
+  // Default tracks are original loops synthesised by scripts/make-deck-loops.mjs (no third-party audio).
+  // Visitors can also load their own files; those stay in the browser and are never uploaded.
   var TRACKS = [
-    { file: 'track-yummy.mp3', label: 'Yummy — Ayesha Erotica', short: 'Yummy', bpm: 96 },
-    { file: 'track-paper-planes.mp3', label: 'Paper Planes — M.I.A.', short: 'Paper Planes', bpm: 98 },
-    { file: 'track-no-scrubs.mp3', label: 'No Scrubs — TLC', short: 'No Scrubs', bpm: 100 },
-    { file: 'track-bills.mp3', label: "Bills Bills Bills — Destiny's Child", short: 'Bills', bpm: 100 },
-    { file: 'track-blinding-lights.mp3', label: 'Blinding Lights — The Weeknd', short: 'Blinding Lights', bpm: 171 },
-    { file: 'track-as-it-was.mp3', label: 'As It Was — Harry Styles', short: 'As It Was', bpm: 174 }
+    { file: 'assets/audio/loop-a.m4a', label: 'Loop A — 112 BPM (original)', short: 'Loop A', bpm: 112 },
+    { file: 'assets/audio/loop-b.m4a', label: 'Loop B — 124 BPM (original)', short: 'Loop B', bpm: 124 }
   ]
   var NUDGE_MAX = 0.08
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -66,7 +64,9 @@
   }
 
   function load (d, file) {
-    var track = TRACKS.filter(function (t) { return t.file === file })[0]
+    var track = (file && typeof file === 'object')
+      ? { file: file.name, label: file.name, short: file.name.replace(/\.[^.]+$/, '').slice(0, 28), bpm: null, local: file }
+      : TRACKS.filter(function (t) { return t.file === file })[0]
     teardown(d)
     // Bump the token first so any in-flight load (including one being deselected) is discarded.
     var token = ++d.loadToken
@@ -76,8 +76,10 @@
     var c
     try { c = audio() } catch (e) { status(d, e.message); return Promise.resolve() }
     status(d, 'Loading ' + track.short + '…')
-    return fetch('/' + track.file)
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer() })
+    var bytes = track.local
+      ? track.local.arrayBuffer()
+      : fetch('/' + track.file).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer() })
+    return bytes
       .then(function (ab) { return new Promise(function (res, rej) { c.decodeAudioData(ab, res, rej) }) })
       .then(function (buf) {
         if (token !== d.loadToken) return // a newer selection won
@@ -149,14 +151,14 @@
   }
 
   /* ---------- rate: tempo, sync, nudge ---------- */
-  function baseRate (d) { return synced && d.track ? tempo / d.track.bpm : 1 }
+  function baseRate (d) { return synced && d.track && d.track.bpm ? tempo / d.track.bpm : 1 }
   function applyRate (d) {
     var r = baseRate(d) * (1 + d.nudge)
     if (d.playing && ctx) { d.offset = position(d); d.startedAt = ctx.currentTime }
     d.rate = r
     if (d.src) d.src.playbackRate.setTargetAtTime(r, ctx.currentTime, 0.015)
     var bpmEl = $('[data-bpm="' + d.id + '"]')
-    bpmEl.textContent = d.track ? Math.round(d.track.bpm * r) : '—'
+    bpmEl.textContent = d.track && d.track.bpm ? Math.round(d.track.bpm * r) : '—'
   }
 
   /* ---------- mixer (original curves) ---------- */
@@ -240,6 +242,13 @@
     var sel = document.getElementById('sel' + k)
     populate(sel)
     sel.addEventListener('change', function () { load(d, sel.value) })
+    var fileEl = $('[data-file="' + k + '"]')
+    if (fileEl) fileEl.addEventListener('change', function () {
+      var f = fileEl.files && fileEl.files[0]
+      if (!f) return
+      sel.value = ''
+      load(d, f)
+    })
     $('[data-play="' + k + '"]').addEventListener('click', function () { toggle(d) })
     var seekEl = $('[data-seek="' + k + '"]')
     seekEl.addEventListener('change', function () { seek(d, +seekEl.value / 1000) })
@@ -269,7 +278,7 @@
   $('#syncBtn').addEventListener('click', function () {
     synced = !synced
     this.setAttribute('aria-pressed', String(synced))
-    if (synced && decks.A.track && decks.B.track && !this.dataset.touched) {
+    if (synced && decks.A.track && decks.B.track && decks.A.track.bpm && decks.B.track.bpm && !this.dataset.touched) {
       // First sync with two tracks: start from the midpoint of their tempos (original behaviour).
       tempo = Math.round((decks.A.track.bpm + decks.B.track.bpm) / 2)
       $('#tempo').value = tempo

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hinge — case study — Maria Showalter</title>
+<link rel="canonical" href="https://mariashowalter.com/work/hinge/"/>
+<meta name="description" content="Hinge: tune hover, press and drag motion by handling a component and shaping its spring, then export a React component that moves the same way."/>
+<meta property="og:title" content="Hinge — case study — Maria Showalter"/>
+<meta property="og:description" content="Hinge: tune hover, press and drag motion by handling a component and shaping its spring, then export a React component that moves the same way."/>
+<meta property="og:image" content="https://mariashowalter.com/assets/media/hinge/hinge-loop-poster.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
+<link rel="stylesheet" href="/assets/css/tokens.css"/>
+<link rel="stylesheet" href="/assets/css/base.css"/>
+<link rel="stylesheet" href="/assets/css/nav.css"/>
+<link rel="stylesheet" href="../case-study.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- region:nav current=work -->
+<header class="mast"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta"><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<nav class="cs-nav" aria-label="Case study sections">
+  <div class="links">
+    <a href="#system">Engineering</a>
+    <a href="#testing">Evidence</a>
+    <a class="primary" href="/work/edition/">Next: Edition →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · web app · 2026</span>
+  <h1 class="cs-title">Hinge</h1>
+  <p class="cs-sub">Design how interfaces move, then export the code.</p>
+  <p class="cs-lede">Hinge is a workshop for interface motion. You handle one component on a stage — hover it, press it, drag and throw it — and shape the spring behind each state. Export writes a React + TypeScript component that runs the same spring code the stage ran.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Design and engineering</dd></div>
+    <div><dt>Stack</dt><dd>React · TypeScript · Vite · closed-form spring solver · code generation</dd></div>
+    <div><dt>Status</dt><dd>Live · MIT · desktop and phone layouts</dd></div>
+    <div><dt>Links</dt><dd><a href="https://mariaareadne1.github.io/hinge/">Try it ↗</a> · <a href="https://github.com/Mariaareadne1/hinge">Source ↗</a></dd></div>
+  </dl>
+</header>
+
+<div class="film">
+  <figure>
+    <video id="hero-film" src="/assets/media/hinge/hinge-loop.mp4" poster="/assets/media/hinge/hinge-loop-poster.jpg" muted loop playsinline controls preload="metadata"
+      aria-label="Hinge: a card on the stage is dragged and released, then the spring is retuned and the release motion changes."></video>
+    <figcaption><span class="label">New capture</span> Recorded from the live app in a real Chromium session with scripted pointer input. Silent loop.</figcaption>
+  </figure>
+</div>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Overview</span><h2 id="s1">For people who design motion and want to ship it as code.</h2></header>
+  <div class="prose">
+    <p>Motion is usually specified twice: once in a prototyping tool, then again by whoever implements it, by eye. Hinge removes the second step. The thing you tune is the thing you export, so “it felt better in the prototype” stops being a conversation.</p>
+    <p>There is one specimen at a time — a card, a button or a draggable token — and four states: Rest, Hover, Press, Drag. Three recipes (Lift, Snap, Magnet) are physically different starting points, not just different numbers.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s2">
+  <header><span class="num">02 — Interaction</span><h2 id="s2">Touch the object, pick a state, shape the spring, export.</h2></header>
+  <ol class="steps"><li><h3>Touch</h3><p>Hover, press, drag and throw the specimen with a mouse, finger or keyboard.</p></li><li><h3>Pick a state</h3><p>The rail on the left selects Rest, Hover, Press or Drag; the object shows which state it is in now.</p></li><li><h3>Shape</h3><p>Drag the peak of the response curve, or scrub stiffness, damping and mass. Measured dots trace the real motion.</p></li><li><h3>Export</h3><p>The export bench shows the generated files: the component, its CSS, the runtime and a config. React is the only dependency.</p></li></ol>
+  <!-- step-figures -->
+</section>
+
+<section class="cs-section" id="system" aria-labelledby="s3">
+  <header><span class="num">03 — Engineering</span><h2 id="s3">One spring, solved exactly, shipped verbatim.</h2></header>
+  <div class="prose">
+    <p>Every channel (x, y, scale, rotate, lift) is a damped harmonic oscillator, <code>m·x″ + c·x′ + k·x = 0</code>, solved in closed form for the under-, critically- and over-damped cases. Nothing is integrated frame by frame, so frame rate cannot change the motion and the curve on screen is the function the element follows.</p>
+    <p>The stage renders the same specimen components that an export contains. Exporting copies the runtime files byte for byte and substitutes the tuned values; nothing in an export imports Hinge.</p>
+  </div>
+  <div class="diagram" role="img" aria-label="Pointer, touch and keyboard input feed the runtime state machine, which drives per-channel closed-form springs that set the element transform; the same runtime and specimen source are copied into the exported component."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="40">pointer · touch · keys</text><text x="250" y="34">runtime.ts</text><text x="250" y="52" fill="#5F6977">state machine</text><text x="440" y="34">spring.ts</text><text x="440" y="52" fill="#5F6977">closed form x(t), v(t)</text><text x="630" y="40">transform</text><text x="250" y="132">generateReact.ts</text><text x="440" y="132">component + runtime</text><text x="630" y="132">your app</text></g><path d="M150 36h90M360 36h70M590 36h30M610 128h20M400 128h30M300 60v52" stroke="#2348C7"/><rect x="236" y="14" width="150" height="50" rx="3"/><rect x="426" y="14" width="170" height="50" rx="3"/><rect x="236" y="112" width="150" height="30" rx="3"/><rect x="426" y="112" width="170" height="30" rx="3"/></svg></div>
+  <article class="decision">
+    <div>
+      <h3>Closed form instead of a physics step.</h3>
+      <p>An integrator would be simpler to write and would drift with frame rate. The closed form gives an exact position and velocity at any time, which is what makes the editor’s curve, the measured trace and the exported component agree. When state changes, each channel is re-seeded from its current position <em>and</em> velocity, so a release that is still gliding home isn’t interrupted by a hover.</p>
+      <p class="where">src/runtime/spring.ts · Hinge @ 41c0ddd</p>
+    </div>
+<pre><code>// spring.ts — exact state at time t (under-damped branch)
+const wd = w * Math.sqrt(1 - z * z)
+const decay = Math.exp(-z * w * t)
+return {
+  x: decay * (x0 * cos + ((v0 + z * w * x0) / wd) * sin),
+  v: decay * (v0 * cos - ((w * w * x0 + z * w * v0) / wd) * sin),
+}</code></pre>
+  </article>
+  <article class="decision">
+    <div>
+      <h3>A graph handle that edits feel, not numbers.</h3>
+      <p>Dragging the curve’s peak sets <em>when</em> the motion peaks and <em>how far</em> it overshoots, which is how people describe motion. The handle inverts those two values into stiffness and damping at the current mass. The time axis holds still during the drag so the peak stays under the pointer.</p>
+      <p class="where">src/runtime/spring.ts · springFromPeak</p>
+    </div>
+<pre><code>// peak time + overshoot → stiffness, damping
+const lnOs = Math.log(os)
+const zeta = -lnOs / Math.sqrt(Math.PI * Math.PI + lnOs * lnOs)
+const omega0 = Math.PI / (tp * Math.sqrt(1 - zeta * zeta))
+const stiffness = m * omega0 * omega0
+const damping = 2 * zeta * Math.sqrt(stiffness * m)</code></pre>
+  </article>
+</section>
+
+<section class="cs-section" id="testing" aria-labelledby="s4">
+  <header><span class="num">04 — Evidence</span><h2 id="s4">What is tested, and what isn’t.</h2></header>
+  <div class="prose">
+    <p>The repository’s export-parity test builds generated components into a fresh Vite app outside the repo, drives the stage and the export with identical input, and compares the element’s computed transform frame by frame.</p>
+  </div>
+  <!-- evidence-media -->
+  <div class="table-wrap">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody><tr><td>Unit tests: spring math, graph handle, schema, codegen</td><td class="ok">EVIDENCE_HINGE_UNIT</td><td>Run for this page; see note</td></tr><tr><td>Export parity, editor vs exported component</td><td class="ok">≤ 0.43 px</td><td>Largest raw difference across five motions, recorded 2026-10-21 in the repo; not re-run here</td></tr><tr><td>Editor + axe E2E, Chromium and WebKit</td><td class="ok">recorded pass</td><td>Repo PROGRESS.md; not re-run here</td></tr><tr><td>Physical touch devices, Firefox, iOS Safari</td><td class="no">not verified</td><td>Touch is emulated in tests</td></tr></tbody>
+    </table>
+  </div>
+  <p class="note">Hinge @ <span class="mono">41c0ddd</span>. Parity figures are from the repository’s own dated test record. No user research or usage figures are claimed.</p>
+</section>
+
+<section class="cs-section" aria-labelledby="s5">
+  <header><span class="num">05 — Status</span><h2 id="s5">Limitations and what isn’t shipped.</h2></header>
+  <div class="prose">
+    <p>One specimen at a time; three specimen types. Motion is limited to transform channels and a lift shadow — no layout animation or shared-element transitions. React 18 is declared compatible but only React 19 is exercised by the fixture. Touch is tested by emulation only.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s6">
+  <header><span class="num">06 — Links</span><h2 id="s6">Try it, read the source.</h2></header>
+  <div class="prose">
+    <ul>
+      <li><a href="https://mariaareadne1.github.io/hinge/">mariaareadne1.github.io/hinge/</a> — the live app</li>
+      <li><a href="https://github.com/Mariaareadne1/hinge">github.com/Mariaareadne1/hinge</a> — source, MIT</li>
+    </ul>
+    <p>Fonts and third-party notices are listed in the repository’s THIRD_PARTY_NOTICES.md.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="cs-footer">
+  <a href="https://github.com/Mariaareadne1/hinge">Source on GitHub ↗</a>
+  <a href="/work/edition/">Next case study: Edition →</a>
+  <a href="/work/">All work</a>
+  <a href="/">← Home</a>
+</footer>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap">
+<div class="foot-row">
+<p class="foot-name">Maria Showalter</p>
+<ul class="foot-links"><li><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></li><li><a href="https://github.com/Mariaareadne1">GitHub</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube</a></li></ul>
+<a class="top-link" href="#top">Back to top</a>
+</div>
+</div></footer>
+<!-- /region:foot -->
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

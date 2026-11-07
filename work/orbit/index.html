@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Orbit — case study — Maria Showalter</title>
+<link rel="canonical" href="https://mariashowalter.com/work/orbit/"/>
+<meta name="description" content="Orbit: place, draw or perform the positions of sounds around a listener; positions drive Web Audio HRTF panning and render offline to a stereo WAV."/>
+<meta property="og:title" content="Orbit — case study — Maria Showalter"/>
+<meta property="og:description" content="Orbit: place, draw or perform the positions of sounds around a listener; positions drive Web Audio HRTF panning and render offline to a stereo WAV."/>
+<meta property="og:image" content="https://mariashowalter.com/assets/media/orbit/orbit-loop-poster.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"/>
+<link rel="stylesheet" href="/assets/css/tokens.css"/>
+<link rel="stylesheet" href="/assets/css/base.css"/>
+<link rel="stylesheet" href="/assets/css/nav.css"/>
+<link rel="stylesheet" href="../case-study.css"/>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!-- region:nav current=work -->
+<header class="mast"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta"><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<nav class="cs-nav" aria-label="Case study sections">
+  <div class="links">
+    <a href="#system">Engineering</a>
+    <a href="#testing">Evidence</a>
+    <a class="primary" href="/work/filo/">Next: Filo →</a>
+  </div>
+</nav>
+
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · web app · 2026</span>
+  <h1 class="cs-title">Orbit</h1>
+  <p class="cs-sub">Draw paths for sounds to move around your head.</p>
+  <p class="cs-lede">Orbit is a small spatial-sound stage. Up to six sounds sit around a listener; you place them, draw paths for them, or perform their motion live. Those positions drive Web Audio’s HRTF panner, and the arrangement renders offline to a WAV that pans the way playback did.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Design and engineering</dd></div>
+    <div><dt>Stack</dt><dd>TypeScript · React · Web Audio (PannerNode, OfflineAudioContext, AudioWorklet)</dd></div>
+    <div><dt>Status</dt><dd>Live · MIT · headphones recommended</dd></div>
+    <div><dt>Links</dt><dd><a href="https://mariaareadne1.github.io/orbit/">Try it ↗</a> · <a href="https://github.com/Mariaareadne1/orbit">Source ↗</a></dd></div>
+  </dl>
+</header>
+
+<div class="film">
+  <figure>
+    <video id="hero-film" src="/assets/media/orbit/orbit-loop.mp4" poster="/assets/media/orbit/orbit-loop-poster.jpg" muted loop playsinline controls preload="metadata"
+      aria-label="Orbit: sounds are placed around the listener, a path is drawn, and playback moves the sounds along it."></video>
+    <figcaption><span class="label">New capture</span> Recorded from the live app (Orbit @ 3beba22) in Chromium with scripted pointer input; the white dot is a capture-only pointer marker. Silent loop; the audible export is in Evidence.</figcaption>
+  </figure>
+</div>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Overview</span><h2 id="s1">Composing where a sound is, not just what it is.</h2></header>
+  <div class="prose">
+    <p>Stereo panning puts a sound somewhere on a line between two speakers. With headphones and a head-related transfer function, a sound can sit to the side, move past you, or circle you. Orbit makes that a compositional parameter you can draw.</p>
+    <p>Three sounds are generated in code (drone, plucks, pulse); you can add your own files, which are decoded locally and never uploaded.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s2">
+  <header><span class="num">02 — Interaction</span><h2 id="s2">Place, draw, perform, export.</h2></header>
+  <ol class="steps"><li><h3>Place</h3><p>Drag a sound to a fixed spot on a top-down room measured in metres.</p></li><li><h3>Draw</h3><p>Sketch a path; it is spread evenly across the piece, with direction marks on the stage.</p></li><li><h3>Perform</h3><p>Record your hand against the playing music; the score marks the stretch being replaced.</p></li><li><h3>Export</h3><p>Render the same graph offline to a 48 kHz, 16-bit stereo WAV, with peak and clipping reported.</p></li></ol>
+  <div class="pair wide">
+    <figure><img src="/assets/media/orbit/orbit-step-2.jpg" width="1600" height="1000" loading="lazy" alt="Orbit in Draw mode: a path being sketched for the Plucks sound around the listener."/><figcaption><strong>Draw.</strong> The stroke becomes keyframes spread evenly over the 12-second piece.</figcaption></figure>
+    <figure><img src="/assets/media/orbit/orbit-step-3.jpg" width="1600" height="1000" loading="lazy" alt="Orbit during playback: the playhead moving in the score and two sounds partway along their paths."/><figcaption><strong>Play.</strong> The stage draws from the same interpolation the panners are scheduled with.</figcaption></figure>
+  </div>
+</section>
+
+<section class="cs-section" id="system" aria-labelledby="s3">
+  <header><span class="num">03 — Engineering</span><h2 id="s3">Positions are scheduled on the audio clock.</h2></header>
+  <div class="prose">
+    <p>Paths are piecewise-linear keyframes. Instead of moving the panner from the animation loop, Orbit schedules each keyframe on the <code>PannerNode</code>’s position parameters ahead of time with <code>linearRampToValueAtTime</code>. Motion is sample-accurate and independent of frame rate; the stage only reads the same interpolation to draw.</p>
+    <p>Live playback runs at 48 kHz like the export, because browser HRTF kernels depend on the sample rate.</p>
+  </div>
+  <div class="diagram" role="img" aria-label="Stage gestures write keyframe paths; paths are scheduled on each PannerNode position parameter; the same graph runs in an AudioContext for playback and in an OfflineAudioContext for WAV export."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="40">place · draw · perform</text><text x="200" y="34">path.ts</text><text x="200" y="52" fill="#5F6977">keyframes (t, x, y)</text><text x="400" y="34">graph.ts</text><text x="400" y="52" fill="#5F6977">PannerNode HRTF ramps</text><text x="600" y="34">AudioContext</text><text x="600" y="52" fill="#5F6977">live, 48 kHz</text><text x="600" y="130">OfflineAudioContext</text><text x="600" y="148" fill="#5F6977">WAV export</text></g><path d="M150 36h40M330 36h60M560 36h30M480 62v68h110" stroke="#2348C7"/><rect x="190" y="14" width="140" height="50" rx="3"/><rect x="390" y="14" width="170" height="50" rx="3"/></svg></div>
+  <article class="decision">
+    <div>
+      <h3>Schedule ahead; seek exactly.</h3>
+      <p>Moving a panner from <code>requestAnimationFrame</code> would tie spatial motion to frame rate and drop steps when the tab is busy. Scheduling on the audio clock removes that, but seeking then needs care: segments already in the past are replaced by the interpolated position at the seek offset. Loops are scheduled a quarter-second before each cycle ends.</p>
+      <p class="where">src/audio/graph.ts · Orbit @ 3beba22</p>
+    </div>
+<pre><code>export function schedulePath(panner, path, startAt, offset = 0) {
+  const params = [panner.positionX, panner.positionY, panner.positionZ]
+  for (const p of params) p.cancelScheduledValues(0)
+  setPosition(panner, positionAt(path, offset), startAt)
+  for (const k of remaining(path, offset)) {
+    const a = stageToAudio(k)
+    const when = startAt + (k.t - offset)
+    panner.positionX.linearRampToValueAtTime(a.x, when)
+    // … y, z
+  }
+}</code></pre>
+  </article>
+  <article class="decision">
+    <div>
+      <h3>Export must pan the way playback did.</h3>
+      <p>The export builds the same graph in an <code>OfflineAudioContext</code>. A repository test taps the live master with an AudioWorklet during a left-to-right pass, renders the same arrangement offline, and compares left/right balance in half-second windows.</p>
+      <p class="where">src/audio/proof.ts · tests/e2e</p>
+    </div>
+<pre><code>// Coordinates (src/audio/coords.ts):
+// listener at origin facing −Z, +Y up
+// stage (x, y) in metres → audio (x, 0, −y)
+// panner: HRTF, inverse distance, ref 1 m, rolloff 1</code></pre>
+  </article>
+</section>
+
+<section class="cs-section" id="testing" aria-labelledby="s4">
+  <header><span class="num">04 — Evidence</span><h2 id="s4">What is tested, and what isn’t.</h2></header>
+  <div class="prose">
+    <p>Listen with headphones. The clip below is a WAV exported by Orbit during this capture, re-encoded for the web. It plays only when you press play.</p>
+  </div>
+  <figure class="listen wide">
+    <figcaption><strong>Exported from Orbit for this page</strong> — 12 s, stereo. Headphones recommended.</figcaption>
+    <audio controls preload="none" src="/assets/media/orbit/orbit-export.m4a">Your browser can’t play this audio. <a href="/assets/media/orbit/orbit-export.m4a">Download it</a>.</audio>
+  </figure>
+  <div class="wide"><figure><img src="/assets/media/orbit/orbit-step-4.jpg" width="1600" height="1000" loading="lazy" alt="Orbit after export: the status line reads WAV, 12 s, 48 kHz stereo 16-bit, peak −15.2 dBFS, 0 clipped."/><figcaption>The app’s own export report for the WAV above.</figcaption></figure></div>
+  <div class="table-wrap">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody><tr><td>Unit: coordinates, paths, gestures, analysis, WAV</td><td class="ok">14 / 14</td><td>vitest, run 7 Nov 2026 for this page</td></tr><tr><td>Exported WAV for this page</td><td class="ok">stereo · 0 clipped</td><td>Analysed outside the browser; see note</td></tr><tr><td>Live vs export L/R balance</td><td class="ok">≤ 0.06 dB</td><td>Chromium and WebKit, recorded 2026-10-25/26 in the repo; not re-run here</td></tr><tr><td>Front/back and elevation localisation</td><td class="no">not claimed</td><td>Browser HRTFs are generic; cues are weak for many listeners</td></tr></tbody>
+    </table>
+  </div>
+  <p class="note">Orbit @ <span class="mono">3beba22</span> (the head of the latest successful deploy run). The WAV for this page: 2 channels, 48 kHz, 16-bit, 12.0 s; peaks −15.2 / −15.6 dBFS; 0 clipped samples; left/right balance moves between −1.0 and +2.3 dB across 100 ms windows as the sources travel. The swing is modest because one sound is held behind-left and the generated sounds are mostly low-frequency. Analysis: <a href="/assets/media/orbit/orbit-export-analysis.json">orbit-export-analysis.json</a>.</p>
+</section>
+
+<section class="cs-section" aria-labelledby="s5">
+  <header><span class="num">05 — Status</span><h2 id="s5">Limitations and what isn’t shipped.</h2></header>
+  <div class="prose">
+    <p>Spatial effects need headphones. Browser HRTF datasets differ by engine and are not personalised, so front/back and elevation cues are weak for many listeners; Orbit does not promise “8D” immersion. Sources stay at ear height. Firefox was not tested.</p>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s6">
+  <header><span class="num">06 — Links</span><h2 id="s6">Try it, read the source.</h2></header>
+  <div class="prose">
+    <ul>
+      <li><a href="https://mariaareadne1.github.io/orbit/">mariaareadne1.github.io/orbit/</a> — the live app</li>
+      <li><a href="https://github.com/Mariaareadne1/orbit">github.com/Mariaareadne1/orbit</a> — source, MIT</li>
+    </ul>
+    <p>The three built-in sounds are generated in code; there are no third-party samples.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="cs-footer">
+  <a href="https://github.com/Mariaareadne1/orbit">Source on GitHub ↗</a>
+  <a href="/work/filo/">Next case study: Filo →</a>
+  <a href="/work/">All work</a>
+  <a href="/">← Home</a>
+</footer>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap">
+<div class="foot-row">
+<p class="foot-name">Maria Showalter</p>
+<ul class="foot-links"><li><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></li><li><a href="https://github.com/Mariaareadne1">GitHub</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube</a></li></ul>
+<a class="top-link" href="#top">Back to top</a>
+</div>
+</div></footer>
+<!-- /region:foot -->
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

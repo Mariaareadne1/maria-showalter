@@ -1,53 +1,28 @@
-# PROGRESS — portfolio editorial redesign (preview branch)
+# PROGRESS — Portfolio V1
 
-- Working directory: `~/Developer/design-engineering-build-2026/maria-showalter-redesign`
-- Worktree of: `~/Development/Personal/maria-showalter` (protected, on `iris-header-preview`, dirty — never touched)
-- Branch: `design/portfolio-editorial-explorations` (created from `origin/main` @ `9ca218c`, upstream unset)
-- Production: `main` and `CNAME` untouched. No merge, no deploy.
-
-## Commands
-
-```bash
-npm install                     # Playwright 1.64 (dev only)
-npm run serve                   # http://127.0.0.1:5451/
-FULL=1 node tests/capture.mjs http://127.0.0.1:5451/ docs/screenshots/<dir> / work/
-```
+- **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v1`
+- **Branch:** `design/portfolio-v1-content-media`, created from `design/portfolio-editorial-explorations` @ `a0204eb` (draft PR #1 head; clean and equal to origin at start).
+  Why a new branch rather than continuing PR #1: PR #1 is a set of design studies the owner may still want to compare. V1 is a different scope (copy reset, new media, new case studies), so it gets its own reviewable branch and draft PR.
+- **Protected, never written to:** `~/Development/Personal/maria-showalter` (`iris-header-preview`, dirty: halftone engine + `playground.html`), `main`, `CNAME`.
+- **Preview:** `python3 -m http.server 5461 --bind 127.0.0.1 --directory <worktree>` (launch config `portfolio-v1`).
 
 ## Milestones
 
-- [x] P0 — preflight, audit (`SITE-AUDIT.md`), live baseline screenshots (`docs/screenshots/baseline/`)
-- [x] P1 — three design studies (`/design-studies/`) + `DESIGN-DECISIONS.md`
-- [x] P2 — provisional shell + homepage (secondary routes land in P3)
-- [x] P3 — secondary pages + case studies
-- [x] P4 — DJ deck restyle + microinteractions
-- [x] P5 — QA, regression, `DESIGN-REVIEW.md`
+- [x] M0 Preflight: branches, PR #1 (draft, open), app repos (Hinge/Edition/Orbit redesigns merged to their `main` and deployed), tools, baseline smoke (Chromium all pass) and captures `docs/screenshots/v1-baseline/`.
+- [~] M1 Copy, nav, hero: registry rewritten, name-only header, “Design Engineer” hero, Currently with FoRG/CMC links, Art = Coming soon, About shortened, case-study titles de-emphasised.
+- [~] M2 Exhibition + Work index: layout built; waiting on new media.
+- [ ] M3 Demo media: capture agents running for Hinge, Edition, Orbit, FrameFlow (studio via Electron test harness). Iris pending.
+- [ ] M4 Case studies: Hinge, Edition, Orbit pages to add; FrameFlow/Filo/Iris preserved.
+- [ ] M5 Playground/Art/Writing/About/footer/deck rights.
+- [ ] M6 Critique passes + full QA.
+- [ ] M7 Push, draft PR, handoff.
 
-## Log
+## Environment notes
 
-- 2026-10-25 P0: audit + baseline. Media derivatives generated under `assets/media/`.
-- 2026-10-26 P1: studies A/B/C, atmosphere module (3 modes), hero slot loader, content registry `content/site.json`. Captures in `docs/screenshots/studies/`.
-- 2026-10-26 P2: tokens/base/nav/media/home/dj CSS, site.js (menu dialog, video previews), dj.js (real tempo/sync, pause/seek, nudge, volume), content build script, new homepage. Smoke on `/` chromium: only failures were links to P3 routes not yet built.
-- 2026-10-26 P3: Work/Playground/Art/Writing/About/404, gallery redirect, essays and case studies on the shared system (`f7d7991`).
-- 2026-10-26 P4: DJ tests (29/engine), hero integration test, perf + smoke suites (`a24f69c`).
-- 2026-10-26 P5: review fixes (dj.js deselect race + bfcache, atmosphere timer, build-script errors, dialog fallback), final captures in `docs/screenshots/preview/`, DESIGN-REVIEW.md.
+- Homebrew ffmpeg/ffprobe broken (libx265). Use `~/Developer/FrameFlow/node_modules/ffmpeg-static/ffmpeg` and `.../ffprobe-static/bin/darwin/arm64/ffprobe`.
+- System sleep is set to 1 minute; background agents were cut off by sleep several times. Keep-awake was declined by the permission classifier.
+- No PIL; `scripts/slice.sh` splits tall screenshots with ffmpeg.
 
-## Tests
+## Next safe command
 
-```bash
-npm run serve &                                   # or the preview server on 5451
-node tests/smoke.mjs http://127.0.0.1:5451/       # ENGINES=chromium,webkit
-node tests/dj.mjs http://127.0.0.1:5451/
-node tests/hero-integration.mjs http://127.0.0.1:5451/
-node tests/perf.mjs https://mariashowalter.com/ http://127.0.0.1:5451/
-node scripts/build-content.mjs --check
-```
-
-## Media and rights
-
-- Six commercial MP3s remain in the repo (unchanged from `main`) and selectable in the deck; no licence on file. Tests use a generated WAV.
-- Hinge/Edition/Orbit images copied from each repo's committed `docs/media/` (pre-redesign captures, labelled on the page).
-- Private Filo findings stay in `../audits/filo-audit.md` / BUILD-STATUS; nothing about them is in public copy.
-
-## Next safe action
-
-Owner review of DESIGN-REVIEW.md §4 open decisions. Do not merge to `main` or touch CNAME without explicit approval. Do not run git commands that write in the protected checkout.
+`node scripts/build-content.mjs --check && ENGINES=chromium node tests/smoke.mjs http://127.0.0.1:5461/`

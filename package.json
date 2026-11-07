@@ -4,10 +4,10 @@
   "description": "Static site for mariashowalter.com. No build step for the site itself; these scripts are dev tooling only.",
   "type": "module",
   "scripts": {
-    "serve": "python3 -m http.server 5451 --bind 127.0.0.1",
+    "serve": "python3 -m http.server 5461 --bind 127.0.0.1",
     "content": "node scripts/build-content.mjs",
-    "test": "node tests/smoke.mjs http://127.0.0.1:5451/",
-    "test:dj": "node tests/dj.mjs http://127.0.0.1:5451/",
+    "test": "node tests/smoke.mjs http://127.0.0.1:5461/",
+    "test:dj": "node tests/dj.mjs http://127.0.0.1:5461/",
     "shots": "node tests/capture.mjs"
   },
   "devDependencies": {

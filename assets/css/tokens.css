@@ -12,9 +12,10 @@
   --rule: #D7DCE3;
   --rule-strong: #161A22;
 
-  /* Signature — used for links, active labels, numerals, the italic surname. Never as a fill. */
+  /* Accent — links, the active nav rule, focus. Never a fill, never a highlighted word. */
   --cobalt: #2348C7;        /* 6.87:1 on paper */
   --cobalt-wash: rgba(35, 72, 199, 0.07);
+  --cobalt-line: rgba(35, 72, 199, 0.28);
 
   /* Media environments (per project, not site themes) */
   --stage-dark: #0C1022;    /* Iris */

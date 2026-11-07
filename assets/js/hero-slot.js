@@ -4,9 +4,9 @@
    The engine (halftone/halftone-cover.js, window.HalftoneCover) is a separate,
    artist-owned project and is NOT part of this branch. This file never edits
    or re-implements it. When a page also loads that script, every element with
-   [data-halftone-slot] is handed to HalftoneCover.mount() and its static
-   fallback is hidden. Without the engine, the fallback stays: an authentic
-   existing photograph, never a generated likeness.
+   [data-halftone-slot] is unhidden and handed to HalftoneCover.mount().
+   Without the engine the slot stays hidden and the hero is typographic —
+   never a generated likeness or a stretched low-resolution photo.
 
    To integrate after review, add before this script:
      <script src="/halftone/halftone-cover.js"></script>
@@ -28,10 +28,12 @@
       }
       var stage = slot.querySelector('[data-halftone-stage]') || slot
       try {
+        slot.hidden = false
         engine.mount(stage, config)
         slot.dataset.state = 'live'
       } catch (e) {
-        console.error('hero-slot: HalftoneCover.mount failed; keeping the fallback', e)
+        console.error('hero-slot: HalftoneCover.mount failed; hiding the slot', e)
+        slot.hidden = true
         slot.dataset.state = 'fallback'
       }
     }
