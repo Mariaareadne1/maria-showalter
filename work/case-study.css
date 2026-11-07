@@ -23,7 +23,7 @@ a { color: var(--blue); }
 .skip:focus { top: 10px; }
 
 /* in-page contents bar (the global masthead sits above it) */
-.cs-nav { position: sticky; top: 0; z-index: 15; display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding: 10px max(24px, 6vw); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+.cs-nav { position: sticky; top: var(--mast-h, 58px); z-index: 15; display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding: 10px max(24px, 6vw); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
 .cs-nav a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; text-decoration: none; padding: 6px 0; }
 .cs-nav .home { color: var(--blue); }
 .cs-nav .links { display: flex; gap: 22px; }

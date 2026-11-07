@@ -11,9 +11,9 @@
 .deck { grid-column: 5 / span 8; }
 
 .presets { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-bottom: 14px; }
-.chip { font: 500 12.5px var(--mono); color: var(--ink); background: none; border: 0; border-bottom: 1px solid var(--rule); padding: 6px 0; cursor: pointer; }
-.chip:hover, .chip:focus-visible { border-bottom-color: var(--ink); }
-.chip[aria-pressed="true"] { color: var(--cobalt); border-bottom-color: var(--cobalt); }
+.chip { font: 500 14px/1 var(--sans); color: var(--paper); background: var(--ink); border: 1px solid var(--ink); border-radius: 2px; padding: 10px 14px; cursor: pointer; transition: background var(--t-fast) var(--ease); }
+.chip:hover, .chip:focus-visible { background: var(--cobalt); border-color: var(--cobalt); }
+.chip[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
 
 /* The sheet */
 .console {
@@ -108,3 +108,5 @@
   .pos label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .xfade { margin: 10px 6px 4px; }
 }
+
+.deck-notes .rights { font: 400 13px/1.55 var(--sans); color: var(--meta); max-width: 34ch; }

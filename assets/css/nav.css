@@ -29,3 +29,7 @@
 /* Fallback when <dialog> is unsupported: keep the inline nav on phones, wrapped. */
 .no-dialog .menu-btn { display: none !important; }
 @media (max-width: 760px) { .no-dialog .mast nav[aria-label="Primary"] { display: block; } .no-dialog .mast .wrap { flex-wrap: wrap; } .no-dialog .mast ul { flex-wrap: wrap; gap: 4px 16px; } }
+
+/* Header height, used by sticky sub-bars (case-study section nav). Measured: 58 px desktop, 60 px phone. */
+:root { --mast-h: 58px; }
+@media (max-width: 760px) { :root { --mast-h: 60px; } }
