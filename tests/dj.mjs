@@ -1,10 +1,10 @@
 // DJ deck behaviour test.
-//   node tests/dj.mjs http://127.0.0.1:5451/
+//   node tests/dj.mjs http://127.0.0.1:5461/
 // The six commercial MP3s are never decoded here: every track request is answered with a
 // generated WAV fixture (sine + 120 BPM clicks), so tests use rights-clean audio only.
 import { chromium, webkit } from '@playwright/test'
 
-const base = process.argv[2] ?? 'http://127.0.0.1:5451/'
+const base = process.argv[2] ?? 'http://127.0.0.1:5461/'
 const engines = (process.env.ENGINES ?? 'chromium,webkit').split(',')
 const TYPES = { chromium, webkit }
 let failures = 0, soft = 0
@@ -37,9 +37,10 @@ for (const engine of engines) {
   const audioRequests = []
   const errors = []
   page.on('pageerror', (e) => errors.push(e.message))
-  await page.route(/track-.*\.mp3$/, (route) => {
+  let failLoopB = false
+  await page.route(/loop-[ab]\.m4a$/, (route) => {
     audioRequests.push(route.request().url())
-    if (route.request().url().includes('track-bills')) return route.fulfill({ status: 404, body: 'missing' })
+    if (failLoopB && route.request().url().includes('loop-b')) return route.fulfill({ status: 404, body: 'missing' })
     return route.fulfill({ status: 200, contentType: 'audio/wav', body: WAV })
   })
   await page.goto(base + '#deck', { waitUntil: 'networkidle' })
@@ -50,7 +51,7 @@ for (const engine of engines) {
   check(await page.locator('[data-play="A"]').isDisabled(), 'Play is disabled with no track')
 
   // Load a pair via a suggestion chip (one real gesture).
-  await page.getByRole('button', { name: 'Yummy + Paper Planes' }).click()
+  await page.getByRole('button', { name: 'Load both loops' }).click()
   await page.waitForFunction(() => document.querySelector('[data-status="A"]').textContent.startsWith('Ready') && document.querySelector('[data-status="B"]').textContent.startsWith('Ready'), null, { timeout: 15000 })
   s = await state(page)
   check(s.A.loaded !== false && s.B.loaded !== false, 'both decks decode the fixture and build their graphs')
@@ -105,12 +106,12 @@ for (const engine of engines) {
   check(near((await state(page)).A.rate, 1, 0.001), 'unsynced deck plays at its native rate')
   await page.locator('#syncBtn').click()
   s = await state(page)
-  check(s.synced && s.tempo === 97, 'Sync engages at the midpoint of 96 and 98 BPM')
-  check(near(s.A.rate, 97 / 96, 0.002) && near(s.B.rate, 97 / 98, 0.002), 'Sync sets each deck’s playbackRate to tempo / track BPM')
-  await setRange(page, '#tempo', 120)
+  check(s.synced && s.tempo === 118, 'Sync engages at the midpoint of 112 and 124 BPM')
+  check(near(s.A.rate, 118 / 112, 0.002) && near(s.B.rate, 118 / 124, 0.002), 'Sync sets each deck’s playbackRate to tempo / track BPM')
+  await setRange(page, '#tempo', 140)
   s = await state(page)
-  check(near(s.A.rate, 120 / 96, 0.002), 'tempo 120 → deck A rate 1.25')
-  check((await page.locator('[data-bpm="A"]').textContent()) === '120', 'deck A BPM readout shows the real tempo')
+  check(near(s.A.rate, 140 / 112, 0.002), 'tempo 140 → deck A rate 1.25')
+  check((await page.locator('[data-bpm="A"]').textContent()) === '140', 'deck A BPM readout shows the real tempo')
 
   // Platter nudge (pointer)
   const box = await page.locator('[data-platter="A"]').boundingBox()
@@ -123,14 +124,23 @@ for (const engine of engines) {
   check(held > 1.25 && near(released, 1.25, 0.002), `platter drag nudges the rate (${held.toFixed(3)}) and releases back (${released.toFixed(3)})`)
 
   // Regression (review finding): deselecting during a load must discard the in-flight decode.
-  await page.selectOption('#selB', 'track-no-scrubs.mp3')
+  await page.selectOption('#selB', 'assets/audio/loop-b.m4a')
   await page.selectOption('#selB', '')
   await page.waitForTimeout(1200)
   check(await page.locator('[data-play="B"]').isDisabled(), 'deselecting mid-load leaves deck B empty (Play disabled)')
   check((await page.locator('[data-status="B"]').textContent()) === 'No track loaded', 'status stays “No track loaded” after the stale decode finishes')
 
-  // Error state: Bills is answered with 404 by the route above.
-  await page.selectOption('#selB', 'track-bills.mp3')
+  // A local file: decoded in the page, no network request, unknown BPM.
+  const before = audioRequests.length
+  await page.setInputFiles('[data-file="B"]', { name: 'my-track.wav', mimeType: 'audio/wav', buffer: WAV })
+  await page.waitForFunction(() => document.querySelector('[data-status="B"]').textContent.startsWith('Ready'), null, { timeout: 10000 })
+  check(audioRequests.length === before, 'opening a local file makes no network request')
+  check((await page.locator('[data-status="B"]').textContent()).includes('my-track'), 'local file loads into deck B')
+  check((await page.locator('[data-bpm="B"]').textContent()) === '—', 'unknown BPM reads “—” and sync leaves its rate alone')
+
+  // Error state: loop B answered with 404.
+  failLoopB = true
+  await page.selectOption('#selB', 'assets/audio/loop-b.m4a')
   await page.waitForFunction(() => /Couldn’t load/.test(document.querySelector('[data-status="B"]').textContent), null, { timeout: 10000 })
   check(await page.locator('[data-play="B"]').isDisabled(), 'failed load shows an error and disables Play')
 
