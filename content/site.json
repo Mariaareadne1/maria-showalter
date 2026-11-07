@@ -39,10 +39,12 @@
       },
       "media": {
         "type": "video",
-        "src": "/work/media/frameflow/real-capture.mp4",
-        "poster": "/work/media/frameflow/real-capture-poster.jpg",
-        "still": "/work/media/frameflow/after-04-studio-moments.jpg",
-        "alt": "FrameFlow studio: a recorded demo page on the canvas with its camera Moments on the timeline"
+        "src": "/assets/media/frameflow/frameflow-loop.mp4",
+        "poster": "/assets/media/frameflow/frameflow-step-1.jpg",
+        "thumb": "/assets/media/frameflow/frameflow-step-1.jpg",
+        "w": 1600,
+        "h": 1000,
+        "alt": "FrameFlow studio: a recording plays with its automatic camera Moments, Moment 02 is renamed and zoomed in, the style changes to Midnight, and an MP4 export finishes"
       },
       "detail": "Turns a raw macOS screen recording into a composed product film: clicks and pauses become editable camera Moments, and one renderer drives preview, MP4 and GIF.",
       "line": "Record your screen. Edit the camera movement. Export a finished video."
