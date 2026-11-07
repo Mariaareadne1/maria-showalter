@@ -2,7 +2,8 @@
    Playground strip, deck. Hierarchy comes from scale and space, never from a coloured word. */
 
 /* ---------- Hero ---------- */
-.hero { position: relative; overflow: hidden; padding: clamp(56px, 12vh, 152px) 0 clamp(48px, 9vh, 112px); }
+.hero { position: relative; overflow: hidden; padding: clamp(56px, 11vh, 136px) 0 0; }
+.hero + .section { padding-top: clamp(56px, 7vw, 96px); }
 .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: end; }
 .role { grid-column: 1 / span 11; margin: 0 0 0 -0.055em; font: 330 var(--step-5)/0.86 var(--serif); font-variation-settings: 'opsz' 144; letter-spacing: -0.045em; color: var(--ink); }
 .intro { grid-column: 7 / span 5; margin: clamp(28px, 4vw, 56px) 0 0; padding-top: 16px; border-top: 1px solid var(--rule-strong); font: 400 var(--step-2)/1.4 var(--serif); font-variation-settings: 'opsz' 24; color: var(--ink); max-width: 30ch; }
@@ -60,7 +61,7 @@
 /* 4 · Orbit + Filo, quieter */
 .pw-quiet { grid-template-columns: repeat(12, minmax(0, 1fr)); }
 .pw-quiet .pw-small:first-child { grid-column: 2 / span 5; }
-.pw-quiet .pw-small:last-child { grid-column: 8 / span 4; }
+.pw-quiet .pw-small:last-child { grid-column: 7 / span 5; }
 .m-small { aspect-ratio: 3 / 2; }
 .m-small.dark { background: var(--stage-audio); }
 .m-small.paper { background: var(--mat); box-shadow: 0 0 0 1px var(--rule); }
@@ -101,6 +102,7 @@
 /* ---------- Phone ---------- */
 @media (max-width: 680px) {
   .hero { padding-top: 48px; }
+  .hero + .section { padding-top: 64px; }
   .hero-grid { grid-template-columns: 1fr; }
   .role { grid-column: 1; font-size: clamp(54px, 17vw, 88px); }
   .intro { grid-column: 1; margin-top: 28px; }
@@ -109,7 +111,7 @@
   .m-lead { aspect-ratio: 4 / 3; }
   .pw-lead .cap { display: block; }
   .pw-lead .line { margin-top: 6px; }
-  .pw-lead .links { margin-top: 10px; }
+  .pw-lead .links { margin-top: 10px; justify-self: start; justify-content: flex-start; }
   .pw-pair, .pw-quiet { grid-template-columns: 1fr; row-gap: 56px; }
   .pw-quiet .pw-small:first-child, .pw-quiet .pw-small:last-child { grid-column: 1; }
   .series-inner { grid-template-columns: 1fr; padding-top: 0; }

@@ -6,7 +6,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -25,9 +25,9 @@
     "bytes": 2228359,
     "sha256": "a848b06b3c6686a12650fff96d7adec7f9c592aa32f0eb24e3ecf458f18f9680",
     "kind": "video",
-    "scenario": "import → separations → misregistration → loupe → split compare",
+    "scenario": "import \u2192 separations \u2192 misregistration \u2192 loupe \u2192 split compare",
     "steps": [
-      "Open ▸ Image… (real file chooser) imports img_0422-1600.jpg, replacing the sample print",
+      "Open \u25b8 Image\u2026 (real file chooser) imports img_0422-1600.jpg, replacing the sample print",
       "Plate 1 view (cobalt key), Plate 2 view (vermilion accent)",
       "Hold Separate: the two plates lift apart",
       "Drag plate 2 across the sheet (to 6.00 / 6.00 mm), then Register plate 2 exactly",
@@ -44,7 +44,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -60,15 +60,15 @@
     "pix_fmt": null,
     "has_audio": false,
     "crop": null,
-    "bytes": 254912,
-    "sha256": "79f5451df6acaa4124f687880282faa00b501dc3f353686cef786e827173168a",
+    "bytes": 311402,
+    "sha256": "e141a7be65b034f12ff028a198b9ce8a21965832df42c546afa939b72a983a9c",
     "kind": "poster",
     "scenario": "loop poster (imported print)",
     "steps": [
       "frame at 3.63 s of edition-loop.mp4"
     ],
-    "capture_method": "ffmpeg frame extract, JPEG ≈q82",
-    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+    "capture_method": "ffmpeg frame extract, JPEG \u2248q82",
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app. Replaced 7 Nov 2026 with the frame at 12.0 s of edition-loop.mp4 (two-ink print, plate 2 out of register), because the original 3.6 s frame showed a single plate."
   },
   {
     "file": "edition-loop-poster.webp",
@@ -77,7 +77,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -93,15 +93,15 @@
     "pix_fmt": null,
     "has_audio": false,
     "crop": null,
-    "bytes": 211716,
-    "sha256": "1ef1622aa4530aab2ce4d37f05aa6ca0abafe07a6837b3c5bb7ec8748233d431",
+    "bytes": 213334,
+    "sha256": "e4227681165679fec35951b8e353b13b0aee9d670681a0adebeda6b006812858",
     "kind": "poster",
     "scenario": "loop poster (imported print)",
     "steps": [
       "WebP of edition-loop-poster.jpg"
     ],
     "capture_method": "ffmpeg libwebp quality 82",
-    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
+    "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app. Replaced 7 Nov 2026 with the frame at 12.0 s of edition-loop.mp4 (two-ink print, plate 2 out of register), because the original 3.6 s frame showed a single plate."
   },
   {
     "file": "edition-step-1.jpg",
@@ -110,7 +110,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -131,9 +131,9 @@
     "kind": "still",
     "scenario": "import",
     "steps": [
-      "Open ▸ Image… loads the owner’s film photo; the two-ink print (cobalt key + vermilion accent) is proofed on the sheet"
+      "Open \u25b8 Image\u2026 loads the owner\u2019s film photo; the two-ink print (cobalt key + vermilion accent) is proofed on the sheet"
     ],
-    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "capture_method": "Playwright page.screenshot (PNG) at 1600\u00d71000 DSF 1 \u2192 JPEG",
     "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
   },
   {
@@ -143,7 +143,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -166,7 +166,7 @@
     "steps": [
       "Holding Separate lifts the two plates apart, each rendered alone by the engine with its registration"
     ],
-    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "capture_method": "Playwright page.screenshot (PNG) at 1600\u00d71000 DSF 1 \u2192 JPEG",
     "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
   },
   {
@@ -176,7 +176,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -199,7 +199,7 @@
     "steps": [
       "Loupe at 2:1 over the sun: export-resolution (A4/300 dpi) pixels, halftone dots and overprint"
     ],
-    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "capture_method": "Playwright page.screenshot (PNG) at 1600\u00d71000 DSF 1 \u2192 JPEG",
     "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
   },
   {
@@ -209,7 +209,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -232,7 +232,7 @@
     "steps": [
       "Mid-drag of plate 2 with the live millimetre readout; registration marks double up"
     ],
-    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "capture_method": "Playwright page.screenshot (PNG) at 1600\u00d71000 DSF 1 \u2192 JPEG",
     "notes": "Capture-only cursor marker injected via addInitScript: a 16 px white dot with dark ring following pointer events (pointer-events:none); not part of the app."
   },
   {
@@ -242,7 +242,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -265,7 +265,7 @@
     "steps": [
       "Export dialog after rendering the three A4/300 dpi files"
     ],
-    "capture_method": "Playwright page.screenshot (PNG) at 1600×1000 DSF 1 → JPEG",
+    "capture_method": "Playwright page.screenshot (PNG) at 1600\u00d71000 DSF 1 \u2192 JPEG",
     "notes": "Native <dialog> renders in the top layer, above the injected cursor dot."
   },
   {
@@ -275,7 +275,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -296,10 +296,10 @@
     "kind": "export-derivative",
     "scenario": "real export: merged print",
     "steps": [
-      "Export ▸ A4 · 300 dpi ▸ Render 3 files ▸ Download; print-composite.png (3508×2492) downscaled to 1600 wide"
+      "Export \u25b8 A4 \u00b7 300 dpi \u25b8 Render 3 files \u25b8 Download; print-composite.png (3508\u00d72492) downscaled to 1600 wide"
     ],
-    "capture_method": "page.waitForEvent(\"download\") → saveAs media-raw/edition/exports; ffmpeg lanczos downscale",
-    "notes": "Native export files: {\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}. Plate 2 register at export: 0.60 / -0.40 mm (app default, after undoing the demo drag). Parity: {\"readout\":\"3508 × 2492 px · 297 × 211 mm\",\"composite\":{\"width\":3508,\"height\":2492},\"dims_match_readout\":true,\"long_edge_3508\":true,\"proof_aspect\":1.4075,\"export_aspect\":1.4077,\"loupe_pixels\":{\"compared\":35344,\"differing\":0,\"at\":[1052,1171],\"span\":188},\"block_means\":{\"proof\":\"860x611\",\"block_px\":8,\"blocks\":8132,\"mean_abs_diff_255\":0.241,\"worst_255\":1.72},\"files\":{\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}}"
+    "capture_method": "page.waitForEvent(\"download\") \u2192 saveAs media-raw/edition/exports; ffmpeg lanczos downscale",
+    "notes": "Native export files: {\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}. Plate 2 register at export: 0.60 / -0.40 mm (app default, after undoing the demo drag). Parity: {\"readout\":\"3508 \u00d7 2492 px \u00b7 297 \u00d7 211 mm\",\"composite\":{\"width\":3508,\"height\":2492},\"dims_match_readout\":true,\"long_edge_3508\":true,\"proof_aspect\":1.4075,\"export_aspect\":1.4077,\"loupe_pixels\":{\"compared\":35344,\"differing\":0,\"at\":[1052,1171],\"span\":188},\"block_means\":{\"proof\":\"860x611\",\"block_px\":8,\"blocks\":8132,\"mean_abs_diff_255\":0.241,\"worst_255\":1.72},\"files\":{\"img-0422-1600-print-composite.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-1.png\":{\"width\":3508,\"height\":2492},\"img-0422-1600-ink-2.png\":{\"width\":3508,\"height\":2492}}}"
   },
   {
     "file": "edition-export-crop.jpg",
@@ -308,7 +308,7 @@
     "source_commit": "12e9b6079175bb84d187507211bad5f76b378712",
     "source_commit_note": "Local edition HEAD; equals origin/main and the headSha of the latest successful \"Test and deploy\" GitHub Actions run (2026-10-26), so the live Pages deploy was built from it (verified via gh run list, not from the served bundle).",
     "fixture_image": "portfolio-v1/assets/media/photos/img_0422-1600.jpg",
-    "fixture_provenance": "Owner’s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
+    "fixture_provenance": "Owner\u2019s own film photograph (Maria Showalter): sunset over water, no people. Edition ships no image fixtures (its sample and test images are code-generated).",
     "capture_date": "2026-11-07T16:36:04.766Z",
     "viewport": {
       "width": 1600,
@@ -324,7 +324,7 @@
     "pix_fmt": null,
     "has_audio": false,
     "crop": {
-      "source": "print-composite.png 3508×2492",
+      "source": "print-composite.png 3508\u00d72492",
       "w": 1000,
       "h": 625,
       "x": 842,
@@ -337,7 +337,7 @@
     "steps": [
       "Native-resolution crop of the downloaded print-composite.png"
     ],
-    "capture_method": "ffmpeg crop of the exported PNG, JPEG q≈90",
+    "capture_method": "ffmpeg crop of the exported PNG, JPEG q\u224890",
     "notes": "No scaling: one image pixel = one 300 dpi export pixel."
   }
 ]

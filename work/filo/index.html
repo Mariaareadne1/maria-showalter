@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Filo — case study — Maria Showalter</title>
 <link rel="canonical" href="https://mariashowalter.com/work/filo/"/>
-<meta name="description" content="Filo is a campus map of places ranked by people you trust: comparison-based rankings, taste twins and privacy enforced in the database. An honest look at what is built and what isn't."/>
+<meta name="description" content="Filo is a campus map of places ranked by people you trust: comparison-based rankings, taste twins and privacy rules written into the database. An honest look at what is built and what isn't."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
@@ -74,7 +74,7 @@
     <a href="#ranking">Ranking</a>
     <a href="#system">System</a>
     <a href="#ml">Search model</a>
-    <a class="primary" href="../frameflow/">FrameFlow →</a>
+    <a class="primary" href="/work/frameflow/">Next: FrameFlow →</a>
   </div>
 </nav>
 
@@ -166,7 +166,7 @@
 </section>
 
 <section class="cs-section" id="system" aria-labelledby="s4">
-  <header><span class="num">04 — System</span><h2 id="s4">Privacy lives in the database, not the client.</h2></header>
+  <header><span class="num">04 — System</span><h2 id="s4">Privacy rules belong in the database, not the client.</h2></header>
   <div class="prose">
     <p>The mobile client talks directly to Supabase, so the rules about who can see what cannot live in the app — anyone can call the API with their own session. Row-level security policies, triggers and a handful of database functions carry those rules. Places come from Google Places; the map is Mapbox; a separate Next.js app holds shared-board pages and an early dashboard for venues.</p>
   </div>
@@ -305,7 +305,7 @@ where chain.n &gt;= k_anon;</code></pre>
     </table>
   </div>
   <div class="prose wide">
-    <p><strong>Open work, found while preparing this page:</strong> discovery lenses show counts but don't yet open their lists; places ranked from the map in some categories are filed under keys the rankings screen doesn't read; the public board page needs an anonymous-read path; and some table policies are broader than the app needs. Each is a contained fix and is tracked privately. Billing for the venue dashboard is a static pricing page — there is no checkout yet.</p>
+    <p><strong>Open work, found while preparing this page:</strong> discovery lenses show counts but don't yet open their lists; places ranked from the map in some categories are filed under keys the rankings screen doesn't read; the public board page needs an anonymous-read path; and some read policies are currently broader than the design intends, so the privacy described on this page is the design and only partly the implementation. Tightening them comes before any release. Each is a contained fix and is tracked privately. Billing for the venue dashboard is a static pricing page — there is no checkout yet.</p>
   </div>
 </section>
 
@@ -324,7 +324,7 @@ where chain.n &gt;= k_anon;</code></pre>
   <a href="https://github.com/Mariaareadne1/filo-recommendation-engine">Recommendation engine ↗</a>
   <a href="../frameflow/">← FrameFlow case study</a>
   <a href="../iris/">Iris series →</a>
-  <a href="../../index.html">Home</a>
+  <a href="/">← Home</a>
 </footer>
 <!-- region:foot -->
 <footer class="site-foot"><div class="wrap">

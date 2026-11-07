@@ -155,7 +155,7 @@
         "type": "diagram",
         "alt": "Diagram: a new place is compared against the midpoint of a ranked list, halving the list each tap"
       },
-      "detail": "A campus map of places ranked by people you trust: rank by comparison in about log₂(n) taps, find your taste twins, with privacy enforced in the database.",
+      "detail": "A campus map of places ranked by people you trust: rank by comparison in about log₂(n) taps and find your taste twins. Prototype; privacy rules are designed into the database but some read policies are still broader than intended.",
       "line": "A social map for saving and ranking places."
     }
   ],
@@ -190,10 +190,10 @@
     {
       "name": "REINFORCE from scratch",
       "kind": "experiment",
-      "statement": "A two-joint arm learns to reach with a policy-gradient loop written by hand — no RL libraries — with a browser visualiser of training.",
+      "statement": "REINFORCE policy gradient written by hand in PyTorch, with no RL libraries; it learns to balance CartPole-v1.",
       "medium": "PyTorch · reinforcement learning",
       "links": {
-        "source": "https://github.com/Mariaareadne1/rl-reacher",
+        "source": "https://github.com/Mariaareadne1/cartpole-policy-gradient",
         "writing": "/blog-cartpole.html"
       }
     },
@@ -265,7 +265,7 @@
       "line": "Play a synthesizer from your keyboard.",
       "series": "Synth",
       "href": "https://mariaareadne1.github.io/webaudio-synth/",
-      "still": null,
+      "still": "/assets/media/playground/tonus-960.jpg",
       "alt": ""
     },
     {
