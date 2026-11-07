@@ -1,0 +1,608 @@
+[
+  {
+    "file": "assets/media/orbit/orbit-loop.mp4",
+    "kind": "video",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "CDP Page.startScreencast (jpeg q90, 2x render downscaled to 1600 wide) resampled to constant 30 fps from frame metadata.timestamp; ffmpeg-static libx264 CRF 24 -preset slow -tune stillimage, yuv420p, +faststart, no audio track",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": 19,
+    "codec": "h264",
+    "pix_fmt": "yuv420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 553896,
+    "sha256": "ad296aabe7ce6ef65e428062ee209d26517c85509f91c8784092f7741bab1f55",
+    "notes": "Silent loop. Engine read-back of voice positions during capture (stage metres, piece time): {\"added\":{\"label\":\"after adding three sounds\",\"t\":0,\"voices\":[{\"name\":\"Drone\",\"x\":0,\"y\":2.5,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":2.38,\"y\":0.77,\"keyframes\":1},{\"name\":\"Pulse\",\"x\":1.47,\"y\":-2.02,\"keyframes\":1}]},\"drawn\":{\"label\":\"after drawing (paused, t=0)\",\"t\":0,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":0,\"y\":3.17,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-4,\"y\":1.2,\"keyframes\":97}]},\"moving\":[{\"label\":\"playing +1s\",\"t\":1.068,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":1.68,\"y\":2.75,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-3.38,\"y\":1.78,\"keyframes\":97}]},{\"label\":\"playing +2s\",\"t\":2.073,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":2.88,\"y\":1.64,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-2.78,\"y\":2.31,\"keyframes\":97}]},{\"label\":\"playing +3s\",\"t\":3.081,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":3.29,\"y\":0.07,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-2.14,\"y\":2.8,\"keyframes\":97}]},{\"label\":\"playing +4s\",\"t\":4.167,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":2.65,\"y\":-1.56,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-1.4,\"y\":3.24,\"keyframes\":97}]},{\"label\":\"playing +5s\",\"t\":5.161,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":1.34,\"y\":-2.51,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":-0.66,\"y\":3.52,\"keyframes\":97}]},{\"label\":\"playing +6s\",\"t\":6.167,\"voices\":[{\"name\":\"Drone\",\"x\":-2.6,\"y\":-2.4,\"keyframes\":1},{\"name\":\"Plucks\",\"x\":-0.27,\"y\":-2.76,\"keyframes\":97},{\"name\":\"Pulse\",\"x\":0.13,\"y\":3.6,\"keyframes\":97}]}]}"
+  },
+  {
+    "file": "assets/media/orbit/orbit-loop-poster.jpg",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Playwright page.screenshot jpeg q82, scale css, taken during playback ~3 s after Play (the same moment appears in the video)",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "mjpeg",
+    "pix_fmt": "yuvj420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 99052,
+    "sha256": "d830866b400188166cfcd1e49ab123936779dab0f28b4ca21803b83a8b5e4d72",
+    "notes": "Poster for orbit-loop.mp4"
+  },
+  {
+    "file": "assets/media/orbit/orbit-loop-poster.webp",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "ffmpeg-static libwebp -quality 82 from the poster jpg",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "webp",
+    "pix_fmt": "yuv420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 55300,
+    "sha256": "bd97fbfbace5dff491051b6ed4575bf9cf37dd8d87e50aea45c168f8adf27bf3",
+    "notes": "Poster for orbit-loop.mp4"
+  },
+  {
+    "file": "assets/media/orbit/orbit-step-1.jpg",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Playwright page.screenshot jpeg q86, scale css (2x render downscaled)",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "mjpeg",
+    "pix_fmt": "yuvj420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 102501,
+    "sha256": "127029668591483898b82fa6a13d2c15d2f2aed9fd4424ae409b68f9ddfbd723",
+    "notes": "Three generated sounds added from the score (Drone, Plucks, Pulse) at their default spots"
+  },
+  {
+    "file": "assets/media/orbit/orbit-step-2.jpg",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Playwright page.screenshot jpeg q86, scale css (2x render downscaled)",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "mjpeg",
+    "pix_fmt": "yuvj420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 109674,
+    "sha256": "4add176e0af62dc62aed334fa8704e3da44426de9ee4961fc16b0101b22e3dfc",
+    "notes": "Draw mode: a path being sketched for Plucks (stroke in progress)"
+  },
+  {
+    "file": "assets/media/orbit/orbit-step-3.jpg",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Playwright page.screenshot jpeg q86, scale css (2x render downscaled)",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "mjpeg",
+    "pix_fmt": "yuvj420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 112331,
+    "sha256": "afd6f99c968453cb5061332a3cc8408a23d44ca1a3ca55b0ed90db8aee77a4bf",
+    "notes": "Playing: playhead running, Plucks and Pulse moved along their drawn paths, score lanes show direction over time"
+  },
+  {
+    "file": "assets/media/orbit/orbit-step-4.jpg",
+    "kind": "image",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "real",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Playwright page.screenshot jpeg q86, scale css (2x render downscaled)",
+    "dimensions": {
+      "width": 1600,
+      "height": 1000
+    },
+    "duration_s": null,
+    "codec": "mjpeg",
+    "pix_fmt": "yuvj420p",
+    "has_audio": false,
+    "channels": null,
+    "sample_rate": null,
+    "bytes": 116171,
+    "sha256": "c639d60f1b2f498e7cf08254ce4cb3170851e0b15047b945feb30509059c0615",
+    "notes": "Export WAV finished: in-app status reports length, 48 kHz stereo 16-bit, peak dBFS and clipped samples"
+  },
+  {
+    "file": "assets/media/orbit/orbit-export.m4a",
+    "kind": "audio",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "offline (OfflineAudioContext; no output device involved)",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Orbit's own Export WAV (renderArrangement → OfflineAudioContext 48 kHz → encodeWav 16-bit), captured with page.waitForEvent('download'); transcoded with ffmpeg-static aac 160k stereo",
+    "dimensions": null,
+    "duration_s": 12,
+    "codec": "aac",
+    "pix_fmt": null,
+    "has_audio": true,
+    "channels": 2,
+    "sample_rate": 48000,
+    "bytes": 256381,
+    "sha256": "24cb2f6df16c9c3ee461b1fbb62347c7c6713ea6a41b2bb1e217450c8a49cd3e",
+    "notes": "Web version of the exported WAV for a user-initiated Play control. Raw WAV: media-raw/orbit/orbit-export.wav (sha256 72c2b6cb00b995d8e5c80d1ff8ba449ce89e797c53c6c52accf006a2ebb20ca1). L−R balance (100 ms windows) -0.99…2.26 dB. App status: WAV · 12 s · 48 kHz stereo 16-bit · peak -15.2 dBFS · 0 clipped · 194 ms"
+  },
+  {
+    "file": "assets/media/orbit/orbit-export-analysis.json",
+    "kind": "data",
+    "source_url": "https://mariaareadne1.github.io/orbit/",
+    "source_repo": "https://github.com/Mariaareadne1/orbit",
+    "source_commit": "3beba22b20a9644941f07c351acf3efeb613ef83",
+    "source_commit_verification": "local HEAD equals the head SHA of the latest successful \"Test and deploy\" run on main (3beba22b20a9644941f07c351acf3efeb613ef83); deployed bundle not byte-compared",
+    "sound_sources": [
+      {
+        "name": "Drone",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Plucks",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      },
+      {
+        "name": "Pulse",
+        "provenance": "Orbit built-in, generated in code at runtime (src/audio/signals.ts); no recording"
+      }
+    ],
+    "capture_date": "2026-11-07T16:33:55.996Z",
+    "audio_backend": "offline (OfflineAudioContext; no output device involved)",
+    "audio_backend_detail": {
+      "real_device_probe": {
+        "state": "running",
+        "advanced_s": 0.7605,
+        "wall_s": 0.8
+      },
+      "fake_sink_probe": {
+        "state": "running",
+        "advanced_s": 0.8069,
+        "wall_s": 0.8
+      },
+      "chromium_args": [],
+      "note": "Real output device clock advanced."
+    },
+    "viewport": {
+      "width": 1600,
+      "height": 1000
+    },
+    "device_scale": 2,
+    "scenario": "Empty \"Portfolio orbit\" document (12 s, loop) seeded into localStorage before load; then real UI input: + Add sound ×3 (Drone, Plucks, Pulse) → Place: drag Drone behind-left → Draw: loop for Plucks, frontal left→right arc for Pulse → Play → Export WAV.",
+    "cursor_marker": "Capture-only white dot (#__capture-cursor) injected by the capture script, following real pointer events and shrinking while pressed; not part of Orbit.",
+    "page_errors": [],
+    "steps": [
+      "add 3 built-in sounds",
+      "place Drone",
+      "draw path for Plucks",
+      "draw path for Pulse",
+      "play",
+      "export WAV"
+    ],
+    "capture_method": "Node script in scripts/capture/orbit.mjs parsing the raw 16-bit PCM WAV",
+    "dimensions": null,
+    "duration_s": 12,
+    "codec": "pcm_s16le (source WAV)",
+    "pix_fmt": null,
+    "has_audio": false,
+    "channels": 2,
+    "sample_rate": 48000,
+    "bytes": 15550,
+    "sha256": "484d0ef2cd255b8ceaf5e18a3e18ad3ca40f6b91e97e330306a230e08666d970",
+    "notes": "Per-channel peak/RMS, clipping count, 100 ms windowed L/R RMS of the exported WAV"
+  }
+]

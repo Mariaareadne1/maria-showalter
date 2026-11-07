@@ -1,0 +1,18 @@
+/* Media frames, portrait slot, inline video controls. */
+.media { position: relative; overflow: hidden; background: var(--paper-2); }
+.media > img, .media > video { width: 100%; height: 100%; object-fit: cover; }
+.media.is-error::after { content: attr(data-error); position: absolute; inset: auto 12px 12px; font: 400 12px var(--mono); color: var(--meta); }
+
+/* Play/pause for muted previews: always visible, never the only way to the project. */
+.vid-toggle { position: absolute; right: 10px; bottom: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); color: var(--ink); background: rgba(246, 246, 242, 0.92); border: 1px solid var(--rule); padding: 7px 10px; border-radius: 2px; cursor: pointer; }
+.vid-toggle:hover { border-color: var(--ink); }
+.on-dark .vid-toggle { background: rgba(12, 16, 34, 0.75); color: var(--on-dark); border-color: rgba(232, 235, 240, 0.25); }
+
+/* Portrait slot — the boundary around the owner's halftone engine (DESIGN-DECISIONS §5). */
+.portrait-slot { position: relative; overflow: hidden; background: var(--paper); }
+.portrait-slot [data-halftone-stage] { position: absolute; inset: 0; }
+.portrait-slot .fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 18%; filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.portrait-slot[data-state="live"] .fallback { display: none; }
+
+figure { margin: 0; }
+figcaption { font: 400 12px/1.55 var(--mono); color: var(--meta); margin-top: 8px; }
