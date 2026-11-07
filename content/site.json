@@ -98,27 +98,6 @@
       "line": "Turn photographs into two-color halftone prints."
     },
     {
-      "id": "iris",
-      "name": "Iris",
-      "kind": "experiment",
-      "medium": "Series · three.js · TypeScript · Web Audio · custom simulation",
-      "role": "Design and engineering · builds on Holocloth by Dmitry Kurash (MIT)",
-      "status": "Three live experiments",
-      "links": {
-        "case": "/work/iris/",
-        "live": "https://mariaareadne1.github.io/iris-soft-matter/"
-      },
-      "media": {
-        "type": "video",
-        "src": "/work/media/iris/resonance.mp4",
-        "poster": "/work/media/iris/resonance-poster.jpg",
-        "still": "/work/media/iris/resonance-poster.jpg",
-        "alt": "Iris Resonance: a translucent violet membrane rippling on a dark blue ground"
-      },
-      "detail": "Three browser studies in digital tactility: a slime you pull, a fabric you play as an instrument, and a darkroom where prints develop under your hand.",
-      "line": "Three experiments with soft matter, sound, and photography."
-    },
-    {
       "id": "orbit",
       "name": "Orbit",
       "kind": "product",
@@ -239,35 +218,19 @@
   ],
   "playground": [
     {
-      "name": "Soft Matter",
-      "line": "Pull and squish a slime.",
-      "series": "Iris",
-      "href": "https://mariaareadne1.github.io/iris-soft-matter/",
-      "still": "/work/media/iris/soft-matter-pull.jpg",
-      "alt": "Soft Matter: a butter-yellow block stretched by a pointer"
-    },
-    {
-      "name": "Resonance",
-      "line": "Pluck a fabric that sings.",
-      "series": "Iris",
-      "href": "https://iris-resonance.vercel.app/",
-      "still": "/work/media/iris/resonance-stretch.jpg",
-      "alt": "Resonance: a violet membrane stretched into a ridge"
-    },
-    {
-      "name": "Afterimage",
-      "line": "Expose and dodge a print.",
-      "series": "Iris",
-      "href": "https://mariaareadne1.github.io/Iris-Afterimage/",
-      "still": "/work/media/iris/afterimage-04-dodging-during-exposure.jpg",
-      "alt": "Afterimage: a print developing under red safelight while being dodged"
-    },
-    {
       "name": "TONUS",
       "line": "Play a synthesizer from your keyboard.",
       "series": "Synth",
       "href": "https://mariaareadne1.github.io/webaudio-synth/",
       "still": "/assets/media/playground/tonus-960.jpg",
+      "alt": ""
+    },
+    {
+      "name": "Hinge",
+      "line": "Drag a card and tune its spring.",
+      "series": "Motion",
+      "href": "https://mariaareadne1.github.io/hinge/",
+      "still": "/assets/media/hinge/hinge-step-2.jpg",
       "alt": ""
     },
     {
@@ -279,11 +242,19 @@
       "alt": ""
     },
     {
-      "name": "Hinge",
-      "line": "Drag a card and tune its spring.",
-      "series": "Motion",
-      "href": "https://mariaareadne1.github.io/hinge/",
-      "still": "/assets/media/hinge/hinge-step-2.jpg",
+      "name": "Edition",
+      "line": "Push an ink plate out of register.",
+      "series": "Print",
+      "href": "https://mariaareadne1.github.io/edition/",
+      "still": "/assets/media/edition/edition-step-4.jpg",
+      "alt": ""
+    },
+    {
+      "name": "Deck",
+      "line": "Mix two loops on this site.",
+      "series": "Audio",
+      "href": "/#deck",
+      "still": null,
       "alt": ""
     }
   ],

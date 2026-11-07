@@ -11,6 +11,7 @@
     "shots": "node tests/capture.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "1.64.0"
   }
 }

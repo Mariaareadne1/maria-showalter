@@ -130,7 +130,7 @@
   <div class="prose">
     <p>The capture runs in a small Swift program, not in Electron, because ScreenCaptureKit and AVAssetWriter are native APIs and the writer must keep pace with 60 fps. It speaks JSON lines on stdout and takes <code>stop</code> on stdin. Electron's main process owns files and permissions; the renderer never touches the disk directly — 29 typed IPC channels, each handler validated and checked against the sender. Every frame anyone sees, in preview or in a file, comes from one function: <code>renderFrame</code>.</p>
   </div>
-  <figure class="diagram">
+  <figure class="diagram" tabindex="0">
     <svg viewBox="0 0 1040 470" role="img" aria-labelledby="dia-title dia-desc">
       <title id="dia-title">FrameFlow architecture</title>
       <desc id="dia-desc">ScreenCaptureKit and mouse events feed a Swift helper that writes recording.mp4 and cursor.json. Electron main spawns the helper, reads JSON-line events, validates projects and serves media through a custom range-request protocol. The preload bridge exposes typed IPC to the React renderer. The renderer's project state feeds a shared engine, which builds a scene for renderFrame. renderFrame draws both the live preview and the frames of the MP4 and GIF exporters, whose bytes return through main into a .partial file renamed on completion.</desc>
@@ -178,7 +178,7 @@
       <p>The camera follows a <em>leashed</em> target: it only moves by however far the pointer strays beyond a dead zone, so a hand settling on a button never nudges the shot. Zooms less than 0.8 s apart are chained, so the camera pans from one moment to the next instead of zooming out and back in.</p>
       <p class="where">src/shared/engine/cursor.ts · camera.ts</p>
     </div>
-<pre><code><span class="c">// cursor.ts — the camera target only moves past the dead zone</span>
+<pre tabindex="0"><code><span class="c">// cursor.ts — the camera target only moves past the dead zone</span>
 <span class="k">for</span> (let i = 0; i &lt; count; i++) {
   const p = sampleRaw(samples, i * dt)!
   const dx = p.x - tx
@@ -201,7 +201,7 @@
       <p>The exporter samples each output frame at the middle of its interval, mapped back through any cuts, encodes with WebCodecs, and streams 8 MB chunks to a <code>.partial</code> file that is renamed only on success — cancelling leaves nothing behind.</p>
       <p class="where">src/renderer/src/engine/render.ts · media/exporter.ts</p>
     </div>
-<pre><code><span class="c">// exporter.ts — sample each frame mid-interval, through cuts</span>
+<pre tabindex="0"><code><span class="c">// exporter.ts — sample each frame mid-interval, through cuts</span>
 <span class="k">export function</span> framePlan(segments, fps) {
   const total = outputDuration(segments)
   const count = Math.max(1, Math.round(total * fps))
@@ -225,7 +225,7 @@ const vp = viewportOf(cam)
       <p>Project files are treated as untrusted: a path inside one is only opened if it is a real media file in the library, beside the project, or the project is in Recents.</p>
       <p class="where">src/shared/projectModel.ts · src/main/projects.ts</p>
     </div>
-<pre><code><span class="c">// projects.ts</span>
+<pre tabindex="0"><code><span class="c">// projects.ts</span>
 <span class="k">export async function</span> saveProject(path, project, thumbnail) {
   const p = assertProject(path)
   <span class="c">// Validate before writing so a renderer bug can never
@@ -267,7 +267,7 @@ const vp = viewportOf(cam)
   <div class="prose">
     <p>Recordings are hard to test because they need permission, a screen and a moving mouse. FrameFlow's helper has a synthetic mode that renders a moving pattern, a scripted cursor and test tones through the <em>same</em> writer, and the test videos carry a burned-in time code that the suite reads back from exported frames. That makes most of the pipeline testable without a person at the machine.</p>
   </div>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence table">
     <table class="evidence">
       <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
       <tbody>
@@ -301,7 +301,6 @@ const vp = viewportOf(cam)
 <footer class="cs-footer">
   <a href="https://github.com/Mariaareadne1/FrameFlow">Source on GitHub ↗</a>
   <a href="/work/hinge/">Next case study: Hinge →</a>
-  <a href="../iris/">Iris series →</a>
   <a href="/">← Home</a>
   <span>Media: real app screenshots and exports; footage labelled</span>
 </footer>

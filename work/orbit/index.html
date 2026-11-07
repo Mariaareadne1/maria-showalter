@@ -86,14 +86,14 @@
     <p>Paths are piecewise-linear keyframes. Instead of moving the panner from the animation loop, Orbit schedules each keyframe on the <code>PannerNode</code>’s position parameters ahead of time with <code>linearRampToValueAtTime</code>. Motion is sample-accurate and independent of frame rate; the stage only reads the same interpolation to draw.</p>
     <p>Live playback runs at 48 kHz like the export, because browser HRTF kernels depend on the sample rate.</p>
   </div>
-  <div class="diagram" role="img" aria-label="Stage gestures write keyframe paths; paths are scheduled on each PannerNode position parameter; the same graph runs in an AudioContext for playback and in an OfflineAudioContext for WAV export."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="40">place · draw · perform</text><text x="200" y="34">path.ts</text><text x="200" y="52" fill="#5F6977">keyframes (t, x, y)</text><text x="400" y="34">graph.ts</text><text x="400" y="52" fill="#5F6977">PannerNode HRTF ramps</text><text x="600" y="34">AudioContext</text><text x="600" y="52" fill="#5F6977">live, 48 kHz</text><text x="600" y="130">OfflineAudioContext</text><text x="600" y="148" fill="#5F6977">WAV export</text></g><path d="M150 36h40M330 36h60M560 36h30M480 62v68h110" stroke="#2348C7"/><rect x="190" y="14" width="140" height="50" rx="3"/><rect x="390" y="14" width="170" height="50" rx="3"/></svg></div>
+  <div class="diagram" tabindex="0" role="img" aria-label="Stage gestures write keyframe paths; paths are scheduled on each PannerNode position parameter; the same graph runs in an AudioContext for playback and in an OfflineAudioContext for WAV export."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="40">place · draw · perform</text><text x="200" y="34">path.ts</text><text x="200" y="52" fill="#5F6977">keyframes (t, x, y)</text><text x="400" y="34">graph.ts</text><text x="400" y="52" fill="#5F6977">PannerNode HRTF ramps</text><text x="600" y="34">AudioContext</text><text x="600" y="52" fill="#5F6977">live, 48 kHz</text><text x="600" y="130">OfflineAudioContext</text><text x="600" y="148" fill="#5F6977">WAV export</text></g><path d="M150 36h40M330 36h60M560 36h30M480 62v68h110" stroke="#2348C7"/><rect x="190" y="14" width="140" height="50" rx="3"/><rect x="390" y="14" width="170" height="50" rx="3"/></svg></div>
   <article class="decision">
     <div>
       <h3>Schedule ahead; seek exactly.</h3>
       <p>Moving a panner from <code>requestAnimationFrame</code> would tie spatial motion to frame rate and drop steps when the tab is busy. Scheduling on the audio clock removes that, but seeking then needs care: segments already in the past are replaced by the interpolated position at the seek offset. Loops are scheduled a quarter-second before each cycle ends.</p>
       <p class="where">src/audio/graph.ts · Orbit @ 3beba22</p>
     </div>
-<pre><code>export function schedulePath(panner, path, startAt, offset = 0) {
+<pre tabindex="0"><code>export function schedulePath(panner, path, startAt, offset = 0) {
   const params = [panner.positionX, panner.positionY, panner.positionZ]
   for (const p of params) p.cancelScheduledValues(0)
   setPosition(panner, positionAt(path, offset), startAt)
@@ -111,7 +111,7 @@
       <p>The export builds the same graph in an <code>OfflineAudioContext</code>. A repository test taps the live master with an AudioWorklet during a left-to-right pass, renders the same arrangement offline, and compares left/right balance in half-second windows.</p>
       <p class="where">src/audio/proof.ts · tests/e2e</p>
     </div>
-<pre><code>// Coordinates (src/audio/coords.ts):
+<pre tabindex="0"><code>// Coordinates (src/audio/coords.ts):
 // listener at origin facing −Z, +Y up
 // stage (x, y) in metres → audio (x, 0, −y)
 // panner: HRTF, inverse distance, ref 1 m, rolloff 1</code></pre>
@@ -128,7 +128,7 @@
     <audio controls preload="none" src="/assets/media/orbit/orbit-export.m4a">Your browser can’t play this audio. <a href="/assets/media/orbit/orbit-export.m4a">Download it</a>.</audio>
   </figure>
   <div class="wide"><figure><img src="/assets/media/orbit/orbit-step-4.jpg" width="1600" height="1000" loading="lazy" alt="Orbit after export: the status line reads WAV, 12 s, 48 kHz stereo 16-bit, peak −15.2 dBFS, 0 clipped."/><figcaption>The app’s own export report for the WAV above.</figcaption></figure></div>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence table">
     <table class="evidence">
       <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
       <tbody><tr><td>Unit: coordinates, paths, gestures, analysis, WAV</td><td class="ok">14 / 14</td><td>vitest, run 7 Nov 2026 for this page</td></tr><tr><td>Exported WAV for this page</td><td class="ok">stereo · 0 clipped</td><td>Analysed outside the browser; see note</td></tr><tr><td>Live vs export L/R balance</td><td class="ok">≤ 0.06 dB</td><td>Chromium and WebKit, recorded 2026-10-25/26 in the repo; not re-run here</td></tr><tr><td>Front/back and elevation localisation</td><td class="no">not claimed</td><td>Browser HRTFs are generic; cues are weak for many listeners</td></tr></tbody>

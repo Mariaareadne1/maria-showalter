@@ -18,7 +18,7 @@
   --cobalt-line: rgba(35, 72, 199, 0.28);
 
   /* Media environments (per project, not site themes) */
-  --stage-dark: #0C1022;    /* Iris */
+  --stage-dark: #0C1022;
   --stage-audio: #0B0E14;   /* Orbit */
   --on-dark: #E8EBF0;
   --on-dark-meta: #9BA3B8;  /* 7.48:1 on stage-dark */

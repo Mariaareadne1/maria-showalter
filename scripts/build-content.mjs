@@ -16,7 +16,7 @@ const check = process.argv.includes('--check')
 const PAGES = [
   'index.html', '404.html',
   'work/index.html', 'playground/index.html', 'art/index.html', 'writing/index.html', 'about/index.html',
-  'work/frameflow/index.html', 'work/filo/index.html', 'work/iris/index.html',
+  'work/frameflow/index.html', 'work/filo/index.html',
   'work/hinge/index.html', 'work/edition/index.html', 'work/orbit/index.html',
   'blog-creativity.html', 'blog-cartpole.html', 'blog-pid.html', 'blog-filo.html'
 ]
@@ -89,22 +89,15 @@ R.foot = () => `<footer class="site-foot"><div class="wrap">
 
 /* Home — Hybrid Exhibition: one wide lead, a matched pair, one wide series, a quieter pair. */
 R['home-work'] = () => {
-  const f = byId.frameflow, h = byId.hinge, e = byId.edition, i = byId.iris, o = byId.orbit, fi = byId.filo
+  const f = byId.frameflow, h = byId.hinge, e = byId.edition, o = byId.orbit, fi = byId.filo
   const cap = (p, keys) => `<div class="cap"><h3 class="title" id="pw-${p.id}"><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p class="line">${esc(p.line)}</p>${links(p.links, keys)}${note(p)}</div>`
   const art = (p, cls, mediaOpts, keys) => `<article class="pw ${cls}" aria-labelledby="pw-${p.id}">${media(p, mediaOpts)}${cap(p, keys)}</article>`
-  const trio = site.playground.filter((x) => x.series === 'Iris').map((x) => `<li><a href="${esc(x.href)}">${esc(x.name)} ↗</a></li>`).join('')
   return `
 ${art(f, 'pw-lead', { cls: 'm-lead', sizes: '(max-width: 680px) 100vw, 92vw', eager: true }, ['case', 'source'])}
 <div class="pw-pair">
 ${art(h, 'pw-half', { cls: 'm-half' }, ['case', 'live'])}
 ${art(e, 'pw-half', { cls: 'm-half' }, ['case', 'live'])}
 </div>
-<article class="pw pw-series on-dark" aria-labelledby="pw-${i.id}">
-  <div class="series-inner">
-    ${media(i, { cls: 'm-series', sizes: '(max-width: 680px) 100vw, 66vw' })}
-    <div class="cap"><h3 class="title" id="pw-${i.id}"><a href="${esc(primaryHref(i))}">${esc(i.name)}</a></h3><p class="line">${esc(i.line)}</p>${links(i.links, ['case'])}<ul class="trio" aria-label="Iris experiments">${trio}</ul></div>
-  </div>
-</article>
 <div class="pw-pair pw-quiet">
 ${art(o, 'pw-small', { cls: 'm-small dark', sizes: '(max-width: 680px) 100vw, 40vw' }, ['case', 'live'])}
 ${art(fi, 'pw-small', { cls: 'm-small paper' }, ['case', 'source'])}
@@ -117,7 +110,7 @@ const thumb = (x) => x.still
   ? `<span class="thumb"><img loading="lazy" decoding="async" src="${esc(x.still)}" alt=""></span>`
   : `<span class="thumb thumb-type" aria-hidden="true"><span>${esc(x.name)}</span></span>`
 
-R['home-playground'] = () => `<ul class="pg-strip">${site.playground.slice(0, 3).map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)} ↗</span><span class="pg-line">${esc(x.line)}</span></a></li>`).join('')}</ul>`
+R['home-playground'] = () => `<ul class="pg-strip">${site.playground.slice(0, 3).map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)}${isExternal(x.href) ? ' ↗' : ''}</span><span class="pg-line">${esc(x.line)}</span></a></li>`).join('')}</ul>`
 
 /* Work index: three groups, scannable rows, each row goes somewhere real. */
 R['work-index'] = () => {
@@ -138,7 +131,7 @@ R['work-index'] = () => {
   }).join('\n')
 }
 
-R['playground-list'] = () => `<ul class="pg-grid">${site.playground.map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)} ↗</span><span class="pg-line">${esc(x.line)}</span><span class="meta">${esc(x.series)}</span></a></li>`).join('')}</ul>`
+R['playground-list'] = () => `<ul class="pg-grid">${site.playground.map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)}${isExternal(x.href) ? ' ↗' : ''}</span><span class="pg-line">${esc(x.line)}</span><span class="meta">${esc(x.series)}</span></a></li>`).join('')}</ul>`
 
 R['writing-list'] = () => `<ol class="wl">${site.writing.map((w, k) => `<li><span class="wl-n meta">${String(k + 1).padStart(2, '0')}</span><div><a class="wl-title" href="${esc(w.href)}">${esc(w.title)}${w.external ? ' ↗' : ''}</a><p class="wl-dek">${esc(w.dek)}</p></div><span class="meta wl-meta">${esc(w.topic)} · ${esc(w.date)}${w.external ? ' · external' : ''}</span></li>`).join('')}</ol>`
 

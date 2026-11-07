@@ -16,10 +16,10 @@
 <link rel="stylesheet" href="../case-study.css"/>
 <style>
   /* Explainers drawn in Filo's own tokens: paper ground, ink, one red thread, sticker shadows. */
-  .filo { --paper: #fafaf8; --surface: #fff; --ink: #0a0a0a; --soft: rgba(10, 10, 10, 0.6); --line: rgba(10, 10, 10, 0.18); --thread: #d8423a;
+  .filo { --paper: #fafaf8; --surface: #fff; --ink: #0a0a0a; --soft: rgba(10, 10, 10, 0.6); --line: rgba(10, 10, 10, 0.18); --thread: #d8423a; --thread-text: #b3302a;
     background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 28px; margin-top: 32px; color: var(--ink); }
   .filo h3 { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; letter-spacing: -0.01em; line-height: 1.1; }
-  .filo h3 em { font-weight: 400; color: var(--thread); }
+  .filo h3 em { font: inherit; color: inherit; }
   .filo .sub { margin-top: 6px; font-size: 13.5px; color: var(--soft); max-width: 60ch; }
   .filo-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 22px; align-items: start; }
   .rank-list { list-style: none; display: grid; gap: 6px; }
@@ -28,11 +28,11 @@
   .rank-list li.out { opacity: 0.32; box-shadow: none; }
   .rank-list li.mid { border-color: var(--thread); box-shadow: 2px 2px 0 var(--thread); }
   .rank-list li.new { border-color: var(--thread); background: #fff4f2; }
-  .rank-list li .tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--thread); }
+  .rank-list li .tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--thread-text); }
   .compare { background: var(--surface); border: 1.5px solid var(--ink); border-radius: 8px; box-shadow: 2px 2px 0 var(--ink); padding: 18px; }
   .compare .q { font-family: var(--serif); font-size: 1.25rem; line-height: 1.3; }
   .compare .q b { font-weight: 600; }
-  .compare .q i { color: var(--thread); }
+  .compare .q i { font-style: normal; color: var(--thread-text); }
   .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
   .btns button, .filo .reset { font: 500 13px var(--sans); padding: 10px 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--surface); color: var(--ink); cursor: pointer; box-shadow: 2px 2px 0 var(--ink); transition: transform 0.08s, box-shadow 0.08s; }
   .btns button:active, .filo .reset:active { transform: translate(2px, 2px); box-shadow: 0 0 0 var(--ink); }
@@ -170,7 +170,7 @@
   <div class="prose">
     <p>The mobile client talks directly to Supabase, so the rules about who can see what cannot live in the app — anyone can call the API with their own session. Row-level security policies, triggers and a handful of database functions carry those rules. Places come from Google Places; the map is Mapbox; a separate Next.js app holds shared-board pages and an early dashboard for venues.</p>
   </div>
-  <figure class="diagram">
+  <figure class="diagram" tabindex="0">
     <svg viewBox="0 0 1040 400" role="img" aria-labelledby="fdia-t fdia-d">
       <title id="fdia-t">Filo architecture</title>
       <desc id="fdia-d">The Expo React Native client calls Google Places for search, renders Mapbox maps, and reads and writes Supabase through PostgREST, RPCs and Storage, with the session encrypted on device. Supabase Postgres enforces row-level security and triggers and runs RPCs for the feed, discover counts, re-ranking and follow notifications. A Next.js web app serves shared boards and a business dashboard through privacy-filtered RPCs. The recommendation engine is a separate project with its own data and API and is not connected to the app.</desc>
@@ -218,7 +218,7 @@
       <p>Inserting a place at position 3 shifts everything below it. Done from the client, that was a series of separate updates that could interleave or fail halfway. It now happens inside one database function: an advisory lock serialises re-ranks for the same person and category, and the uniqueness of (person, category, position) is checked only at commit, so positions may collide mid-transaction while rows shift.</p>
       <p class="where">supabase/migrations/…_data_layer.sql</p>
     </div>
-<pre><code>PERFORM pg_advisory_xact_lock(hashtext(v_user::text), hashtext(p_category));
+<pre tabindex="0"><code>PERFORM pg_advisory_xact_lock(hashtext(v_user::text), hashtext(p_category));
 SET CONSTRAINTS rankings_user_id_category_position_key DEFERRED;
 DELETE FROM rankings
   WHERE user_id = v_user AND place_id = p_place_id AND category = p_category;
@@ -242,7 +242,7 @@ INSERT INTO rankings (user_id, place_id, category, position)
       <p>A private account's pins are visible only to followers it has accepted. If the app wrote the follow's status, any client could write “active”. Instead the app omits it, and a trigger sets it from the target's privacy setting; another trigger makes the two people in a follow immutable. Pin visibility policies then trust only that server-set status.</p>
       <p class="where">supabase/migrations/…_security_hardening.sql</p>
     </div>
-<pre><code>CREATE OR REPLACE FUNCTION set_follow_status() RETURNS trigger
+<pre tabindex="0"><code>CREATE OR REPLACE FUNCTION set_follow_status() RETURNS trigger
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 BEGIN
   SELECT CASE WHEN u.is_private THEN 'pending' ELSE 'active' END
@@ -260,7 +260,7 @@ END; $$;</code></pre>
       <p>The venue dashboard shows a business how students found it. Every number is computed only from public pins by public accounts, and any count below three people is suppressed — a k-anonymity floor — so a small venue can't infer an individual's behaviour. A review pass on this code caught a <code>LEFT JOIN</code> whose filter would have leaked private rows; the fix moved the privacy predicate into an inner join, with a comment explaining why.</p>
       <p class="where">supabase/migrations/…_phase2_discovery_rpcs.sql</p>
     </div>
-<pre><code>select 'board'::text, board_reach.board_name, board_reach.reach::integer
+<pre tabindex="0"><code>select 'board'::text, board_reach.board_name, board_reach.reach::integer
 from board_reach
 where board_reach.reach &gt;= k_anon      <span class="c">-- suppress small cells</span>
 union all
@@ -291,7 +291,7 @@ where chain.n &gt;= k_anon;</code></pre>
 
 <section class="cs-section" aria-labelledby="s7">
   <header><span class="num">07 — Evidence</span><h2 id="s7">What is tested, and what is still open.</h2></header>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence table">
     <table class="evidence">
       <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
       <tbody>
@@ -323,7 +323,6 @@ where chain.n &gt;= k_anon;</code></pre>
   <a href="https://github.com/Mariaareadne1/Filo">Filo on GitHub ↗</a>
   <a href="https://github.com/Mariaareadne1/filo-recommendation-engine">Recommendation engine ↗</a>
   <a href="../frameflow/">← FrameFlow case study</a>
-  <a href="../iris/">Iris series →</a>
   <a href="/">← Home</a>
 </footer>
 <!-- region:foot -->

@@ -37,7 +37,7 @@
   <div class="links">
     <a href="#system">Engineering</a>
     <a href="#testing">Evidence</a>
-    <a class="primary" href="/work/iris/">Next: Iris →</a>
+    <a class="primary" href="/work/orbit/">Next: Orbit →</a>
   </div>
 </nav>
 
@@ -88,14 +88,14 @@
     <p><strong>Halftone.</strong> Each screen cell inks the round dot whose area — the circle clipped to the square cell — equals the sampled coverage exactly, so a flat field of coverage <em>c</em> inks a fraction <em>c</em> of the paper.</p>
     <p><strong>Registration.</strong> A plate’s offset and rotation are applied by mapping output pixels into that plate’s frame before the screen is evaluated, so the dots and the plate’s own marks move — never a shifted bitmap.</p>
   </div>
-  <div class="diagram" role="img" aria-label="The source image is separated into two coverage maps; each map is screened at its own angle in its own frame; the screened plates are overprinted multiplicatively on paper to produce the preview, loupe and export from one engine."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="84">photo</text><text x="110" y="62">separations.ts</text><text x="110" y="80" fill="#5F6977">OKLab → key, accent</text><text x="320" y="40">plate 1 · angle · offset</text><text x="320" y="128">plate 2 · angle · offset</text><text x="540" y="62">render.ts</text><text x="540" y="80" fill="#5F6977">overprint on paper</text><text x="540" y="140" fill="#5F6977">preview · loupe · export</text></g><path d="M50 80h50M270 74l40-34M270 74l40 50M500 40l30 30M500 124l30-50" stroke="#2348C7"/><rect x="100" y="44" width="170" height="50" rx="3"/><rect x="530" y="44" width="170" height="50" rx="3"/></svg></div>
+  <div class="diagram" tabindex="0" role="img" aria-label="The source image is separated into two coverage maps; each map is screened at its own angle in its own frame; the screened plates are overprinted multiplicatively on paper to produce the preview, loupe and export from one engine."><svg viewBox="0 0 760 170" fill="none" stroke="currentColor" font-size="12"><g fill="#161A22" stroke="none"><text x="10" y="84">photo</text><text x="110" y="62">separations.ts</text><text x="110" y="80" fill="#5F6977">OKLab → key, accent</text><text x="320" y="40">plate 1 · angle · offset</text><text x="320" y="128">plate 2 · angle · offset</text><text x="540" y="62">render.ts</text><text x="540" y="80" fill="#5F6977">overprint on paper</text><text x="540" y="140" fill="#5F6977">preview · loupe · export</text></g><path d="M50 80h50M270 74l40-34M270 74l40 50M500 40l30 30M500 124l30-50" stroke="#2348C7"/><rect x="100" y="44" width="170" height="50" rx="3"/><rect x="530" y="44" width="170" height="50" rx="3"/></svg></div>
   <article class="decision">
     <div>
       <h3>Dot area solved exactly, then tabulated.</h3>
       <p>Once a dot grows past half the cell it touches its neighbours, and a naive radius-from-coverage formula darkens midtones. The area function subtracts the four circular segments outside the cell; an inverse table built by bisection gives the radius for any coverage in constant time.</p>
       <p class="where">src/engine/halftone.ts · Edition @ 12e9b60</p>
     </div>
-<pre><code>export function dotArea(r: number): number {
+<pre tabindex="0"><code>export function dotArea(r: number): number {
   if (r &lt;= 0) return 0
   if (r &lt;= 0.5) return Math.PI * r * r
   if (r &gt;= R_MAX) return 1
@@ -109,7 +109,7 @@
       <p>A zoomed preview would show smoothing and screen moiré that the file doesn’t have. The loupe asks the worker to render the window under the pointer at export resolution and draws it with no smoothing. The repository test compares those pixels with the same window of the downloaded PNG.</p>
       <p class="where">src/worker/render.worker.ts · src/ui/Loupe</p>
     </div>
-<pre><code>// The same engine renders three scales of one print:
+<pre tabindex="0"><code>// The same engine renders three scales of one print:
 //   preview bands  (≈650 px, latest-wins lane)
 //   loupe windows  (export dpi, cropped)
 //   export         (A4 300 dpi, progress + cancel)
@@ -127,7 +127,7 @@
     <figure><img src="/assets/media/edition/edition-export-print-1600.jpg" width="1600" height="1136" loading="lazy" alt="The exported two-ink composite of a sunset over water, cobalt and vermilion halftone with registration marks."/><figcaption><strong>Exported composite</strong>, downscaled from 3508 × 2492.</figcaption></figure>
     <figure><img src="/assets/media/edition/edition-export-crop.jpg" width="1000" height="625" loading="lazy" alt="A one-to-one crop of the exported PNG showing individual cobalt and vermilion dots overprinting."/><figcaption><strong>1:1 crop</strong> of the same file: dots at native resolution.</figcaption></figure>
   </div>
-  <div class="table-wrap">
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence table">
     <table class="evidence">
       <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
       <tbody><tr><td>Unit: engine, import, golden outputs, studio state</td><td class="ok">29 / 29</td><td>vitest, run 7 Nov 2026 for this page</td></tr><tr><td>Loupe pixels vs downloaded PNG, this page’s print</td><td class="ok">0 / 35,344</td><td>Chromium, 7 Nov 2026; the repo also records WebKit</td></tr><tr><td>Export vs on-screen proof, this page’s print</td><td class="ok">0.24 / 255 mean</td><td>8 px blocks, linear light; worst 1.72</td></tr><tr><td>Export vs on-screen proof</td><td class="ok">0.09 / 255 mean</td><td>Chromium, linear light, recorded 2026-10-26</td></tr><tr><td>Colour accuracy against physical inks</td><td class="no">not claimed</td><td>No ICC proofing; inks are screen colours</td></tr></tbody>
@@ -158,7 +158,7 @@
 
 <footer class="cs-footer">
   <a href="https://github.com/Mariaareadne1/edition">Source on GitHub ↗</a>
-  <a href="/work/iris/">Next case study: Iris →</a>
+  <a href="/work/orbit/">Next case study: Orbit →</a>
   <a href="/work/">All work</a>
   <a href="/">← Home</a>
 </footer>

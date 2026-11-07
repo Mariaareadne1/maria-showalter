@@ -6,9 +6,9 @@ import { chromium, webkit } from '@playwright/test'
 const [base = 'http://127.0.0.1:5451/', ...only] = process.argv.slice(2)
 const ROUTES = only.length ? only : [
   '', 'work/', 'playground/', 'art/', 'writing/', 'about/',
-  'work/frameflow/', 'work/filo/', 'work/iris/',
+  'work/frameflow/', 'work/filo/',
   'blog-creativity.html', 'blog-cartpole.html', 'blog-pid.html', 'blog-filo.html',
-  'gallery.html', 'design-studies/', 'design-studies/a.html', 'design-studies/b.html', 'design-studies/c.html'
+  'gallery.html', 'work/iris/', 'work/hinge/', 'work/edition/', 'work/orbit/', '404.html'
 ]
 const WIDTHS = [[1440, 900], [1024, 768], [768, 1024], [390, 844], [320, 640]]
 const engines = (process.env.ENGINES ?? 'chromium,webkit').split(',')

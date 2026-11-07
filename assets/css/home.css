@@ -45,20 +45,7 @@
 .pw-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--col-gap); margin-top: clamp(72px, 9vw, 136px); align-items: start; }
 .m-half { aspect-ratio: 16 / 10; background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule); }
 
-/* 3 · Iris, a wide dark series band */
-.pw-series { margin: clamp(72px, 9vw, 136px) calc(-1 * var(--gutter)) 0; background: var(--stage-dark); color: var(--on-dark); }
-.series-inner { max-width: var(--max); margin: 0 auto; padding: clamp(28px, 4vw, 64px) var(--gutter); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: end; }
-.m-series { grid-column: 1 / span 8; aspect-ratio: 16 / 9; background: var(--stage-dark); }
-.pw-series .cap { grid-column: 10 / span 3; margin: 0; }
-.pw-series .title a { color: var(--on-dark); }
-.pw-series .line { color: var(--on-dark); }
-.pw-series .links a { color: #B9C7FF; }
-.trio { list-style: none; margin: 18px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(232, 235, 240, 0.2); }
-.trio a { display: inline-block; padding: 5px 0; color: var(--on-dark); font: 400 14px var(--sans); text-decoration: none; }
-.trio a:hover, .trio a:focus-visible { color: #fff; text-decoration: underline; }
-.on-dark :focus-visible { outline-color: #B9C7FF; }
-
-/* 4 · Orbit + Filo, quieter */
+/* 3 · Orbit + Filo, quieter */
 .pw-quiet { grid-template-columns: repeat(12, minmax(0, 1fr)); }
 .pw-quiet .pw-small:first-child { grid-column: 2 / span 5; }
 .pw-quiet .pw-small:last-child { grid-column: 7 / span 5; }
@@ -91,8 +78,6 @@
   .pw-lead .title { grid-column: 1 / -1; }
   .pw-lead .line { grid-column: 1 / span 8; margin-top: 6px; }
   .pw-lead .links { grid-column: 9 / span 4; }
-  .m-series { grid-column: 1 / -1; }
-  .pw-series .cap { grid-column: 1 / span 8; margin-top: 18px; }
   .pw-quiet .pw-small:first-child { grid-column: 1 / span 6; }
   .pw-quiet .pw-small:last-child { grid-column: 7 / span 6; }
   .cur-grid h2 { grid-column: 1 / span 3; }
@@ -114,9 +99,6 @@
   .pw-lead .links { margin-top: 10px; justify-self: start; justify-content: flex-start; }
   .pw-pair, .pw-quiet { grid-template-columns: 1fr; row-gap: 56px; }
   .pw-quiet .pw-small:first-child, .pw-quiet .pw-small:last-child { grid-column: 1; }
-  .series-inner { grid-template-columns: 1fr; padding-top: 0; }
-  .m-series { grid-column: 1; margin: 0 calc(-1 * var(--gutter)); aspect-ratio: 4 / 3; }
-  .pw-series .cap { grid-column: 1; }
   .cur-grid { grid-template-columns: 1fr; }
   .cur-grid h2, .currently { grid-column: 1; }
   .currently { margin-top: 18px; }

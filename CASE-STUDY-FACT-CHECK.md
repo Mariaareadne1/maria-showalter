@@ -23,6 +23,5 @@
 | /work/filo/ | “Privacy lives in the database” | Private audit: `users` and `rankings` read policies broader than intended | **Corrected**: heading and limitation softened; no exploit detail published |
 | | No users/traction claimed | Page states it | OK |
 | | Recommendation engine not connected | Page states it | OK |
-| /work/iris/ | Holocloth by Dmitry Kurash (MIT) | Page credits it in lineage, timeline and credits | Preserved |
 | Work index | REINFORCE “two-joint arm reacher” | `cartpole-policy-gradient` README: CartPole-v1 | **Corrected** |
 | About / Currently | FoRG and CMC affiliations | Links resolve (200); role not stated | See FACTS_TO_CONFIRM.md |

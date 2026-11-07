@@ -18,13 +18,13 @@ Sky/hills background: deferred, not built. The hero keeps the existing contour a
 | Portrait | Slot reserved (`data-halftone-slot`, `hidden`). It is shown only when `window.HalftoneCover` exists and mounts. The old `photo_main.png` fallback is no longer shown. | The engine and footage live only in the protected checkout; `media/` there is empty. The only static portrait is 912×558 and visibly pixelated at hero size. A typographic hero is better than a blurry one. |
 | Emphasis | No italic, coloured or bold single words anywhere in headings or taglines. Old `.cs-title em` and `.page-head h1 em` neutralised. | Brief. |
 | Type | Fraunces (display/headings) + IBM Plex Sans (UI/body) + Plex Mono only for small metadata labels. | Already loaded; two families + mono. |
-| Selected Work | FrameFlow wide (16:10) → Hinge + Edition equal pair (16:10) → Iris full-bleed dark band (16:9) with links to its three experiments → Orbit + Filo smaller pair (3:2). One sentence and text links per project. Whole media frame is a link (hidden from AT, the title link is the accessible one). | Hybrid Exhibition: four rhythms, not six cards. |
+| Selected Work | FrameFlow wide (16:10) → Hinge + Edition equal pair (16:10) → Orbit + Filo smaller pair (3:2). (An Iris series band was built and then removed at the owner’s request.) One sentence and text links per project. Whole media frame is a link (hidden from AT, the title link is the accessible one). | Hybrid Exhibition: three rhythms, not five identical cards. |
 | Currently | Three rows: Studying, Research (two links), Making. Small heading at left. | Brief; quieter than the work above. |
-| Playground | Three thumbnails on the home page, six on `/playground/`, each a still image linking to the live app. No live canvases. | Performance and honesty. |
+| Playground | Three thumbnails on the home page (led by TONUS, so it doesn’t repeat Selected Work), five on `/playground/`, each a still image linking to the live app. No live canvases. | Performance and honesty. |
 | Art | “Art” / “Coming soon.” / “Photography / Murals / Digital”. Previous photo sequence and lightbox removed from the page; files kept in `assets/media/photos/`. | Brief: no gallery until the owner curates it. |
 | DJ deck | Kept. Defaults are two loops synthesised by `scripts/make-deck-loops.mjs`; visitors can open their own files (decoded locally). The six commercial MP3s are no longer referenced but are still in the repo (owner decision). | Rights. |
 | Work index | Products / Creative experiments / Research, team and technical. Rows with a thumbnail, one line, stack, links. Replaces the expand/collapse rows. | Scannable without interaction; nothing hidden. |
-| Case studies | Existing FrameFlow/Filo/Iris content kept; titles became “Name” + one sentence. Hinge/Edition/Orbit pages added on the same template: hero film, overview, interaction, engineering + real code, evidence, limitations, links. | Brief §8. |
+| Case studies | Existing FrameFlow/Filo content kept; titles became “Name” + one sentence. Hinge/Edition/Orbit pages added on the same template: hero film, overview, interaction, engineering + real code, evidence, limitations, links. | Brief §8. |
 
 ## Copy, before → after
 

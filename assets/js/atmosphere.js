@@ -2,7 +2,7 @@
    atmosphere.js — sculpted light + contour field behind a region of the page.
 
    The field is an interference pattern of damped circular waves (the same
-   family of solutions as the wave equation behind Iris Resonance), plus one
+   family of solutions as a damped 2D wave equation), plus one
    broad swell. It is rendered ONCE per size into a canvas: a soft relief
    shading pass (gradient of the field · a light direction) and contour lines
    traced by marching squares. Nothing animates while the pointer is still;
