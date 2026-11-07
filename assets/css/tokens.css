@@ -1,5 +1,12 @@
 /* Design tokens — provisional (see DESIGN-DECISIONS.md §3). Change values here only. */
-@font-face { font-family: 'Fraunces Local'; src: url('/Fraunces-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+/* Self-hosted fonts (SIL OFL; licences in /assets/fonts/). Latin subsets from Fontsource. */
+@font-face { font-family: 'Fraunces'; src: url('/assets/fonts/fraunces-latin-opsz-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Fraunces'; src: url('/assets/fonts/fraunces-latin-opsz-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-500-normal.woff2') format('woff2'); font-weight: 500 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('/assets/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'IBM Plex Mono'; src: url('/assets/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500 600; font-style: normal; font-display: swap; }
 
 :root {
   /* Paper and ink */
@@ -24,7 +31,7 @@
   --on-dark-meta: #9BA3B8;  /* 7.48:1 on stage-dark */
 
   /* Type */
-  --serif: 'Fraunces', 'Fraunces Local', Georgia, serif;
+  --serif: 'Fraunces', Georgia, serif;
   --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
   --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --step--1: 13px;

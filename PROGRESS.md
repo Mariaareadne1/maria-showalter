@@ -8,21 +8,22 @@
 
 ## Milestones
 
-- [x] M0 Preflight: branches, PR #1 (draft, open), app repos (Hinge/Edition/Orbit redesigns merged to their `main` and deployed), tools, baseline smoke (Chromium all pass) and captures `docs/screenshots/v1-baseline/`.
-- [~] M1 Copy, nav, hero: registry rewritten, name-only header, “Design Engineer” hero, Currently with FoRG/CMC links, Art = Coming soon, About shortened, case-study titles de-emphasised.
-- [~] M2 Exhibition + Work index: layout built; waiting on new media.
-- [ ] M3 Demo media: capture agents running for Hinge, Edition, Orbit, FrameFlow (studio via Electron test harness). Iris pending.
-- [ ] M4 Case studies: Hinge, Edition, Orbit pages to add; FrameFlow/Filo/Iris preserved.
-- [ ] M5 Playground/Art/Writing/About/footer/deck rights.
-- [ ] M6 Critique passes + full QA.
-- [ ] M7 Push, draft PR, handoff.
+- [x] M0 Preflight and baseline
+- [x] M1 Copy, name-only header, Design Engineer hero, Currently, Art coming soon, About
+- [x] M2 Exhibition layout + Work index
+- [x] M3 New captures: Hinge, Edition, Orbit (+WAV), FrameFlow studio; TONUS still. Iris captured, then removed at owner request.
+- [x] M4 Case studies: Hinge, Edition, Orbit added; FrameFlow, Filo kept and fact-checked
+- [x] M5 Playground, Art, Writing, About, footer, deck with original loops
+- [x] M6 Two visual passes, full QA (QA-RESULTS.md), self-hosted fonts
+- [x] M7 Pushed; draft PR opened (see below)
 
 ## Environment notes
 
 - Homebrew ffmpeg/ffprobe broken (libx265). Use `~/Developer/FrameFlow/node_modules/ffmpeg-static/ffmpeg` and `.../ffprobe-static/bin/darwin/arm64/ffprobe`.
-- System sleep is set to 1 minute; background agents were cut off by sleep several times. Keep-awake was declined by the permission classifier.
+- System sleep is 1 minute and the network flapped; background agents were interrupted several times and two QA runs failed on lost connectivity.
 - No PIL; `scripts/slice.sh` splits tall screenshots with ffmpeg.
 
 ## Next safe command
 
-`node scripts/build-content.mjs --check && ENGINES=chromium node tests/smoke.mjs http://127.0.0.1:5461/`
+`node scripts/build-content.mjs --check && node tests/smoke.mjs http://127.0.0.1:5461/`
+Owner review: FACTS_TO_CONFIRM.md. Do not merge to `main` or touch `CNAME` without approval.
