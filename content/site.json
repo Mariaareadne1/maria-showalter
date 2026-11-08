@@ -133,8 +133,14 @@
         "source": "https://github.com/Mariaareadne1/Filo"
       },
       "media": {
-        "type": "diagram",
-        "alt": "Diagram: a new place is compared against the midpoint of a ranked list, halving the list each tap"
+        "type": "image",
+        "src": "/assets/media/filo/filo-screens-1600.jpg",
+        "small": "/assets/media/filo/filo-screens-800.jpg",
+        "thumb": "/assets/media/filo/filo-screens-800.jpg",
+        "w": 1600,
+        "h": 1000,
+        "alt": "Filo on an iPhone simulator: the campus map with ranked places, the Discover feed, and the ranking screen asking where a new place lands",
+        "note": "Development build in the iOS simulator, sample data."
       },
       "detail": "A campus map of places ranked by people you trust: rank by comparison in about log₂(n) taps and find your taste twins. Prototype; privacy rules are designed into the database but some read policies are still broader than intended.",
       "line": "A social map for saving and ranking places."
@@ -218,44 +224,44 @@
   ],
   "playground": [
     {
-      "name": "TONUS",
-      "line": "Play a synthesizer from your keyboard.",
-      "series": "Synth",
-      "href": "https://mariaareadne1.github.io/webaudio-synth/",
-      "still": "/assets/media/playground/tonus-960.jpg",
-      "alt": ""
+      "name": "Meadow",
+      "verb": "Draw a sheep",
+      "line": "Draw a loop on the grass and it becomes a sheep.",
+      "href": "https://meadow-interactive.vercel.app/",
+      "repo": "https://github.com/Mariaareadne1/meadow-interactive",
+      "still": "/assets/media/playground/meadow-960.jpg",
+      "alt": "A painted meadow tile on paper with sheep at different depths",
+      "verified": "2026-11-07"
     },
     {
-      "name": "Hinge",
-      "line": "Drag a card and tune its spring.",
-      "series": "Motion",
-      "href": "https://mariaareadne1.github.io/hinge/",
-      "still": "/assets/media/hinge/hinge-step-2.jpg",
-      "alt": ""
+      "name": "Pond",
+      "verb": "Draw on the water",
+      "line": "Loops on the water turn into koi, ducks and frogs.",
+      "href": "https://pond-interactive.vercel.app/",
+      "repo": "https://github.com/Mariaareadne1/pond-interactive",
+      "still": "/assets/media/playground/pond-960.jpg",
+      "alt": "A painted pond tile with koi, a duck and duckling, lily pads and frogs",
+      "verified": "2026-11-07"
     },
     {
-      "name": "Orbit",
-      "line": "Move sounds around your head.",
-      "series": "Spatial audio",
-      "href": "https://mariaareadne1.github.io/orbit/",
-      "still": "/assets/media/orbit/orbit-step-3.jpg",
-      "alt": ""
+      "name": "Hive",
+      "verb": "Grow a flower",
+      "line": "Draw a flower in the garden; the bees come to visit.",
+      "href": "https://hive-interactive.vercel.app/",
+      "repo": "https://github.com/Mariaareadne1/hive-interactive",
+      "still": "/assets/media/playground/hive-960.jpg",
+      "alt": "A painted cottage garden tile with flowers, a straw skep and bees",
+      "verified": "2026-11-07"
     },
     {
-      "name": "Edition",
-      "line": "Push an ink plate out of register.",
-      "series": "Print",
-      "href": "https://mariaareadne1.github.io/edition/",
-      "still": "/assets/media/edition/edition-step-4.jpg",
-      "alt": ""
-    },
-    {
-      "name": "Deck",
-      "line": "Mix two loops on this site.",
-      "series": "Audio",
-      "href": "/#deck",
-      "still": null,
-      "alt": ""
+      "name": "Lanterns",
+      "verb": "Let a lantern go",
+      "line": "Draw a lantern over the lake at dusk and let it drift up.",
+      "href": "https://lanterns-interactive.vercel.app/",
+      "repo": "https://github.com/Mariaareadne1/lanterns-interactive",
+      "still": "/assets/media/playground/lanterns-960.jpg",
+      "alt": "Paper lanterns rising over a lake at night",
+      "verified": "2026-11-07"
     }
   ],
   "currently": [
@@ -277,7 +283,7 @@
       ]
     },
     {
-      "label": "Making",
+      "label": "Building",
       "text": "Creative software and interactive tools"
     }
   ],
@@ -333,6 +339,17 @@
       "href": "https://github.com/Mariaareadne1/cellular-automata/blob/main/blog.html",
       "dek": "Three rules, and music no one wrote.",
       "external": true
+    }
+  ],
+  "soon": [
+    {
+      "name": "Art",
+      "line": "Photography, murals and digital work.",
+      "href": "/art/"
+    },
+    {
+      "name": "DJ Deck",
+      "line": "A new deck is in progress."
     }
   ]
 }

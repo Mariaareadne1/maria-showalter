@@ -1,4 +1,29 @@
-# PROGRESS — Portfolio V1
+# PROGRESS — Portfolio V2 (sky + editorial)
+
+- **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v2`
+- **Branch:** `design/sky-glass-editorial-v2`, from `design/portfolio-v1-content-media` @ `feca664` (draft PR #2 head, clean, equal to origin).
+- **Protected, never written:** `~/Development/Personal/maria-showalter` (`iris-header-preview`, dirty), `main`, `CNAME`, PR #1/#2 branches, `~/Development/sky-study` (read-only reference).
+- **Preview:** launch config `portfolio-v2` → `python3 -m http.server 5471 --bind 127.0.0.1 --directory <worktree>`.
+- **Sky engine source:** Sky Study @ `c09d1c8`, vendored by `node scripts/sync-sky-study.mjs` into `sky/vendor/sky-study/`; bundle built with `npx vite build -c sky/vite.config.mjs` → `assets/sky/portfolio-sky.js`.
+
+## Milestones (V2)
+
+- [x] S0 Audit: repos, PRs, Sky Study baseline (typecheck + 42 unit tests pass), Playground repos found (Meadow, Pond, Hive, Lanterns live).
+- [x] S1 Sky spike on the real homepage: Sky Study engine renders; draw/move/resize change scene state and pixels (tests/sky.mjs).
+- [x] S2 Browse/Edit modes, toolbar, keyboard path, persistence, reset/undo, fallbacks (no WebGL2, storage full, context loss).
+- [ ] S3–S4 Panel/hero/compact work — homepage done (first pass); inner pages not yet on the sheet.
+- [ ] S5 Playground verification by real interaction
+- [ ] S6 Supporting pages
+- [ ] S7 QA pass
+- [ ] S8 Push + draft PR
+
+## Next safe action
+
+Wrap inner pages in the sheet (`scripts/` migration), restyle pages.css/case-study.css for the 800 px sheet, then `node tests/sky.mjs` and `node tests/smoke.mjs http://127.0.0.1:5471/`.
+
+---
+
+# Previous: PROGRESS — Portfolio V1
 
 - **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v1`
 - **Branch:** `design/portfolio-v1-content-media`, created from `design/portfolio-editorial-explorations` @ `a0204eb` (draft PR #1 head; clean and equal to origin at start).

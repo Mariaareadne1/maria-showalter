@@ -1,57 +1,76 @@
-/* Design tokens — provisional (see DESIGN-DECISIONS.md §3). Change values here only. */
+/* Design tokens — V2 "sky + editorial". Change values here only (DESIGN-DECISIONS.md, V2). */
 /* Self-hosted fonts (SIL OFL; licences in /assets/fonts/). Latin subsets from Fontsource. */
-@font-face { font-family: 'Fraunces'; src: url('/assets/fonts/fraunces-latin-opsz-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Fraunces'; src: url('/assets/fonts/fraunces-latin-opsz-italic.woff2') format('woff2'); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('/assets/fonts/instrument-sans-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('/assets/fonts/instrument-sans-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('/assets/fonts/instrument-sans-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('/assets/fonts/instrument-sans-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-500-normal.woff2') format('woff2'); font-weight: 500 600; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/assets/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'IBM Plex Mono'; src: url('/assets/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500 600; font-style: normal; font-display: swap; }
+/* Fraunces stays registered only for preserved pages that still reference --serif in inline styles. */
+@font-face { font-family: 'Fraunces'; src: url('/assets/fonts/fraunces-latin-opsz-normal.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
 
 :root {
-  /* Paper and ink */
-  --paper: #F6F6F2;
-  --paper-2: #EDF0F4;
+  /* Paper and ink — monochrome. The sky supplies the colour. */
+  --paper: #FAFAF7;
+  --paper-rgb: 250, 250, 247;
+  --paper-2: #EEF0F1;
   --mat: #FBFBF8;
-  --ink: #161A22;
-  --text: #313942;
-  --meta: #5F6977;          /* 5.14:1 on paper, 4.87:1 on paper-2 */
-  --rule: #D7DCE3;
-  --rule-strong: #161A22;
+  --ink: #111318;
+  --text: #2A2E35;
+  --meta: #5A616B;
+  --rule: rgba(17, 19, 24, 0.12);
+  --rule-strong: rgba(17, 19, 24, 0.8);
 
-  /* Accent — links, the active nav rule, focus. Never a fill, never a highlighted word. */
-  --cobalt: #2348C7;        /* 6.87:1 on paper */
-  --cobalt-wash: rgba(35, 72, 199, 0.07);
-  --cobalt-line: rgba(35, 72, 199, 0.28);
+  /* Links are ink with an underline; there is no accent colour. */
+  --link: var(--ink);
+  --link-line: rgba(17, 19, 24, 0.3);
+  /* Aliases kept for preserved pages that still reference the old accent names. */
+  --cobalt: var(--ink);
+  --cobalt-wash: rgba(17, 19, 24, 0.05);
+  --cobalt-line: var(--link-line);
+
+  /* Sky fallback when neither WebGL nor the still is available. */
+  --sky-top: #A9C6E3;
+  --sky-mid: #C9DBEC;
+  --sky-low: #EEF2F2;
 
   /* Media environments (per project, not site themes) */
   --stage-dark: #0C1022;
-  --stage-audio: #0B0E14;   /* Orbit */
+  --stage-audio: #0B0E14;
   --on-dark: #E8EBF0;
-  --on-dark-meta: #9BA3B8;  /* 7.48:1 on stage-dark */
+  --on-dark-meta: #9BA3B8;
 
-  /* Type */
-  --serif: 'Fraunces', Georgia, serif;
-  --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  /* Type: one sans family; mono only for small labels. */
+  --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+  --serif: var(--sans);
   --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --step--1: 13px;
   --step-0: 16px;
-  --step-1: clamp(18px, 1.3vw, 20px);
-  --step-2: clamp(21px, 1.7vw, 25px);
-  --step-3: clamp(28px, 3vw, 44px);
-  --step-4: clamp(40px, 5.4vw, 84px);
-  --step-5: clamp(62px, 12.4vw, 196px);
-  --measure: 66ch;
+  --step-1: 18px;
+  --step-2: clamp(19px, 1.6vw, 22px);
+  --step-3: clamp(24px, 2.4vw, 30px);
+  --step-4: clamp(34px, 4.6vw, 52px);
+  --step-5: clamp(44px, 7.2vw, 80px);
+  --measure: 62ch;
 
-  /* Space and grid */
-  --gutter: clamp(18px, 4.2vw, 64px);
-  --col-gap: clamp(14px, 1.6vw, 24px);
-  --section: clamp(64px, 9vw, 136px);
-  --max: 1520px;
+  /* The sheet: one narrow centred reading surface. */
+  --sheet-max: 800px;
+  --sheet-pad: clamp(18px, 5.4vw, 52px);
+  --sheet-radius: 22px;
+  --gutter: var(--sheet-pad);
+  --col-gap: clamp(18px, 3vw, 28px);
+  --section: clamp(64px, 9vw, 104px);
+  --max: var(--sheet-max);
+
+  /* Scroll progress (0 open sky → 1 reading surface); set by sky-page.js. */
+  --sky-p: 0;
 
   /* Motion — short and responsive only */
-  --t-fast: 140ms;
-  --t-med: 220ms;
+  --t-fast: 150ms;
+  --t-med: 240ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 @media (prefers-reduced-motion: reduce) {
