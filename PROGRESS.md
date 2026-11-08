@@ -15,7 +15,7 @@
 - [x] S5 Playground verified by real drawing (tests/playground.mjs).
 - [x] S6 Art / DJ coming soon, About, Writing, case studies re-set; old deck at unlisted /lab/deck/.
 - [x] S7 QA (QA-RESULTS.md), perf cap for browse mode, review fixes.
-- [x] S8 Pushed; draft PR (see below).
+- [x] S8 Pushed `66fe5b9`; draft PR https://github.com/Mariaareadne1/maria-showalter/pull/3 (base: PR #2 branch). No preview host (Pages builds `main` only).
 
 ## Next safe action
 
