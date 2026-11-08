@@ -1,5 +1,21 @@
 # Design decisions — V2 sky + editorial (2026-11-08)
 
+## V2.1 — the panel as a glass object (2026-11-08)
+Owner feedback: the panel read as "a frosted card over a sky"; make it a real material — thickness, refraction, luminous edges, varied frost, a quiet physical response — and try white type. The sky is the environment; the panel is the object.
+
+- **How it is drawn:** a WebGL 2 pass (`sky/src/glass/`, built to `assets/sky/portfolio-glass.js`, ~9 kB gzip) in a panel-sized canvas behind the sheet's content. The live sky frame is copied into a mip-mapped texture (0.1–0.2 ms) and refracted: bevel lensing that pulls a compressed strip of the sky in from beyond the rim, slight dispersion, low-frequency waviness, frost that is clearer at the rim and densest over the text column with a soft hand-made unevenness, body tint, absorption along the lower rims, the slab's far edge seen through it, and a specular rim lit from the upper left. Inner pages refract the still (no renderer there).
+- **Locked to the page while scrolling:** the canvas is `position: sticky` inside a wrapper clipped (`clip-path`) to the sheet, so the compositor keeps its edges on the sheet; only the sky seen through it uses (one frame older) layout, which blur hides. The 1 px rim highlight and the shadow are CSS for the same reason.
+- **Four treatments, compared on screen** (`?glass-compare` adds a switcher; `?glass=<id>` picks one): **Clear lens** (thin, crisp, dark ink), **Soft jelly** (thick 46 px rounded bevel, milky, dark ink — *default*), **Smoked glass** (graphite, white ink), **Sky glass** (deep sky-blue, white ink). See docs/v2-review/glass-treatments-0.jpg and -1500.jpg (top / scrolled).
+- **White type:** works on Smoked and Sky glass. Legibility is not left to luck: the shader enforces a per-pixel luminance ceiling behind the text column (white ink) or a floor (dark ink), pulling toward a deeper shade of the body tint so clouds passing behind darken into the glass colour instead of grey smudges. With white ink the panel deepens (not whitens) as you read. `--meta` darkened to #41474F so grey labels pass on frosted glass.
+- **Jelly response (restrained):** springs, not keyframes. Near the rim the bevel widens toward the pointer (surface tension); over the slab a soft dome lifts, catches light and clears the frost a little; a press dents it and it springs back with one small overshoot (ζ 0.42); fast scrolling makes the surface trail a few px and settle. Off with reduced motion; touch gets press/release only.
+- **Sky depth:** the veil is now an aerial-perspective haze (14 % overhead → 36 % at the horizon, plus the reading wash) instead of a flat 27 %; three clouds added at 12, 34 and 44 km — one crossing the panel's left rim (so the refraction has something to bend) and a far bank on the horizon.
+- **Width:** 800 → 880 px (radius per treatment, 26–32 px). At 1440 px the sky margins are still 280 px a side.
+- **Fallbacks:** no WebGL 2, reduced transparency, more contrast or forced colours → the CSS glass (backdrop blur, top glow, rim) or an opaque paper sheet, as before.
+
+## Default for now
+Soft jelly with dark ink, because it keeps the brief's off-white reading surface. Sky glass with white type is the most striking object; choosing it makes reading surfaces deep blue on every page. Owner's call — see REVIEW-NOTES.md.
+
+
 ## Direction
 A small near-white publication floating on Sky Study's real sky. One narrow sheet (800 px max), black type, no accent colour; the sky and the project media supply all colour. No droplets, no forced sunset, no second 3D object.
 

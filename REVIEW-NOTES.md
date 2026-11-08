@@ -1,5 +1,11 @@
 # Review notes — V2 (for the owner)
 
+## V2.1 glass panel — decide
+- **Which material?** Open http://127.0.0.1:5471/?glass-compare and use the switcher (bottom right), or look at docs/v2-review/glass-treatments-0.jpg / -1500.jpg. Default is *Soft jelly*; *Sky glass* is the white-type option I'd consider most. Making a treatment the default is one line: `DEFAULT_TREATMENT` in sky/src/glass/treatments.ts, then `npx vite build -c sky/vite.config.mjs`.
+- **Motion:** docs/v2-review/glass-jelly-demo.mp4 (pointer near rim, hover, press/spring-back, scroll trail, all four treatments) and glass-jelly-frames.jpg.
+- Not checked on real hardware: Safari's sky copy (headless WebKit copies in software, ~10 ms, so the glass updates every 4th frame there — real Safari should be faster), phones, low-end GPUs, Firefox.
+
+
 Branch `design/sky-glass-editorial-v2`. Nothing merged; `main`, `CNAME` and mariashowalter.com untouched.
 
 ## Look at first

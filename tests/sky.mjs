@@ -1,6 +1,7 @@
 // End-to-end checks for the live sky with real pointer and keyboard input, on the real GPU renderer.
 //   node tests/sky.mjs [base=http://127.0.0.1:5471] [browser=chromium|webkit]
 // Each check asserts scene state AND rendered pixels where the brief asks for both.
+import { PNG } from 'pngjs'
 import { chromium, webkit } from '@playwright/test'
 
 const base = process.argv[2] || 'http://127.0.0.1:5471'
@@ -36,7 +37,7 @@ await ready()
 
 await check('default scene: authored clouds, daylight', async () => {
   const s = await scene()
-  assert(s.clouds.length >= 4 && s.clouds.length <= 7, `clouds ${s.clouds.length}`)
+  assert(s.clouds.length >= 4 && s.clouds.length <= 9, `clouds ${s.clouds.length}`)
   assert(Math.abs(s.hour - 12.5) < 0.01, `hour ${s.hour}`)
 })
 
@@ -216,7 +217,16 @@ await check('a browse-mode drag (a grouped edit) is saved and survives reload', 
 })
 
 await check('scroll progress: panel opacity rises, width never changes, and reverses', async () => {
-  const read = () => page.evaluate(() => { const s = document.querySelector('.sheet'); return { w: s.getBoundingClientRect().width, x: s.getBoundingClientRect().x, bg: getComputedStyle(s).backgroundColor, p: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sky-p')) } })
+  // The panel's body is drawn by the glass canvas when it is live, so read its pixels
+  // (a strip inside the side padding, clear of text) rather than a CSS colour.
+  const panelLum = async () => {
+    const r = await page.evaluate(() => { const b = document.querySelector('.sheet').getBoundingClientRect(); return { x: b.left + 14, y: 300, width: 14, height: 200 } })
+    const png = PNG.sync.read(await page.screenshot({ clip: r }))
+    let sum = 0
+    for (let i = 0; i < png.data.length; i += 4) sum += 0.2126 * png.data[i] + 0.7152 * png.data[i + 1] + 0.0722 * png.data[i + 2]
+    return sum / (png.data.length / 4)
+  }
+  const read = async () => ({ ...(await page.evaluate(() => { const s = document.querySelector('.sheet'); return { w: s.getBoundingClientRect().width, x: s.getBoundingClientRect().x, p: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sky-p')) } })), bg: await panelLum() })
   const a = await read()
   await page.evaluate(() => document.getElementById('currently').scrollIntoView())
   await page.waitForTimeout(400)
@@ -226,7 +236,8 @@ await check('scroll progress: panel opacity rises, width never changes, and reve
   const c = await read()
   assert(a.w === b.w && a.x === b.x, 'sheet width/position changed')
   assert(b.p > 0.95 && a.p < 0.05 && c.p < 0.05, `p ${a.p} ${b.p} ${c.p}`)
-  assert(a.bg !== b.bg, 'background did not change')
+  assert(b.bg > a.bg + 12, `panel did not turn lighter (${a.bg.toFixed(0)} → ${b.bg.toFixed(0)})`)
+  assert(Math.abs(c.bg - a.bg) < 10, `did not reverse (${a.bg.toFixed(0)} → ${c.bg.toFixed(0)})`)
 })
 
 await check('renderer pauses when the sky is fully veiled and resumes at the top', async () => {

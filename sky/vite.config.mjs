@@ -1,5 +1,6 @@
 // Builds the portfolio sky (Sky Study engine + portfolio adapter) into one ES module:
-//   npx vite build -c sky/vite.config.mjs   →  assets/sky/portfolio-sky.js
+//   npx vite build -c sky/vite.config.mjs   →  assets/sky/portfolio-sky.js (engine, home only)
+//                                             assets/sky/portfolio-glass.js (glass panel, every page)
 import { defineConfig } from 'vite'
 import { fileURLToPath } from 'node:url'
 
@@ -14,6 +15,10 @@ export default defineConfig({
     emptyOutDir: false,
     target: 'es2022',
     sourcemap: false,
-    lib: { entry: here('src/main.ts'), formats: ['es'], fileName: () => 'portfolio-sky.js' }
+    lib: {
+      entry: { 'portfolio-sky': here('src/main.ts'), 'portfolio-glass': here('src/glass/glassMain.ts') },
+      formats: ['es'],
+      fileName: (_format, name) => `${name}.js`
+    }
   }
 })

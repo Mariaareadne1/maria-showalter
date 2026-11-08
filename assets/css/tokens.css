@@ -20,7 +20,7 @@
   --mat: #FBFBF8;
   --ink: #111318;
   --text: #2A2E35;
-  --meta: #5A616B;
+  --meta: #41474F;
   --rule: rgba(17, 19, 24, 0.12);
   --rule-strong: rgba(17, 19, 24, 0.8);
 
@@ -57,9 +57,9 @@
   --measure: 62ch;
 
   /* The sheet: one narrow centred reading surface. */
-  --sheet-max: 800px;
+  --sheet-max: 880px;
   --sheet-pad: clamp(18px, 5.4vw, 52px);
-  --sheet-radius: 22px;
+  --sheet-radius: 26px;
   --gutter: var(--sheet-pad);
   --col-gap: clamp(18px, 3vw, 28px);
   --section: clamp(56px, 7vw, 80px);

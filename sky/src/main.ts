@@ -56,8 +56,19 @@ function boot() {
       else t.removeAttribute('title');
     }
     if (state === 'lost' && editor?.open) editor.exit();
+    // Hand each (re)started renderer to the glass panel, which refracts its frames.
+    const engine = sky.engine;
+    if (state === 'live' && engine && engine !== announcedEngine) {
+      announcedEngine = engine;
+      window.dispatchEvent(new CustomEvent('sky:engine', { detail: engine }));
+    } else if (unavailable && announcedEngine) {
+      announcedEngine = null;
+      window.dispatchEvent(new CustomEvent('sky:engine-ended'));
+    }
   };
+  let announcedEngine: unknown = null;
 
+  // onState first runs inside mount(), after this assignment.
   const sky = new PortfolioSkyController(root, { onState, announce });
   let editor: SkyEditor | null = null;
   editor = new SkyEditor(sky, { sheet, announce });

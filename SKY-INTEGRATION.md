@@ -51,3 +51,12 @@ DOMContentLoaded ≈ 35 ms locally; text paints before the engine (idle boot). J
 - Freehand drawing has no keyboard equivalent beyond "Add cloud".
 - Firefox not tested (Playwright Firefox is installed but WebGL2 raymarching under headless Firefox was not evaluated).
 - Real low-end/mobile GPU timing not measured; the iPhone numbers above are an emulated viewport on this Mac's GPU.
+
+## Glass panel (V2.1)
+- Source: `sky/src/glass/` — `shader.ts` (the slab), `GlassLayer.ts` (WebGL 2, sky texture, uniforms), `treatments.ts` (four materials), `springs.ts` (pointer, press, scroll slosh), `glassMain.ts` (DOM, scheduling, `?glass=` / `?glass-compare`). Built with the engine: `npx vite build -c sky/vite.config.mjs` → `assets/sky/portfolio-glass.js`, loaded on every page.
+- No engine import. The home sky hands each (re)started renderer over with a `sky:engine` event (`sky:engine-ended` on unsupported/lost); the glass copies each frame in `engine.onAfterRender` (same task, so the non-preserved buffer is still valid) through a half-resolution 2D canvas into a mip-mapped texture. Copy cost is measured and throttled (every frame if < 1.5 ms, else every 2nd/4th).
+- Inner pages refract the still (visitor's saved still or the shipped one) laid out like `background-size: cover; background-position: 50% 35%`.
+- The canvas is `position: sticky; height: 100vh` inside `.glass-clip` (absolute, `clip-path: inset(0 round r)`, `z-index: -1` in the sheet's stacking context). Edges stay compositor-locked while scrolling; the sheet must not get a `transform` while the glass is live.
+- Draws only when something changed: on each renderer frame while the sky runs, otherwise on scroll, resize, progress or while a spring is moving.
+- `window.__portfolioGlass` = `{ treatment, setTreatment(id), state: 'css'|'image'|'live', stats }`; `html[data-glass]`, `[data-ink]`, `[data-glass-state]` drive the CSS.
+- Measured (Chromium, Metal, M-series): no frame-rate change with the pointer moving over the panel at 1440×900@2, @1 and 390×844@3; sky copy 0.1–0.2 ms; glass canvas 880×900 at 1× (panel width, not viewport). `node tests/perf-glass.mjs`.

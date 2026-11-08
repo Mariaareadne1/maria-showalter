@@ -1,5 +1,19 @@
 # QA results — V2 sky + editorial (2026-11-08)
 
+## V2.1 glass panel (2026-11-08)
+| Command | Result |
+|---|---|
+| `node tests/sky.mjs` (Chromium) | **22 / 22 pass** (panel check now reads glass pixels: lighter at *Currently*, reverses at top) |
+| `node tests/sky.mjs … webkit` | **22 / 22 pass** |
+| `node tests/glass-contrast.mjs` — 4 treatments × home at scroll 0/700/1800 | **all pass WCAG AA from pixels** (tightest 4.51:1) |
+| `node tests/glass-contrast.mjs … jelly,tide /work/hinge/,/about/,/playground/,/writing/` | **all pass** |
+| `node tests/a11y.mjs` (axe) | **no violations** (axe cannot see through the canvas — hence the pixel test) |
+| `node tests/smoke.mjs` | Chromium all pass; WebKit 1 failure: *lead video plays when visible* — **also fails on 9b6c0fb** (checked side by side, 3×), so it predates the glass; an explicit `play()` works, the scroll-triggered autoplay in headless WebKit does not |
+| `node tests/perf-glass.mjs` | no frame-rate change with the pointer over the panel (1440×900@2, @1, 390×844@3); sky copy 0.1–0.2 ms |
+| `npx tsc -p sky/tsconfig.json` | clean |
+
+Fixed during QA: grey labels failed on frosted glass (`--meta` → #41474F, floor raised); masthead text sat outside the contrast mask; links stayed dark in white-ink treatments (`--link` resolves at :root — overridden); case-study bar, steps and video Play pill were white-on-white in white ink; the glass froze mid-transition when the sky paused at the bottom of the page (scheduler dropped the last redraw).
+
 Machine: macOS (Darwin 25.4), Apple Silicon. Playwright 1.64.0 — Chromium 1248 with `--use-angle=metal --enable-gpu` (hardware-accelerated WebGL2), WebKit 2370. Local server `http://127.0.0.1:5471/`. Firefox not run.
 
 | Command | Result |

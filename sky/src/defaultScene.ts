@@ -43,6 +43,10 @@ const AUTHORED: Authored[] = [
   { id: 'sky-c', seed: 3301, path: loop(0.76, 0.3, 0.34, 0.22), distance: 10 },
   { id: 'sky-d', seed: 4409, path: wave(0.58, 1.0, -0.3, 0.04), distance: 19, scale: 1.4 },
   { id: 'sky-e', seed: 5503, path: wave(-0.16, 0.2, 0.74, 0.045, 1.6), distance: 14 },
+  // depth: a mid cloud that crosses the panel's left rim, and a far bank on the horizon
+  { id: 'sky-f', seed: 6607, path: loop(-0.6, -0.44, 0.26, 0.15), distance: 12 },
+  { id: 'sky-g', seed: 7703, path: wave(-0.5, 0.0, -0.7, 0.025, 2.6), distance: 34, scale: 1.1 },
+  { id: 'sky-h', seed: 8807, path: wave(0.3, 0.9, -0.76, 0.02, 3), distance: 44, scale: 1.3 },
 ];
 
 let cached: SceneDoc | null = null;

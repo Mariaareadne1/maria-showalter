@@ -22,7 +22,7 @@ for (const rel of PAGES) {
   if (!/<body[^>]*id="top"/.test(s)) s = s.replace(/<body([^>]*)>/, '<body$1 id="top">')
   s = s.replace(/(<a class="skip" href="#main">Skip to content<\/a>)/, `$1\n${SKY}`)
   s = s.replace('<!-- /region:foot -->', '<!-- /region:foot -->\n</div>')
-  s = s.replace(/(<script src="\/assets\/js\/site\.js" defer><\/script>)/, '$1\n<script src="/assets/js/sky-page.js"></script>')
+  s = s.replace(/(<script src="\/assets\/js\/site\.js" defer><\/script>)/, '$1\n<script src="/assets/js/sky-page.js"></script>\n<script type="module" src="/assets/sky/portfolio-glass.js"></script>')
   for (const need of ['class="sheet"', 'sky.css', 'sky-page.js', '<!-- /region:foot -->\n</div>']) if (!s.includes(need)) throw new Error(`${rel}: missing ${need}`)
   await writeFile(f, s)
   console.log('migrated:', rel)

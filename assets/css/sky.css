@@ -14,8 +14,11 @@ body { background: transparent; }
 .sky-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 900ms var(--ease); }
 .sky[data-reveal="true"] .sky-canvas { opacity: 1; }
 .sky[data-state="unsupported"] .sky-canvas, .sky[data-state="lost"] .sky-canvas { opacity: 0; }
-/* The veil quiets the sky as the reader moves into the work. Cheap: one composited layer. */
-.sky-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #EEF4FA 0%, #F4F6F5 100%); opacity: calc(0.27 + var(--sky-p) * 0.36); }
+/* The veil: an aerial-perspective haze, thin overhead and thicker toward the horizon,
+   plus a flat wash that rises as the reader moves into the work. The glass shader
+   applies the same veil to the sky it refracts (veil() in sky/src/glass/shader.ts). */
+.sky-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(238, 244, 250, 0.14) 0%, rgba(240, 245, 249, 0.16) 55%, rgba(244, 246, 245, 0.36) 100%); }
+.sky-veil::after { content: ''; position: absolute; inset: 0; background: #F2F5F7; opacity: calc(var(--sky-p) * 0.36); }
 .sky-surface { position: absolute; inset: 0; touch-action: auto; -webkit-user-select: none; user-select: none; }
 .sky-surface[data-cursor="grab"] { cursor: grab; }
 .sky-surface[data-dragging] { cursor: grabbing; }
@@ -31,36 +34,96 @@ body { background: transparent; }
 .sky-selection [data-handle="se"] { right: 0; bottom: 0; cursor: nwse-resize; }
 .sky-selection-label { position: absolute; left: 0; top: calc(100% + 8px); white-space: nowrap; font: 500 11.5px/1 var(--mono); color: var(--ink); background: rgba(255, 255, 255, 0.86); padding: 5px 7px; border-radius: 4px; }
 
-/* ---------- The sheet ---------- */
+/* ---------- The sheet: a glass slab ----------
+   With WebGL 2 the slab is drawn by /assets/sky/portfolio-glass.js into a clipped,
+   sticky canvas behind the content (html[data-glass-state]). The rim highlight and
+   the shadow stay in CSS so they are locked to the sheet while scrolling. Without
+   WebGL, this CSS glass is the whole material. */
 .sheet {
   position: relative; z-index: 2;
   width: min(var(--sheet-max), calc(100% - 2 * clamp(12px, 3vw, 40px)));
   margin: clamp(20px, 6vh, 64px) auto clamp(20px, 5vh, 56px);
-  border-radius: var(--sheet-radius);
-  background: rgba(var(--paper-rgb), calc(0.66 + var(--sky-p) * 0.31));
-  -webkit-backdrop-filter: blur(22px) saturate(1.15);
-  backdrop-filter: blur(22px) saturate(1.15);
+  border-radius: var(--glass-radius, var(--sheet-radius));
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.22), transparent 70%),
+    rgba(var(--paper-rgb), calc(0.62 + var(--sky-p) * 0.33));
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+  backdrop-filter: blur(26px) saturate(1.2);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.45),
-    0 1px 2px rgba(30, 48, 72, 0.06),
-    0 28px 70px -36px rgba(30, 48, 72, 0.35);
+    0 1px 1px rgba(30, 48, 72, 0.05),
+    0 10px 28px -12px rgba(30, 48, 72, 0.22),
+    0 46px 96px -44px rgba(30, 48, 72, 0.42);
   transition: opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
 }
+/* The rim: a luminous edge, brightest along the top, catching again at the bottom. */
+.sheet::after {
+  content: ''; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  border-radius: inherit; padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0.5) 120px, rgba(255, 255, 255, 0.26) 420px, rgba(255, 255, 255, 0.26) calc(100% - 200px), rgba(255, 255, 255, 0.6) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.55), inset 0 -1px 0.5px rgba(20, 30, 45, 0.08);
+}
+html[data-glass-state] .sheet { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.glass-clip { position: absolute; inset: 0; z-index: -1; border-radius: inherit; clip-path: inset(0 round var(--glass-radius, var(--sheet-radius))); pointer-events: none; }
+.glass-canvas { position: sticky; top: 0; display: block; width: 100%; height: 100vh; opacity: 0; transition: opacity 500ms var(--ease); }
+html[data-glass-state] .glass-canvas { opacity: 1; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .sheet { background: rgba(var(--paper-rgb), calc(0.9 + var(--sky-p) * 0.08)); }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .sheet { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .sky-veil { opacity: calc(0.2 + var(--sky-p) * 0.5); }
+  .sheet, html[data-glass-state] .sheet { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sheet::after { display: none; }
+  .sky-veil::after { opacity: calc(0.2 + var(--sky-p) * 0.5); }
 }
 @media (forced-colors: active) {
   .sheet { background: Canvas; border: 1px solid CanvasText; backdrop-filter: none; }
+  .sheet::after { display: none; }
 }
+
+/* ---------- White type on the glass (smoke, sky treatments) ---------- */
+html[data-ink="light"] .sheet {
+  --ink: #FFFFFF;
+  --text: rgba(255, 255, 255, 0.95);
+  --meta: rgba(255, 255, 255, 0.86);
+  --rule: rgba(255, 255, 255, 0.2);
+  --rule-strong: rgba(255, 255, 255, 0.8);
+  --link-line: rgba(255, 255, 255, 0.42);
+  --link: #FFFFFF;
+  /* surfaces inside the sheet (case-study bars, steps, notes) turn to deep glass too */
+  --paper: #1A212C;
+  --paper-rgb: 26, 33, 44;
+  --offwhite: rgba(255, 255, 255, 0.06);
+  --blue-wash: rgba(255, 255, 255, 0.14);
+  --cobalt: #FFFFFF;
+  --cobalt-line: rgba(255, 255, 255, 0.42);
+  --cobalt-wash: rgba(255, 255, 255, 0.08);
+  --paper-2: rgba(255, 255, 255, 0.08);
+  --mat: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 70%),
+    rgba(22, 28, 38, calc(0.7 + var(--sky-p) * 0.24));
+}
+html[data-ink="light"][data-glass-state] .sheet { background: transparent; }
+html[data-ink="light"] .sheet :focus-visible { box-shadow: 0 0 0 5px rgba(10, 14, 20, 0.55); }
+html[data-ink="light"] .sheet ::selection { background: #fff; color: #111318; }
+html[data-ink="light"] .sheet .edit-sky { color: #fff; background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.34); }
+html[data-ink="light"] .sheet .edit-sky:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.6); }
+html[data-ink="light"]:not([data-sky]) .sheet .edit-sky:disabled { color: #fff; background: rgba(255, 255, 255, 0.1); }
+html[data-ink="light"] .sheet .edit-sky:disabled { color: rgba(255, 255, 255, 0.6); background: transparent; }
+html[data-ink="light"] .sheet::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0, rgba(255, 255, 255, 0.36) 120px, rgba(255, 255, 255, 0.16) 420px, rgba(255, 255, 255, 0.16) calc(100% - 200px), rgba(255, 255, 255, 0.4) 100%); }
+
+/* Review aid (?glass-compare): switch treatments live. Not shown otherwise. */
+.glass-switch { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(250, 250, 247, 0.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(17, 19, 24, 0.1), 0 10px 30px -14px rgba(30, 48, 72, 0.5); }
+.glass-switch button { min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #111318; font: 500 13px/1 var(--sans); cursor: pointer; }
+.glass-switch button[aria-pressed="true"] { background: #111318; color: #fff; }
+.sky-editing .glass-switch { display: none; }
 
 /* Phones: an opening band of sky above a near-full-width sheet. */
 @media (max-width: 680px) {
-  .sheet { width: calc(100% - 16px); margin-top: 0; border-radius: 18px; }
+  .sheet { width: calc(100% - 16px); margin-top: 0; }
   .is-home .sheet { margin-top: 38vh; margin-top: 38svh; }
 }
 
@@ -86,6 +149,7 @@ body { background: transparent; }
 .sky-editing { overflow: hidden; }
 .sky-editing .sheet { opacity: 0; transform: translateY(18px) scale(0.985); pointer-events: none; }
 .sky-editing .sky-veil { opacity: 0; transition: opacity var(--t-med) var(--ease); }
+.sky-veil { transition: opacity var(--t-med) var(--ease); }
 .sky-editing .sky-corner { visibility: hidden; }
 .sky-editing .sky { z-index: 4; }
 .sky-surface[data-mode="edit"] { touch-action: none; }
@@ -118,3 +182,4 @@ body { background: transparent; }
 /* Before the engine reports in, a disabled trigger looks normal (it is only pending). */
 html:not([data-sky]) .edit-sky:disabled { color: var(--ink); background: rgba(255, 255, 255, 0.55); cursor: progress; }
 html:not([data-sky]) .edit-sky:disabled::before { opacity: 1; }
+html[data-ink="light"] .sheet .vid-toggle { color: #111318; }
