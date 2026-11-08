@@ -12,18 +12,21 @@
 <meta property="og:url" content="https://mariashowalter.com/work/">
 <meta property="og:image" content="https://mariashowalter.com/assets/media/frameflow/frameflow-step-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F6F6F2">
+<meta name="theme-color" content="#C9DBEC">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/nav.css">
+<link rel="stylesheet" href="/assets/css/sky.css">
 <link rel="stylesheet" href="/assets/css/media.css">
 <link rel="stylesheet" href="/assets/css/pages.css">
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
+<div class="sky" aria-hidden="true"><div class="sky-still"></div><div class="sky-veil"></div></div>
+<div class="sheet">
 <!-- region:nav current=work -->
 <header class="mast"><div class="wrap">
 <a class="home" href="/">Maria Showalter</a>
@@ -44,9 +47,7 @@
 <li class="wi-row" id="hinge"><a class="wi-thumb" href="/work/hinge/" tabindex="-1" aria-hidden="true"><img loading="lazy" decoding="async" src="/assets/media/hinge/hinge-step-3.jpg" alt=""></a><div class="wi-body"><h3><a href="/work/hinge/">Hinge</a></h3><p>Design how interfaces move, then export the code.</p><p class="meta">Web app · React · TypeScript · closed-form spring solver · code generation</p></div><p class="links"><a href="/work/hinge/">Case study</a><a href="https://mariaareadne1.github.io/hinge/">Try it ↗</a><a href="https://github.com/Mariaareadne1/hinge">Source ↗</a></p></li>
 <li class="wi-row" id="edition"><a class="wi-thumb" href="/work/edition/" tabindex="-1" aria-hidden="true"><img loading="lazy" decoding="async" src="/assets/media/edition/edition-step-1.jpg" alt=""></a><div class="wi-body"><h3><a href="/work/edition/">Edition</a></h3><p>Turn photographs into two-color halftone prints.</p><p class="meta">Web app · TypeScript · image processing · Web Workers</p></div><p class="links"><a href="/work/edition/">Case study</a><a href="https://mariaareadne1.github.io/edition/">Try it ↗</a><a href="https://github.com/Mariaareadne1/edition">Source ↗</a></p></li>
 <li class="wi-row" id="orbit"><a class="wi-thumb" href="/work/orbit/" tabindex="-1" aria-hidden="true"><img loading="lazy" decoding="async" src="/assets/media/orbit/orbit-step-3.jpg" alt=""></a><div class="wi-body"><h3><a href="/work/orbit/">Orbit</a></h3><p>Draw paths for sounds to move around your head.</p><p class="meta">Web app · Web Audio (PannerNode, OfflineAudioContext) · TypeScript</p></div><p class="links"><a href="/work/orbit/">Case study</a><a href="https://mariaareadne1.github.io/orbit/">Try it ↗</a><a href="https://github.com/Mariaareadne1/orbit">Source ↗</a></p></li>
-<li class="wi-row" id="filo"><a class="wi-thumb diagram" href="/work/filo/" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 400 240" width="100%" height="100%" fill="none" stroke="currentColor" font-family="IBM Plex Mono, monospace" font-size="11" role="img" aria-label="Diagram: a new place is compared against the midpoint of a ranked list, halving the list each tap">
-<line x1="30" y1="60" x2="370" y2="60"/><line x1="115" y1="105" x2="285" y2="105"/><line x1="157" y1="150" x2="243" y2="150"/><line x1="189" y1="195" x2="211" y2="195"/>
-<g fill="currentColor" stroke="none"><circle cx="200" cy="60" r="4"/><circle cx="200" cy="105" r="4"/><circle cx="200" cy="150" r="4"/><circle cx="200" cy="195" r="4"/><g fill="#5F6977"><text x="30" y="46">n places, ranked</text><text x="295" y="109">n/2</text><text x="253" y="154">n/4</text><text x="221" y="199">≈ log₂ n taps</text></g></g></svg></a><div class="wi-body"><h3><a href="/work/filo/">Filo</a></h3><p>A social map for saving and ranking places.</p><p class="meta">Mobile app (prototype) · React Native / Expo · Supabase (Postgres, RLS) · Mapbox</p></div><p class="links"><a href="/work/filo/">Case study</a><a href="https://github.com/Mariaareadne1/Filo">Source ↗</a></p></li></ol></section>
+<li class="wi-row" id="filo"><a class="wi-thumb" href="/work/filo/" tabindex="-1" aria-hidden="true"><img loading="lazy" decoding="async" src="/assets/media/filo/filo-screens-800.jpg" alt=""></a><div class="wi-body"><h3><a href="/work/filo/">Filo</a></h3><p>A social map for saving and ranking places.</p><p class="meta">Mobile app (prototype) · React Native / Expo · Supabase (Postgres, RLS) · Mapbox</p></div><p class="links"><a href="/work/filo/">Case study</a><a href="https://github.com/Mariaareadne1/Filo">Source ↗</a></p></li></ol></section>
 <section class="wi-group" aria-labelledby="g-experiment"><h2 class="group-h" id="g-experiment">Creative experiments</h2><ol class="wi"><li class="wi-row text-only" id="o0"><div class="wi-body"><h3><a href="https://mariaareadne1.github.io/webaudio-synth/">TONUS</a></h3><p>Polyphonic web synthesizer: FM, AM, additive and subtractive synthesis crossfaded in real time, with a chord generator, scope and recorder.</p><p class="meta">Web Audio · JavaScript, zero dependencies</p></div><p class="links"><a href="https://mariaareadne1.github.io/webaudio-synth/">Try it ↗</a></p></li>
 <li class="wi-row text-only" id="o2"><div class="wi-body"><h3><a href="https://github.com/Mariaareadne1/filo-recommendation-engine">Filo recommendation engine</a></h3><p>Semantic search over a synthetic NYC venue catalogue with a MiniLM model fine-tuned by contrastive loss; not connected to the app.</p><p class="meta">PyTorch · Sentence Transformers · FastAPI · React</p></div><p class="links"><a href="https://github.com/Mariaareadne1/filo-recommendation-engine">Source ↗</a></p></li>
 <li class="wi-row text-only" id="o3"><div class="wi-body"><h3><a href="https://github.com/Mariaareadne1/cartpole-policy-gradient">REINFORCE from scratch</a></h3><p>REINFORCE policy gradient written by hand in PyTorch, with no RL libraries; it learns to balance CartPole-v1.</p><p class="meta">PyTorch · reinforcement learning</p></div><p class="links"><a href="https://github.com/Mariaareadne1/cartpole-policy-gradient">Source ↗</a><a href="/blog-cartpole.html">Notes</a></p></li>
@@ -66,6 +67,9 @@
 </div>
 </div></footer>
 <!-- /region:foot -->
+</div>
 <script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/sky-page.js"></script>
+<script type="module" src="/assets/sky/portfolio-glass.js"></script>
 </body>
 </html>

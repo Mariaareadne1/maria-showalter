@@ -48,3 +48,13 @@ and the TONUS Playground still (`playground/tonus-960.jpg`).
 
 Home page media is poster-first; videos use `preload="none"` (lead: `metadata`) and play only while 40 % visible
 and motion is allowed. See QA-RESULTS.md for measured transfer.
+
+
+## V2 additions (2026-11-08)
+
+| File | Source | Size | Notes |
+|---|---|---|---|
+| assets/sky/sky-still.jpg | Rendered by `scripts/make-sky-still.mjs` from this branch's default scene with the real Sky Study renderer, 1600×1000, 48 samples | 46 KB | Shipped fallback / inner-page sky |
+| assets/media/filo/filo-screens-1600.jpg, -800.jpg | Three Filo screenshots from `Filo/docs/screenshots/after/` (iOS 26.5 simulator, dev build, `d4ed99f`), placed side by side on paper with ffmpeg; no retouching | 114 / 33 KB | Sample data shown (handles like @cal are seed users) |
+| assets/media/playground/{meadow,pond,hive,lanterns}-960.jpg | Downscaled from each repo's own `docs/media` captures (08-several-depths, 01-pond, 01-garden, demo-end) | 53–74 KB | Real app captures by each project's tooling |
+| docs/v2-review/edit-sky-demo.mp4 | `tests/record-edit.mjs`: real mouse input in Chromium (GPU), 960×600 H.264, 22.6 s | 371 KB | Review evidence, not loaded by the site |

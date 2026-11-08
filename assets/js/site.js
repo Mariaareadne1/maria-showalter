@@ -37,7 +37,7 @@
       var b = document.createElement('button')
       b.type = 'button'
       b.className = 'vid-toggle'
-      function label () { var playing = !v.paused; b.textContent = playing ? '❚❚ Pause' : '▶ Play'; b.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + (v.getAttribute('aria-label') || 'preview')) }
+      function label () { var playing = !v.paused; b.textContent = playing ? 'Pause' : 'Play'; b.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + (v.getAttribute('aria-label') || 'preview')) }
       b.addEventListener('click', function () {
         if (v.paused) { userPaused.delete(v); if (v.preload === 'none') v.preload = 'auto'; v.play().catch(function () {}) } else { userPaused.add(v); v.pause() }
       })

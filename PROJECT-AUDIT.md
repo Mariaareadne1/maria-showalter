@@ -1,3 +1,20 @@
+# Project audit — V2 Playground (2026-11-08)
+
+Found with local folders + `gh` (owner account Mariaareadne1); each verified live on 2026-11-07/08 by `node tests/playground.mjs` (Chromium, GPU): HTTP 200, canvas renders, a drawn loop changes the picture, no page errors.
+
+| World | Repo (public, MIT) | Live | What a drawn loop did in the test |
+|---|---|---|---|
+| Meadow | github.com/Mariaareadne1/meadow-interactive | meadow-interactive.vercel.app | sheep painted in (2.6 % of pixels changed) |
+| Pond | github.com/Mariaareadne1/pond-interactive | pond-interactive.vercel.app | creature bloomed on the water (3.1 %) |
+| Hive | github.com/Mariaareadne1/hive-interactive | hive-interactive.vercel.app | a rose grew; bees visited (0.6 %) |
+| Lanterns | github.com/Mariaareadne1/lanterns-interactive | lanterns-interactive.vercel.app | lantern made and lit (3.1 %) |
+
+Also found and live but not listed (to keep 2–4 and avoid near-duplicates): SKY paper planes (sky-interactive), TIDE, BUBBLES, WIND STUDY (private repo, public site). SURF and HARBOR not deployed. Sky Study is the homepage sky itself, so it is not a Playground tile.
+
+Removed from Playground (still on Work): Hinge, Edition, Orbit, TONUS, the old deck. Iris: not reintroduced (owner removed it in PR #2); `/work/iris/` redirect kept.
+
+---
+
 # PROJECT-AUDIT — what to show, and where
 
 Checked 7 Nov 2026 from local clones, `gh repo view` and live URLs. Repos are all owned by `Mariaareadne1` and none are forks (`isFork: false`); team projects are noted. Scores are 1–5 for design-engineering strength (interaction craft, technical depth, completeness, uniqueness).

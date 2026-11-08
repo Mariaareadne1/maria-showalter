@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maria Showalter — Design Engineer</title>
-<meta name="description" content="Maria Showalter is a design engineer. She designs and builds software, interactive tools and digital experiments: FrameFlow, Hinge, Edition, Orbit and Filo.">
+<meta name="description" content="Maria Showalter, design engineer. Software, interactive tools and digital experiments: FrameFlow, Hinge, Edition, Orbit, Filo, and small playable worlds.">
 <link rel="canonical" href="https://mariashowalter.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Maria Showalter — Design Engineer">
@@ -12,19 +12,29 @@
 <meta property="og:url" content="https://mariashowalter.com/">
 <meta property="og:image" content="https://mariashowalter.com/assets/media/frameflow/frameflow-step-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F6F6F2">
+<meta name="theme-color" content="#C9DBEC">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/sky/sky-still.jpg" as="image">
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/nav.css">
 <link rel="stylesheet" href="/assets/css/media.css">
+<link rel="stylesheet" href="/assets/css/sky.css">
 <link rel="stylesheet" href="/assets/css/home.css">
-<link rel="stylesheet" href="/assets/css/dj.css">
+<link rel="modulepreload" href="/assets/sky/portfolio-sky.js">
 </head>
-<body id="top">
+<body id="top" class="is-home">
 <a class="skip" href="#main">Skip to content</a>
+<div class="sky" id="sky" data-sky-live>
+<div class="sky-still" aria-hidden="true"></div>
+<canvas class="sky-canvas" aria-hidden="true"></canvas>
+<div class="sky-veil" aria-hidden="true"></div>
+<div class="sky-surface" aria-hidden="true"></div>
+</div>
+<button class="edit-sky sky-corner" type="button" data-sky-edit disabled aria-describedby="sky-what"><span data-sky-label>Edit sky</span></button>
+<div class="sheet">
 <!-- region:nav current=home -->
 <header class="mast"><div class="wrap">
 <a class="home" href="/" aria-current="page">Maria Showalter</a>
@@ -39,103 +49,54 @@
 <!-- /region:nav -->
 
 <main id="main">
-<section class="hero" aria-labelledby="hero-h" data-atmosphere='{"anchor":{"x":0.84,"y":0.5,"r":0.7},"sources":[{"x":0.86,"y":0.46,"a":1,"s":0.5,"k":16,"p":0},{"x":1.1,"y":1.0,"a":0.6,"s":0.45,"k":20,"p":1.2},{"x":0.4,"y":-0.2,"a":0.3,"s":0.5,"k":11,"p":2}]}'>
-  <div class="wrap hero-grid">
+<section class="hero wrap" aria-labelledby="hero-h">
+  <div class="hero-text">
     <h1 class="role" id="hero-h"><span class="vh">Maria Showalter, </span>Design Engineer</h1>
     <p class="intro">I design and build software, interactive tools, and digital experiments.</p>
-    <a class="to-work" href="#work">Selected Work <span aria-hidden="true">↓</span></a>
-    <figure class="portrait-slot" data-halftone-slot hidden>
-      <div data-halftone-stage></div>
-    </figure>
+    <div class="hero-actions">
+      <a class="to-work" href="#work">Selected Work <span aria-hidden="true">↓</span></a>
+      <button class="edit-sky" type="button" data-sky-edit disabled aria-describedby="sky-what"><span data-sky-label>Edit sky</span></button>
+      <span class="edit-sky-hint" aria-hidden="true">Draw and move clouds</span>
+    </div>
+    <p class="vh" id="sky-what">The sky behind this page is a live volumetric cloud renderer from Sky Study. Edit sky lets you draw, move and resize clouds and change the light; keyboard controls are listed in the editor.</p>
   </div>
+  <figure class="portrait-slot" data-halftone-slot hidden>
+    <div data-halftone-stage></div>
+  </figure>
 </section>
 
 <section class="section wrap" id="work" aria-labelledby="work-h">
   <header class="sec-head"><h2 id="work-h">Selected Work</h2><a href="/work/">All work</a></header>
 <!-- region:home-work -->
-<article class="pw pw-lead" aria-labelledby="pw-frameflow"><div class="media m-lead"><video data-inline muted loop playsinline preload="metadata" poster="/assets/media/frameflow/frameflow-step-1.jpg" aria-label="FrameFlow studio: a recording plays with its automatic camera Moments, Moment 02 is renamed and zoomed in, the style changes to Midnight, and an MP4 export finishes" width="1600" height="1000"><source src="/assets/media/frameflow/frameflow-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/frameflow/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="pw-frameflow"><a href="/work/frameflow/">FrameFlow</a></h3><p class="line">Record your screen. Edit the camera movement. Export a finished video.</p><p class="links"><a href="/work/frameflow/">Case study</a><a href="https://github.com/Mariaareadne1/FrameFlow">Source ↗</a></p></div></article>
-<div class="pw-pair">
-<article class="pw pw-half" aria-labelledby="pw-hinge"><div class="media m-half"><video data-inline muted loop playsinline preload="none" poster="/assets/media/hinge/hinge-loop-poster.jpg" aria-label="Hinge: a card is dragged and released, the release spring is retuned to low damping, and the same throw now oscillates home" width="1600" height="1000"><source src="/assets/media/hinge/hinge-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/hinge/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="pw-hinge"><a href="/work/hinge/">Hinge</a></h3><p class="line">Design how interfaces move, then export the code.</p><p class="links"><a href="/work/hinge/">Case study</a><a href="https://mariaareadne1.github.io/hinge/">Try it ↗</a></p></div></article>
-<article class="pw pw-half" aria-labelledby="pw-edition"><div class="media m-half"><video data-inline muted loop playsinline preload="none" poster="/assets/media/edition/edition-loop-poster.jpg" aria-label="Edition: a film photograph becomes a cobalt and vermilion halftone print; the plates are lifted apart, one is pushed out of register, and the loupe reads the dots" width="1600" height="1000"><source src="/assets/media/edition/edition-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/edition/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="pw-edition"><a href="/work/edition/">Edition</a></h3><p class="line">Turn photographs into two-color halftone prints.</p><p class="links"><a href="/work/edition/">Case study</a><a href="https://mariaareadne1.github.io/edition/">Try it ↗</a></p></div></article>
-</div>
-<div class="pw-pair pw-quiet">
-<article class="pw pw-small" aria-labelledby="pw-orbit"><div class="media m-small dark"><video data-inline muted loop playsinline preload="none" poster="/assets/media/orbit/orbit-loop-poster.jpg" aria-label="Orbit: three sounds are added, two paths are drawn around the listener, and playback moves the sounds along them" width="1600" height="1000"><source src="/assets/media/orbit/orbit-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/orbit/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="pw-orbit"><a href="/work/orbit/">Orbit</a></h3><p class="line">Draw paths for sounds to move around your head.</p><p class="links"><a href="/work/orbit/">Case study</a><a href="https://mariaareadne1.github.io/orbit/">Try it ↗</a></p></div></article>
-<article class="pw pw-small" aria-labelledby="pw-filo"><div class="media m-small paper diagram"><svg viewBox="0 0 400 240" width="100%" height="100%" fill="none" stroke="currentColor" font-family="IBM Plex Mono, monospace" font-size="11" role="img" aria-label="Diagram: a new place is compared against the midpoint of a ranked list, halving the list each tap">
-<line x1="30" y1="60" x2="370" y2="60"/><line x1="115" y1="105" x2="285" y2="105"/><line x1="157" y1="150" x2="243" y2="150"/><line x1="189" y1="195" x2="211" y2="195"/>
-<g fill="currentColor" stroke="none"><circle cx="200" cy="60" r="4"/><circle cx="200" cy="105" r="4"/><circle cx="200" cy="150" r="4"/><circle cx="200" cy="195" r="4"/><g fill="#5F6977"><text x="30" y="46">n places, ranked</text><text x="295" y="109">n/2</text><text x="253" y="154">n/4</text><text x="221" y="199">≈ log₂ n taps</text></g></g></svg><a class="cover" href="/work/filo/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="pw-filo"><a href="/work/filo/">Filo</a></h3><p class="line">A social map for saving and ranking places.</p><p class="links"><a href="/work/filo/">Case study</a><a href="https://github.com/Mariaareadne1/Filo">Source ↗</a></p></div></article>
+<div class="work-grid">
+<article class="wk wk-lead" aria-labelledby="wk-frameflow"><div class="media m-lead"><video data-inline muted loop playsinline preload="metadata" poster="/assets/media/frameflow/frameflow-step-1.jpg" aria-label="FrameFlow studio: a recording plays with its automatic camera Moments, Moment 02 is renamed and zoomed in, the style changes to Midnight, and an MP4 export finishes" width="1600" height="1000"><source src="/assets/media/frameflow/frameflow-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/frameflow/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="wk-frameflow"><a href="/work/frameflow/">FrameFlow</a></h3><p class="line">Record your screen. Edit the camera movement. Export a finished video.</p><p class="links"><a href="/work/frameflow/">Case study</a><a href="https://github.com/Mariaareadne1/FrameFlow">Source ↗</a></p></div></article>
+<article class="wk" aria-labelledby="wk-hinge"><div class="media m-card"><video data-inline muted loop playsinline preload="none" poster="/assets/media/hinge/hinge-loop-poster.jpg" aria-label="Hinge: a card is dragged and released, the release spring is retuned to low damping, and the same throw now oscillates home" width="1600" height="1000"><source src="/assets/media/hinge/hinge-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/hinge/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="wk-hinge"><a href="/work/hinge/">Hinge</a></h3><p class="line">Design how interfaces move, then export the code.</p><p class="links"><a href="/work/hinge/">Case study</a><a href="https://mariaareadne1.github.io/hinge/">Try it ↗</a></p></div></article>
+<article class="wk" aria-labelledby="wk-edition"><div class="media m-card"><video data-inline muted loop playsinline preload="none" poster="/assets/media/edition/edition-loop-poster.jpg" aria-label="Edition: a film photograph becomes a cobalt and vermilion halftone print; the plates are lifted apart, one is pushed out of register, and the loupe reads the dots" width="1600" height="1000"><source src="/assets/media/edition/edition-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/edition/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="wk-edition"><a href="/work/edition/">Edition</a></h3><p class="line">Turn photographs into two-color halftone prints.</p><p class="links"><a href="/work/edition/">Case study</a><a href="https://mariaareadne1.github.io/edition/">Try it ↗</a></p></div></article>
+<article class="wk" aria-labelledby="wk-orbit"><div class="media m-card"><video data-inline muted loop playsinline preload="none" poster="/assets/media/orbit/orbit-loop-poster.jpg" aria-label="Orbit: three sounds are added, two paths are drawn around the listener, and playback moves the sounds along them" width="1600" height="1000"><source src="/assets/media/orbit/orbit-loop.mp4" type="video/mp4"></video><a class="cover" href="/work/orbit/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="wk-orbit"><a href="/work/orbit/">Orbit</a></h3><p class="line">Draw paths for sounds to move around your head.</p><p class="links"><a href="/work/orbit/">Case study</a><a href="https://mariaareadne1.github.io/orbit/">Try it ↗</a></p></div></article>
+<article class="wk" aria-labelledby="wk-filo"><div class="media m-card"><img loading="lazy" decoding="async" src="/assets/media/filo/filo-screens-1600.jpg" srcset="/assets/media/filo/filo-screens-800.jpg 800w, /assets/media/filo/filo-screens-1600.jpg 1600w" sizes="(max-width: 680px) 100vw, 360px" width="1600" height="1000" alt="Filo on an iPhone simulator: the campus map with ranked places, the Discover feed, and the ranking screen asking where a new place lands"><a class="cover" href="/work/filo/" tabindex="-1" aria-hidden="true"></a></div><div class="cap"><h3 class="title" id="wk-filo"><a href="/work/filo/">Filo</a></h3><p class="line">A social map for saving and ranking places.</p><p class="links"><a href="/work/filo/">Case study</a><a href="https://github.com/Mariaareadne1/Filo">Source ↗</a></p></div></article>
 </div>
 <!-- /region:home-work -->
 </section>
 
-<section class="section wrap" id="currently" aria-labelledby="cur-h">
-  <div class="cur-grid">
-    <h2 id="cur-h">Currently</h2>
+<section class="section wrap" id="currently" aria-labelledby="cur-h" data-sky-end>
+  <header class="sec-head"><h2 id="cur-h">Currently</h2></header>
 <!-- region:home-currently -->
-<dl class="currently"><div><dt>Studying</dt><dd>Computer Science at Barnard / Columbia</dd></div><div><dt>Research</dt><dd><a href="https://www.cs.columbia.edu/~ms6147/">Formal Methods and Reasoning Group</a><br><a href="https://cmc.music.columbia.edu/">Computer Music Center</a></dd></div><div><dt>Making</dt><dd>Creative software and interactive tools</dd></div></dl>
+<dl class="currently"><div><dt>Studying</dt><dd>Computer Science at Barnard / Columbia</dd></div><div><dt>Research</dt><dd><a href="https://www.cs.columbia.edu/~ms6147/">Formal Methods and Reasoning Group</a><span class="sep">; </span><a href="https://cmc.music.columbia.edu/">Computer Music Center</a></dd></div><div><dt>Building</dt><dd>Creative software and interactive tools</dd></div></dl>
 <!-- /region:home-currently -->
-  </div>
 </section>
 
 <section class="section wrap" id="playground" aria-labelledby="pg-h">
-  <header class="sec-head"><h2 id="pg-h">Playground</h2><a href="/playground/">All experiments</a></header>
+  <header class="sec-head"><h2 id="pg-h">Playground</h2><a href="/playground/">Things to try</a></header>
 <!-- region:home-playground -->
-<ul class="pg-strip"><li><a href="https://mariaareadne1.github.io/webaudio-synth/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/tonus-960.jpg" alt=""></span><span class="pg-name">TONUS ↗</span><span class="pg-line">Play a synthesizer from your keyboard.</span></a></li><li><a href="https://mariaareadne1.github.io/hinge/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/hinge/hinge-step-2.jpg" alt=""></span><span class="pg-name">Hinge ↗</span><span class="pg-line">Drag a card and tune its spring.</span></a></li><li><a href="https://mariaareadne1.github.io/orbit/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/orbit/orbit-step-3.jpg" alt=""></span><span class="pg-name">Orbit ↗</span><span class="pg-line">Move sounds around your head.</span></a></li></ul>
+<ul class="pg-row"><li class="pg"><a class="pg-link" href="https://meadow-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/meadow-960.jpg" alt="A painted meadow tile on paper with sheep at different depths" width="960" height="600"></span><span class="pg-name">Meadow <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a loop on the grass and it becomes a sheep.</span></a></li><li class="pg"><a class="pg-link" href="https://pond-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/pond-960.jpg" alt="A painted pond tile with koi, a duck and duckling, lily pads and frogs" width="960" height="600"></span><span class="pg-name">Pond <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Loops on the water turn into koi, ducks and frogs.</span></a></li><li class="pg"><a class="pg-link" href="https://hive-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/hive-960.jpg" alt="A painted cottage garden tile with flowers, a straw skep and bees" width="960" height="600"></span><span class="pg-name">Hive <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a flower in the garden; the bees come to visit.</span></a></li><li class="pg"><a class="pg-link" href="https://lanterns-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/lanterns-960.jpg" alt="Paper lanterns rising over a lake at night" width="960" height="600"></span><span class="pg-name">Lanterns <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a lantern over the lake at dusk and let it drift up.</span></a></li></ul>
 <!-- /region:home-playground -->
 </section>
 
-<section class="section deck-section" id="deck" aria-labelledby="deck-h">
-  <div class="wrap">
-    <header class="sec-head"><h2 id="deck-h">Deck</h2></header>
-    <div class="deck-layout">
-      <div class="deck-notes">
-        <p>A two-deck mixer that runs in the page. Load the two loops, or your own audio files. Nothing plays until you press Play.</p>
-        <dl class="deck-map">
-          <div><dt>Tempo</dt><dd>Changes playback rate; pitch follows, as on a turntable.</dd></div>
-          <div><dt>Sync</dt><dd>Sets both decks to the tempo shown.</dd></div>
-          <div><dt>Platter</dt><dd>Drag to nudge a playing deck faster or slower.</dd></div>
-          <div><dt>Filters</dt><dd>Low pass and high pass on both decks.</dd></div>
-          <div><dt>Crossfader</dt><dd>Equal-power blend from A to B.</dd></div>
-        </dl>
-        <p class="rights">Files you open stay in your browser. The two loops are original, synthesised for this site.</p>
-      </div>
-      <div class="deck" id="djDeck" aria-label="DJ mixer">
-        <div class="presets" role="group" aria-label="Quick start">
-          <button type="button" class="chip" data-pair="assets/audio/loop-a.m4a,assets/audio/loop-b.m4a">Load both loops</button>
-        </div>
-        <div class="console">
-          <div class="unit" data-deck="A">
-            <div class="unit-head"><span class="deck-id">A</span><label class="vh" for="selA">Track for deck A</label><select id="selA" class="track"></select></div>
-            <label class="file"><input type="file" accept="audio/*" data-file="A"><span>Open your own file…</span></label>
-            <div class="platter" data-platter="A" aria-hidden="true"><div class="disc"><span class="mark"></span><span class="hub"></span></div></div>
-            <p class="status meta" data-status="A" role="status" aria-live="polite">No track loaded</p>
-            <div class="pos"><label class="meta" for="posA">Position</label><input id="posA" type="range" min="0" max="1000" value="0" step="1" disabled data-seek="A"><output class="meta" data-time="A">0:00</output></div>
-            <div class="transport"><button type="button" class="play" data-play="A" disabled aria-label="Play deck A">Play</button><span class="meta"><span data-bpm="A">—</span> BPM</span></div>
-            <div class="fader"><label class="meta" for="volA">Volume</label><input id="volA" type="range" min="0" max="100" value="85" data-vol="A"></div>
-          </div>
-
-          <div class="mixer">
-            <div class="fader"><label class="meta" for="tempo">Tempo <output id="tempoOut" for="tempo">100</output></label><input id="tempo" type="range" min="60" max="180" value="100" step="1"></div>
-            <button type="button" class="sync" id="syncBtn" aria-pressed="false">Sync</button>
-            <div class="fader"><label class="meta" for="lp">Low pass</label><input id="lp" type="range" min="0" max="100" value="100"></div>
-            <div class="fader"><label class="meta" for="hp">High pass</label><input id="hp" type="range" min="0" max="100" value="0"></div>
-            <canvas class="meter" id="meter" width="200" height="40" aria-hidden="true"></canvas>
-          </div>
-
-          <div class="unit" data-deck="B">
-            <div class="unit-head"><span class="deck-id">B</span><label class="vh" for="selB">Track for deck B</label><select id="selB" class="track"></select></div>
-            <label class="file"><input type="file" accept="audio/*" data-file="B"><span>Open your own file…</span></label>
-            <div class="platter" data-platter="B" aria-hidden="true"><div class="disc"><span class="mark"></span><span class="hub"></span></div></div>
-            <p class="status meta" data-status="B" role="status" aria-live="polite">No track loaded</p>
-            <div class="pos"><label class="meta" for="posB">Position</label><input id="posB" type="range" min="0" max="1000" value="0" step="1" disabled data-seek="B"><output class="meta" data-time="B">0:00</output></div>
-            <div class="transport"><button type="button" class="play" data-play="B" disabled aria-label="Play deck B">Play</button><span class="meta"><span data-bpm="B">—</span> BPM</span></div>
-            <div class="fader"><label class="meta" for="volB">Volume</label><input id="volB" type="range" min="0" max="100" value="85" data-vol="B"></div>
-          </div>
-
-          <div class="xfade"><label class="meta" for="xf"><span>A</span><span>Crossfader</span><span>B</span></label><input id="xf" type="range" min="0" max="100" value="50"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<section class="section wrap" id="deck" aria-labelledby="soon-h">
+  <header class="sec-head"><h2 id="soon-h">Also</h2></header>
+<!-- region:home-soon -->
+<dl class="soon-list"><div><dt><a href="/art/">Art</a></dt><dd>Coming soon. <span class="meta">Photography, murals and digital work.</span></dd></div><div><dt>DJ Deck</dt><dd>Coming soon. <span class="meta">A new deck is in progress.</span></dd></div></dl>
+<!-- /region:home-soon -->
 </section>
 </main>
 
@@ -148,19 +109,12 @@
 </div>
 </div></footer>
 <!-- /region:foot -->
+</div>
+<p class="vh" id="sky-status" role="status" aria-live="polite"></p>
 <script src="/assets/js/site.js" defer></script>
-<script src="/assets/js/atmosphere.js" defer></script>
+<script src="/assets/js/sky-page.js"></script>
+<script type="module" src="/assets/sky/portfolio-glass.js"></script>
 <script src="/assets/js/hero-slot.js" defer></script>
-<script src="/assets/js/dj.js" defer></script>
-<script>
-  window.addEventListener('DOMContentLoaded', function () {
-    var hero = document.querySelector('.hero[data-atmosphere]')
-    if (hero && window.Atmosphere) {
-      var opts = JSON.parse(hero.dataset.atmosphere)
-      opts.mode = 'whisper'
-      window.Atmosphere.mount(hero, opts)
-    }
-  })
-</script>
+<script type="module" src="/assets/sky/portfolio-sky.js"></script>
 </body>
 </html>

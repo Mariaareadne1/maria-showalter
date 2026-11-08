@@ -8,7 +8,7 @@ const ROUTES = only.length ? only : [
   '', 'work/', 'playground/', 'art/', 'writing/', 'about/',
   'work/frameflow/', 'work/filo/',
   'blog-creativity.html', 'blog-cartpole.html', 'blog-pid.html', 'blog-filo.html',
-  'gallery.html', 'work/iris/', 'work/hinge/', 'work/edition/', 'work/orbit/', '404.html'
+  'gallery.html', 'work/iris/', 'work/hinge/', 'work/edition/', 'work/orbit/', '404.html', 'lab/deck/'
 ]
 const WIDTHS = [[1440, 900], [1024, 768], [768, 1024], [390, 844], [320, 640]]
 const engines = (process.env.ENGINES ?? 'chromium,webkit').split(',')
@@ -20,7 +20,7 @@ const checkedLinks = new Map()
 
 for (const engine of engines) {
   console.log(`\n[${engine}]`)
-  const browser = await TYPES[engine].launch()
+  const browser = await TYPES[engine].launch(engine === 'chromium' ? { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } : {})
   for (const route of ROUTES) {
     for (const [w, h] of WIDTHS) {
       const page = await browser.newPage({ viewport: { width: w, height: h }, reducedMotion: 'reduce' })
@@ -79,12 +79,12 @@ for (const engine of engines) {
   // Video previews play with motion allowed and pause offscreen.
   const vp = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' })
   await vp.goto(base, { waitUntil: 'networkidle' })
-  await vp.locator('.pw-lead video').scrollIntoViewIfNeeded()
+  await vp.locator('.wk-lead video').scrollIntoViewIfNeeded()
   await vp.waitForTimeout(1500)
-  check(await vp.locator('.pw-lead video').evaluate((v) => !v.paused), 'lead video plays when visible (motion allowed)')
+  check(await vp.locator('.wk-lead video').evaluate((v) => !v.paused), 'lead video plays when visible (motion allowed)')
   await vp.evaluate(() => scrollTo(0, document.body.scrollHeight))
   await vp.waitForTimeout(800)
-  check(await vp.locator('.pw-lead video').evaluate((v) => v.paused), 'lead video pauses offscreen')
+  check(await vp.locator('.wk-lead video').evaluate((v) => v.paused), 'lead video pauses offscreen')
   await vp.close()
   await browser.close()
 }

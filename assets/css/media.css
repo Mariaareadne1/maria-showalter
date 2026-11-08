@@ -4,8 +4,9 @@
 .media.is-error::after { content: attr(data-error); position: absolute; inset: auto 12px 12px; font: 400 12px var(--mono); color: var(--meta); }
 
 /* Play/pause for muted previews: always visible, never the only way to the project. */
-.vid-toggle { position: absolute; right: 10px; bottom: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--mono); color: var(--ink); background: rgba(246, 246, 242, 0.92); border: 1px solid var(--rule); padding: 7px 10px; border-radius: 2px; cursor: pointer; }
-.vid-toggle:hover { border-color: var(--ink); }
+.vid-toggle { position: absolute; right: 8px; bottom: 8px; z-index: 2; display: inline-flex; align-items: center; min-height: 30px; font: 500 12px/1 var(--sans); color: var(--ink); background: rgba(255, 255, 255, 0.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 0; box-shadow: 0 0 0 1px var(--rule); padding: 0 10px; border-radius: 999px; cursor: pointer; }
+.vid-toggle:hover { background: #fff; }
+.vid-toggle::after { content: ''; position: absolute; inset: -7px; }
 .on-dark .vid-toggle { background: rgba(12, 16, 34, 0.75); color: var(--on-dark); border-color: rgba(232, 235, 240, 0.25); }
 
 /* Portrait slot — the boundary around the owner's halftone engine (DESIGN-DECISIONS §5). */

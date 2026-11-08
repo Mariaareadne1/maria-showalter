@@ -43,7 +43,7 @@ for (const engine of engines) {
     if (failLoopB && route.request().url().includes('loop-b')) return route.fulfill({ status: 404, body: 'missing' })
     return route.fulfill({ status: 200, contentType: 'audio/wav', body: WAV })
   })
-  await page.goto(base + '#deck', { waitUntil: 'networkidle' })
+  await page.goto(base + 'lab/deck/#deck', { waitUntil: 'networkidle' })
 
   let s = await state(page)
   check(s.ctx === 'none', 'no AudioContext before a user gesture')

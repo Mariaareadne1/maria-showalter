@@ -87,30 +87,29 @@ R.foot = () => `<footer class="site-foot"><div class="wrap">
 </div>
 </div></footer>`
 
-/* Home — Hybrid Exhibition: one wide lead, a matched pair, one wide series, a quieter pair. */
+/* Home — compact Selected Work: one slightly wider lead, then an even two-column grid.
+   Thumbnail, name, one line, quiet links. Nothing hover-only. */
 R['home-work'] = () => {
-  const f = byId.frameflow, h = byId.hinge, e = byId.edition, o = byId.orbit, fi = byId.filo
-  const cap = (p, keys) => `<div class="cap"><h3 class="title" id="pw-${p.id}"><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p class="line">${esc(p.line)}</p>${links(p.links, keys)}${note(p)}</div>`
-  const art = (p, cls, mediaOpts, keys) => `<article class="pw ${cls}" aria-labelledby="pw-${p.id}">${media(p, mediaOpts)}${cap(p, keys)}</article>`
-  return `
-${art(f, 'pw-lead', { cls: 'm-lead', sizes: '(max-width: 680px) 100vw, 92vw', eager: true }, ['case', 'source'])}
-<div class="pw-pair">
-${art(h, 'pw-half', { cls: 'm-half' }, ['case', 'live'])}
-${art(e, 'pw-half', { cls: 'm-half' }, ['case', 'live'])}
-</div>
-<div class="pw-pair pw-quiet">
-${art(o, 'pw-small', { cls: 'm-small dark', sizes: '(max-width: 680px) 100vw, 40vw' }, ['case', 'live'])}
-${art(fi, 'pw-small', { cls: 'm-small paper' }, ['case', 'source'])}
-</div>`
+  const order = ['frameflow', 'hinge', 'edition', 'orbit', 'filo'].map((id) => byId[id])
+  const item = (p, k) => {
+    const lead = k === 0
+    const keys = p.links.live ? ['case', 'live'] : ['case', 'source']
+    return `<article class="wk${lead ? ' wk-lead' : ''}" aria-labelledby="wk-${p.id}">${media(p, { cls: lead ? 'm-lead' : 'm-card', sizes: lead ? '(max-width: 680px) 100vw, 720px' : '(max-width: 680px) 100vw, 360px', eager: lead })}<div class="cap"><h3 class="title" id="wk-${p.id}"><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p class="line">${esc(p.line)}</p>${links(p.links, keys)}</div></article>`
+  }
+  return `<div class="work-grid">\n${order.map(item).join('\n')}\n</div>`
 }
 
-R['home-currently'] = () => `<dl class="currently">${site.currently.map((c) => `<div><dt>${esc(c.label)}</dt><dd>${c.links ? c.links.map((l) => `<a href="${esc(l.href)}">${esc(l.text)}</a>`).join('<br>') : esc(c.text)}</dd></div>`).join('')}</dl>`
+R['home-currently'] = () => `<dl class="currently">${site.currently.map((c) => `<div><dt>${esc(c.label)}</dt><dd>${c.links ? c.links.map((l) => `<a href="${esc(l.href)}">${esc(l.text)}</a>`).join('<span class="sep">; </span>') : esc(c.text)}</dd></div>`).join('')}</dl>`
 
 const thumb = (x) => x.still
-  ? `<span class="thumb"><img loading="lazy" decoding="async" src="${esc(x.still)}" alt=""></span>`
+  ? `<span class="thumb"><img loading="lazy" decoding="async" src="${esc(x.still)}" alt="${esc(x.alt || '')}" width="960" height="600"></span>`
   : `<span class="thumb thumb-type" aria-hidden="true"><span>${esc(x.name)}</span></span>`
 
-R['home-playground'] = () => `<ul class="pg-strip">${site.playground.slice(0, 3).map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)}${isExternal(x.href) ? ' ↗' : ''}</span><span class="pg-line">${esc(x.line)}</span></a></li>`).join('')}</ul>`
+/* Playground: independent playable worlds (verified live; see PROJECT-AUDIT.md). */
+const pgItem = (x, withSource) => `<li class="pg"><a class="pg-link" href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)} <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">${esc(x.line)}</span></a>${withSource && x.repo ? `<a class="pg-src" href="${esc(x.repo)}">Source<span class="vh"> for ${esc(x.name)}</span></a>` : ''}</li>`
+R['home-playground'] = () => `<ul class="pg-row">${site.playground.slice(0, 4).map((x) => pgItem(x, false)).join('')}</ul>`
+
+R['home-soon'] = () => `<dl class="soon-list">${site.soon.map((x) => `<div><dt>${x.href ? `<a href="${esc(x.href)}">${esc(x.name)}</a>` : esc(x.name)}</dt><dd>Coming soon. <span class="meta">${esc(x.line)}</span></dd></div>`).join('')}</dl>`
 
 /* Work index: three groups, scannable rows, each row goes somewhere real. */
 R['work-index'] = () => {
@@ -131,7 +130,7 @@ R['work-index'] = () => {
   }).join('\n')
 }
 
-R['playground-list'] = () => `<ul class="pg-grid">${site.playground.map((x) => `<li><a href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)}${isExternal(x.href) ? ' ↗' : ''}</span><span class="pg-line">${esc(x.line)}</span><span class="meta">${esc(x.series)}</span></a></li>`).join('')}</ul>`
+R['playground-list'] = () => `<ul class="pg-grid">${site.playground.map((x) => pgItem(x, true)).join('')}</ul>`
 
 R['writing-list'] = () => `<ol class="wl">${site.writing.map((w, k) => `<li><span class="wl-n meta">${String(k + 1).padStart(2, '0')}</span><div><a class="wl-title" href="${esc(w.href)}">${esc(w.title)}${w.external ? ' ↗' : ''}</a><p class="wl-dek">${esc(w.dek)}</p></div><span class="meta wl-meta">${esc(w.topic)} · ${esc(w.date)}${w.external ? ' · external' : ''}</span></li>`).join('')}</ol>`
 

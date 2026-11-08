@@ -1,3 +1,44 @@
+# QA results — V2 sky + editorial (2026-11-08)
+
+## V2.1 glass panel (2026-11-08)
+| Command | Result |
+|---|---|
+| `node tests/sky.mjs` (Chromium) | **22 / 22 pass** (panel check now reads glass pixels: lighter at *Currently*, reverses at top) |
+| `node tests/sky.mjs … webkit` | **22 / 22 pass** |
+| `node tests/glass-contrast.mjs` — 4 treatments × home at scroll 0/700/1800 | **all pass WCAG AA from pixels** (tightest 4.51:1) |
+| `node tests/glass-contrast.mjs … jelly,tide /work/hinge/,/about/,/playground/,/writing/` | **all pass** |
+| `node tests/a11y.mjs` (axe) | **no violations** (axe cannot see through the canvas — hence the pixel test) |
+| `node tests/smoke.mjs` | Chromium all pass; WebKit 1 failure: *lead video plays when visible* — **also fails on 9b6c0fb** (checked side by side, 3×), so it predates the glass; an explicit `play()` works, the scroll-triggered autoplay in headless WebKit does not |
+| `node tests/perf-glass.mjs` | no frame-rate change with the pointer over the panel (1440×900@2, @1, 390×844@3); sky copy 0.1–0.2 ms |
+| `npx tsc -p sky/tsconfig.json` | clean |
+
+Fixed during QA: grey labels failed on frosted glass (`--meta` → #41474F, floor raised); masthead text sat outside the contrast mask; links stayed dark in white-ink treatments (`--link` resolves at :root — overridden); case-study bar, steps and video Play pill were white-on-white in white ink; the glass froze mid-transition when the sky paused at the bottom of the page (scheduler dropped the last redraw).
+
+Machine: macOS (Darwin 25.4), Apple Silicon. Playwright 1.64.0 — Chromium 1248 with `--use-angle=metal --enable-gpu` (hardware-accelerated WebGL2), WebKit 2370. Local server `http://127.0.0.1:5471/`. Firefox not run.
+
+| Command | Result |
+|---|---|
+| `node tests/sky.mjs` (Chromium) | **22 / 22 pass** |
+| `node tests/sky.mjs … webkit` | **22 / 22 pass** |
+| `node tests/playground.mjs` | **4 / 4 pass** — Meadow, Pond, Hive, Lanterns respond to a drawn loop |
+| `node tests/smoke.mjs` (19 routes × 5 widths × 2 engines) | first full run: 9 failures (FrameFlow facts overflow at 390; `/lab/deck/` no h1 + overflow) → fixed → re-run of the failing routes in both engines: **all checks passed** |
+| `node tests/a11y.mjs` (axe, WCAG 2.0–2.2 A/AA, 13 routes × 2 widths) | **no violations** |
+| `node tests/dj.mjs` on `/lab/deck/` | 5 failures (mixer read-back), **identical on PR #2 baseline** — pre-existing |
+| `node scripts/build-content.mjs --check` ×2 | up to date both times (deterministic) |
+| `npx tsc -p sky/tsconfig.json` | clean |
+| Sky Study reference: `npm run typecheck && npm test` | clean, 42 / 42 |
+| Manual overflow sweep, 15 routes at 320 px | none |
+
+sky.mjs covers: text before sky; default scene; wheel scrolls page in browse (camera unchanged); mouse drags a margin cloud (state + pixels); keyboard entry to Edit sky with inert sheet and focus in toolbar; draw → new cloud (state + pixels after formation); undo/redo; corner-handle resize; arrows/Delete/⌘Z; Golden hour changes hour, pixels and highlight warmth; Escape restores exact scroll and focus; navigate to a case study and back with a saved still; reload persistence; reset persists and never writes the default; grouped-edit drag survives an immediate reload (regression for a review finding); scroll progress raises opacity with no width/position change and reverses; renderer pauses when veiled and resumes; no page errors; no-WebGL2 fallback; storage throwing → memory + notice; context loss/restore; reduced motion → no drift; 390 px touch tap does not draw, editor fits and restores scroll.
+
+Code review (independent agent) found one high bug — grouped edits (drag, resize, nudge) were not autosaved — plus edge cases (pending saves dropped on navigation, wheel transaction outliving edit mode, stuck gesture on permanent context loss, loose still validation). All fixed; regression test added.
+
+Performance: see SKY-INTEGRATION.md (measured fps / GPU ms per frame, init time).
+
+Not verified: Firefox; real phones/tablets; low-end GPUs; screen readers beyond axe and the live-region text; 200 % zoom was checked only via the 320–390 px layouts that it maps to, not with browser zoom itself.
+
+---
+
 # QA-RESULTS — Portfolio V1
 
 Environment: macOS (Darwin 25.4), Node 22.21, Playwright 1.64 (Chromium 1248, WebKit 2370), local

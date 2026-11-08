@@ -1,4 +1,29 @@
-# PROGRESS — Portfolio V1
+# PROGRESS — Portfolio V2 (sky + editorial)
+
+- **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v2`
+- **Branch:** `design/sky-glass-editorial-v2`, from `design/portfolio-v1-content-media` @ `feca664` (draft PR #2 head, clean, equal to origin).
+- **Protected, never written:** `~/Development/Personal/maria-showalter` (`iris-header-preview`, dirty), `main`, `CNAME`, PR #1/#2 branches, `~/Development/sky-study` (read-only reference).
+- **Preview:** launch config `portfolio-v2` → `python3 -m http.server 5471 --bind 127.0.0.1 --directory <worktree>`.
+- **Sky engine source:** Sky Study @ `c09d1c8`, vendored by `node scripts/sync-sky-study.mjs` into `sky/vendor/sky-study/`; bundle built with `npx vite build -c sky/vite.config.mjs` → `assets/sky/portfolio-sky.js`.
+
+## Milestones (V2)
+
+- [x] S0 Audit: repos, PRs, Sky Study baseline (typecheck + 42 unit tests pass), Playground repos found (Meadow, Pond, Hive, Lanterns live).
+- [x] S1 Sky spike on the real homepage: Sky Study engine renders; draw/move/resize change scene state and pixels (tests/sky.mjs).
+- [x] S2 Browse/Edit modes, toolbar, keyboard path, persistence, reset/undo, fallbacks (no WebGL2, storage full, context loss).
+- [x] S3–S4 Sheet, hero, compact Selected Work, scroll progression; all pages on the sheet.
+- [x] S5 Playground verified by real drawing (tests/playground.mjs).
+- [x] S6 Art / DJ coming soon, About, Writing, case studies re-set; old deck at unlisted /lab/deck/.
+- [x] S7 QA (QA-RESULTS.md), perf cap for browse mode, review fixes.
+- [x] S8 Pushed `66fe5b9`; draft PR https://github.com/Mariaareadne1/maria-showalter/pull/3 (base: PR #2 branch). No preview host (Pages builds `main` only).
+
+## Next safe action
+
+Owner review of the draft PR (REVIEW-NOTES.md). Before any further change: `node tests/sky.mjs && node tests/smoke.mjs http://127.0.0.1:5471/`. Do not merge to `main` or touch `CNAME` without approval.
+
+---
+
+# Previous: PROGRESS — Portfolio V1
 
 - **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v1`
 - **Branch:** `design/portfolio-v1-content-media`, created from `design/portfolio-editorial-explorations` @ `a0204eb` (draft PR #1 head; clean and equal to origin at start).
