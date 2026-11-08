@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck (archived study) — Maria Showalter</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/home.css">
+<link rel="stylesheet" href="/assets/css/dj.css">
+<style>body{background:var(--paper)} .lab-note{padding:24px var(--sheet-pad) 0;font-size:14px;color:var(--meta)}</style>
+</head>
+<body>
+<!-- Unlisted: the V1 two-deck mixer, kept working for reference and tests/dj.mjs.
+     The public site says "DJ Deck — Coming soon". Not linked, not in the sitemap. -->
+<p class="lab-note">Archived study, not linked from the site. <a href="/">Home</a></p>
+<main id="main">
+<section class="section deck-section" id="deck" aria-labelledby="deck-h">
+  <div class="wrap">
+    <header class="sec-head"><h2 id="deck-h">Deck</h2></header>
+    <div class="deck-layout">
+      <div class="deck-notes">
+        <p>A two-deck mixer that runs in the page. Load the two loops, or your own audio files. Nothing plays until you press Play.</p>
+        <dl class="deck-map">
+          <div><dt>Tempo</dt><dd>Changes playback rate; pitch follows, as on a turntable.</dd></div>
+          <div><dt>Sync</dt><dd>Sets both decks to the tempo shown.</dd></div>
+          <div><dt>Platter</dt><dd>Drag to nudge a playing deck faster or slower.</dd></div>
+          <div><dt>Filters</dt><dd>Low pass and high pass on both decks.</dd></div>
+          <div><dt>Crossfader</dt><dd>Equal-power blend from A to B.</dd></div>
+        </dl>
+        <p class="rights">Files you open stay in your browser. The two loops are original, synthesised for this site.</p>
+      </div>
+      <div class="deck" id="djDeck" aria-label="DJ mixer">
+        <div class="presets" role="group" aria-label="Quick start">
+          <button type="button" class="chip" data-pair="assets/audio/loop-a.m4a,assets/audio/loop-b.m4a">Load both loops</button>
+        </div>
+        <div class="console">
+          <div class="unit" data-deck="A">
+            <div class="unit-head"><span class="deck-id">A</span><label class="vh" for="selA">Track for deck A</label><select id="selA" class="track"></select></div>
+            <label class="file"><input type="file" accept="audio/*" data-file="A"><span>Open your own file…</span></label>
+            <div class="platter" data-platter="A" aria-hidden="true"><div class="disc"><span class="mark"></span><span class="hub"></span></div></div>
+            <p class="status meta" data-status="A" role="status" aria-live="polite">No track loaded</p>
+            <div class="pos"><label class="meta" for="posA">Position</label><input id="posA" type="range" min="0" max="1000" value="0" step="1" disabled data-seek="A"><output class="meta" data-time="A">0:00</output></div>
+            <div class="transport"><button type="button" class="play" data-play="A" disabled aria-label="Play deck A">Play</button><span class="meta"><span data-bpm="A">—</span> BPM</span></div>
+            <div class="fader"><label class="meta" for="volA">Volume</label><input id="volA" type="range" min="0" max="100" value="85" data-vol="A"></div>
+          </div>
+
+          <div class="mixer">
+            <div class="fader"><label class="meta" for="tempo">Tempo <output id="tempoOut" for="tempo">100</output></label><input id="tempo" type="range" min="60" max="180" value="100" step="1"></div>
+            <button type="button" class="sync" id="syncBtn" aria-pressed="false">Sync</button>
+            <div class="fader"><label class="meta" for="lp">Low pass</label><input id="lp" type="range" min="0" max="100" value="100"></div>
+            <div class="fader"><label class="meta" for="hp">High pass</label><input id="hp" type="range" min="0" max="100" value="0"></div>
+            <canvas class="meter" id="meter" width="200" height="40" aria-hidden="true"></canvas>
+          </div>
+
+          <div class="unit" data-deck="B">
+            <div class="unit-head"><span class="deck-id">B</span><label class="vh" for="selB">Track for deck B</label><select id="selB" class="track"></select></div>
+            <label class="file"><input type="file" accept="audio/*" data-file="B"><span>Open your own file…</span></label>
+            <div class="platter" data-platter="B" aria-hidden="true"><div class="disc"><span class="mark"></span><span class="hub"></span></div></div>
+            <p class="status meta" data-status="B" role="status" aria-live="polite">No track loaded</p>
+            <div class="pos"><label class="meta" for="posB">Position</label><input id="posB" type="range" min="0" max="1000" value="0" step="1" disabled data-seek="B"><output class="meta" data-time="B">0:00</output></div>
+            <div class="transport"><button type="button" class="play" data-play="B" disabled aria-label="Play deck B">Play</button><span class="meta"><span data-bpm="B">—</span> BPM</span></div>
+            <div class="fader"><label class="meta" for="volB">Volume</label><input id="volB" type="range" min="0" max="100" value="85" data-vol="B"></div>
+          </div>
+
+          <div class="xfade"><label class="meta" for="xf"><span>A</span><span>Crossfader</span><span>B</span></label><input id="xf" type="range" min="0" max="100" value="50"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/dj.js" defer></script>
+</body>
+</html>

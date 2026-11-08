@@ -62,7 +62,7 @@
   --sheet-radius: 22px;
   --gutter: var(--sheet-pad);
   --col-gap: clamp(18px, 3vw, 28px);
-  --section: clamp(64px, 9vw, 104px);
+  --section: clamp(56px, 7vw, 80px);
   --max: var(--sheet-max);
 
   /* Scroll progress (0 open sky → 1 reading surface); set by sky-page.js. */

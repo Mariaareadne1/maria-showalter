@@ -7,15 +7,18 @@
 <link rel="canonical" href="https://mariashowalter.com/work/frameflow/"/>
 <meta name="description" content="FrameFlow turns a raw macOS screen recording into a composed product film: native ScreenCaptureKit capture, automatic camera Moments, one renderer for preview and export."/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-<link rel="preload" href="/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/tokens.css"/>
 <link rel="stylesheet" href="/assets/css/base.css"/>
 <link rel="stylesheet" href="/assets/css/nav.css"/>
+<link rel="stylesheet" href="/assets/css/sky.css">
 <link rel="stylesheet" href="../case-study.css"/>
 </head>
-<body>
+<body id="top">
 <a class="skip" href="#main">Skip to content</a>
+<div class="sky" aria-hidden="true"><div class="sky-still"></div><div class="sky-veil"></div></div>
+<div class="sheet">
 <!-- region:nav current=work -->
 <header class="mast"><div class="wrap">
 <a class="home" href="/">Maria Showalter</a>
@@ -312,7 +315,9 @@ const vp = viewportOf(cam)
 </div>
 </div></footer>
 <!-- /region:foot -->
+</div>
 <script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/sky-page.js"></script>
 
 <script>
   // Autoplay the hero film only when the reader hasn't asked for reduced motion.

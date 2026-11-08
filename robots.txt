@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /docs/
+Disallow: /lab/
 Sitemap: https://mariashowalter.com/sitemap.xml

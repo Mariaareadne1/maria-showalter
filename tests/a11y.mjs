@@ -6,7 +6,7 @@ import AxeBuilder from '@axe-core/playwright'
 const base = process.argv[2] ?? 'http://127.0.0.1:5461/'
 const ROUTES = ['', 'work/', 'work/frameflow/', 'work/hinge/', 'work/edition/', 'work/orbit/', 'work/filo/',
   'playground/', 'art/', 'writing/', 'about/', '404.html', 'blog-pid.html']
-const browser = await chromium.launch()
+const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] })
 let total = 0
 for (const [w, h] of [[1440, 900], [390, 844]]) {
   for (const r of ROUTES) {

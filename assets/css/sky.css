@@ -15,7 +15,7 @@ body { background: transparent; }
 .sky[data-reveal="true"] .sky-canvas { opacity: 1; }
 .sky[data-state="unsupported"] .sky-canvas, .sky[data-state="lost"] .sky-canvas { opacity: 0; }
 /* The veil quiets the sky as the reader moves into the work. Cheap: one composited layer. */
-.sky-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #EEF4FA 0%, #F4F6F5 100%); opacity: calc(0.2 + var(--sky-p) * 0.42); }
+.sky-veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #EEF4FA 0%, #F4F6F5 100%); opacity: calc(0.27 + var(--sky-p) * 0.36); }
 .sky-surface { position: absolute; inset: 0; touch-action: auto; -webkit-user-select: none; user-select: none; }
 .sky-surface[data-cursor="grab"] { cursor: grab; }
 .sky-surface[data-dragging] { cursor: grabbing; }

@@ -4,26 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Playground — Maria Showalter</title>
-<meta name="description" content="Things to try by Maria Showalter: Hinge, Edition, Orbit, the TONUS synthesizer and a two-deck mixer.">
+<meta name="description" content="Small playable worlds by Maria Showalter: Meadow, Pond, Hive and Lanterns.">
 <link rel="canonical" href="https://mariashowalter.com/playground/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Playground — Maria Showalter">
-<meta property="og:description" content="Things to try by Maria Showalter: Hinge, Edition, Orbit, the TONUS synthesizer and a two-deck mixer.">
+<meta property="og:description" content="Small playable worlds by Maria Showalter: Meadow, Pond, Hive and Lanterns.">
 <meta property="og:url" content="https://mariashowalter.com/playground/">
 <meta property="og:image" content="https://mariashowalter.com/assets/media/frameflow/frameflow-step-1.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#F6F6F2">
+<meta name="theme-color" content="#C9DBEC">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/nav.css">
+<link rel="stylesheet" href="/assets/css/sky.css">
 <link rel="stylesheet" href="/assets/css/media.css">
 <link rel="stylesheet" href="/assets/css/pages.css">
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
+<div class="sky" aria-hidden="true"><div class="sky-still"></div><div class="sky-veil"></div></div>
+<div class="sheet">
 <!-- region:nav current=playground -->
 <header class="mast"><div class="wrap">
 <a class="home" href="/">Maria Showalter</a>
@@ -38,10 +41,11 @@
 <!-- /region:nav -->
 <main id="main" class="wrap">
 <header class="page-head"><h1>Playground</h1>
-<p class="lede">Things to try. Each one opens the working experiment.</p></header>
+<p class="lede">Small worlds you can draw in. Each one opens the live piece.</p></header>
 <!-- region:playground-list -->
 <ul class="pg-grid"><li class="pg"><a class="pg-link" href="https://meadow-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/meadow-960.jpg" alt="A painted meadow tile on paper with sheep at different depths" width="960" height="600"></span><span class="pg-name">Meadow <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a loop on the grass and it becomes a sheep.</span></a><a class="pg-src" href="https://github.com/Mariaareadne1/meadow-interactive">Source<span class="vh"> for Meadow</span></a></li><li class="pg"><a class="pg-link" href="https://pond-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/pond-960.jpg" alt="A painted pond tile with koi, a duck and duckling, lily pads and frogs" width="960" height="600"></span><span class="pg-name">Pond <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Loops on the water turn into koi, ducks and frogs.</span></a><a class="pg-src" href="https://github.com/Mariaareadne1/pond-interactive">Source<span class="vh"> for Pond</span></a></li><li class="pg"><a class="pg-link" href="https://hive-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/hive-960.jpg" alt="A painted cottage garden tile with flowers, a straw skep and bees" width="960" height="600"></span><span class="pg-name">Hive <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a flower in the garden; the bees come to visit.</span></a><a class="pg-src" href="https://github.com/Mariaareadne1/hive-interactive">Source<span class="vh"> for Hive</span></a></li><li class="pg"><a class="pg-link" href="https://lanterns-interactive.vercel.app/"><span class="thumb"><img loading="lazy" decoding="async" src="/assets/media/playground/lanterns-960.jpg" alt="Paper lanterns rising over a lake at night" width="960" height="600"></span><span class="pg-name">Lanterns <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">Draw a lantern over the lake at dusk and let it drift up.</span></a><a class="pg-src" href="https://github.com/Mariaareadne1/lanterns-interactive">Source<span class="vh"> for Lanterns</span></a></li></ul>
 <!-- /region:playground-list -->
+<p class="pg-note">The DJ deck is coming soon. Sky Study, the cloud renderer behind the homepage, is editable from <a href="/">the homepage</a>.</p>
 </main>
 <!-- region:foot -->
 <footer class="site-foot"><div class="wrap">
@@ -52,6 +56,8 @@
 </div>
 </div></footer>
 <!-- /region:foot -->
+</div>
 <script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/sky-page.js"></script>
 </body>
 </html>
