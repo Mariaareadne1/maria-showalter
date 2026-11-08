@@ -11,15 +11,15 @@
 - [x] S0 Audit: repos, PRs, Sky Study baseline (typecheck + 42 unit tests pass), Playground repos found (Meadow, Pond, Hive, Lanterns live).
 - [x] S1 Sky spike on the real homepage: Sky Study engine renders; draw/move/resize change scene state and pixels (tests/sky.mjs).
 - [x] S2 Browse/Edit modes, toolbar, keyboard path, persistence, reset/undo, fallbacks (no WebGL2, storage full, context loss).
-- [ ] S3–S4 Panel/hero/compact work — homepage done (first pass); inner pages not yet on the sheet.
-- [ ] S5 Playground verification by real interaction
-- [ ] S6 Supporting pages
-- [ ] S7 QA pass
-- [ ] S8 Push + draft PR
+- [x] S3–S4 Sheet, hero, compact Selected Work, scroll progression; all pages on the sheet.
+- [x] S5 Playground verified by real drawing (tests/playground.mjs).
+- [x] S6 Art / DJ coming soon, About, Writing, case studies re-set; old deck at unlisted /lab/deck/.
+- [x] S7 QA (QA-RESULTS.md), perf cap for browse mode, review fixes.
+- [x] S8 Pushed; draft PR (see below).
 
 ## Next safe action
 
-Wrap inner pages in the sheet (`scripts/` migration), restyle pages.css/case-study.css for the 800 px sheet, then `node tests/sky.mjs` and `node tests/smoke.mjs http://127.0.0.1:5471/`.
+Owner review of the draft PR (REVIEW-NOTES.md). Before any further change: `node tests/sky.mjs && node tests/smoke.mjs http://127.0.0.1:5471/`. Do not merge to `main` or touch `CNAME` without approval.
 
 ---
 

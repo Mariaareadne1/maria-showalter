@@ -67,6 +67,7 @@ export class SkyInteraction {
   }
 
   attach(engine: Engine | null) {
+    if (!engine) this.cancelGesture();
     this.offFrame?.();
     this.offFrame = null;
     this.engine = engine;
@@ -75,6 +76,7 @@ export class SkyInteraction {
 
   setMode(mode: Mode) {
     this.cancelGesture();
+    this.endWheel();
     this.mode = mode;
     this.surface.dataset.mode = mode;
     if (mode === 'browse') useSky.getState().select(null);
@@ -269,7 +271,11 @@ export class SkyInteraction {
   private onUp = (e: PointerEvent) => {
     const g = this.gesture;
     const engine = this.engine;
-    if (!g || g.pointerId !== e.pointerId || !engine) return;
+    if (!g || g.pointerId !== e.pointerId) return;
+    if (!engine) {
+      this.cancelGesture();
+      return;
+    }
     this.gesture = null;
     delete this.surface.dataset.dragging;
     const st = useSky.getState();
@@ -319,6 +325,10 @@ export class SkyInteraction {
   private onWheel = (e: WheelEvent) => {
     const engine = this.engine;
     if (this.mode !== 'edit' || !engine) return;
+    if (this.gesture) {
+      e.preventDefault();
+      return;
+    }
     const st = useSky.getState();
     const { x, y } = this.local(e);
     let id = this.wheelTarget;
@@ -328,6 +338,7 @@ export class SkyInteraction {
     }
     window.clearTimeout(this.wheelTimer);
     this.wheelTimer = window.setTimeout(() => {
+      this.wheelTimer = 0;
       this.wheelTarget = null;
       useSky.getState().end();
     }, 350);
@@ -340,6 +351,14 @@ export class SkyInteraction {
     const dist = clamp(cloudDistance(cam, c) * Math.exp(e.deltaY * 0.0016), DISTANCE_MIN, DISTANCE_MAX);
     st.updateCloud(c.id, { position: this.liftAboveGround(moveToDistance(cam, c.position, dist), c) });
   };
+
+  private endWheel() {
+    if (!this.wheelTimer) return;
+    window.clearTimeout(this.wheelTimer);
+    this.wheelTimer = 0;
+    this.wheelTarget = null;
+    useSky.getState().end();
+  }
 
   /* ---------- keyboard alternatives (called by the editor) ---------- */
 

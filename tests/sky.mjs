@@ -195,6 +195,26 @@ await check('reload keeps clouds and light; reset restores the original and pers
   assert(await page.evaluate(() => localStorage.getItem('mariashowalter.com/sky/scene/v1')) === null, 'default written to storage')
 })
 
+await check('a browse-mode drag (a grouped edit) is saved and survives reload', async () => {
+  const t = await page.evaluate(() => {
+    const { sky, store } = window.__portfolioSky
+    return store.getState().scene.clouds.map((c) => ({ id: c.id, r: sky.engine.screenRect(c) })).filter((x) => x.r && x.r.x + x.r.w / 2 > 1200 && x.r.y + x.r.h / 2 < 480)[0]
+  })
+  assert(t, 'no margin cloud')
+  const cx = t.r.x + t.r.w / 2, cy = t.r.y + t.r.h / 2
+  await page.mouse.move(cx, cy); await page.mouse.down()
+  for (let i = 1; i <= 10; i++) await page.mouse.move(cx, cy + i * 12)
+  await page.mouse.up()
+  const moved = (await scene()).clouds.find((c) => c.id === t.id).position
+  await page.waitForTimeout(150) // well under the 400 ms debounce: pagehide must flush
+  await page.reload()
+  await ready()
+  const after = (await scene()).clouds.find((c) => c.id === t.id)?.position
+  assert(after && Math.hypot(after[0] - moved[0], after[1] - moved[1], after[2] - moved[2]) < 1e-6, 'drag lost on reload')
+  await page.click('.hero [data-sky-edit]'); await page.click('[data-act="reset"]'); await page.click('[data-act="done"]')
+  await page.waitForTimeout(600)
+})
+
 await check('scroll progress: panel opacity rises, width never changes, and reverses', async () => {
   const read = () => page.evaluate(() => { const s = document.querySelector('.sheet'); return { w: s.getBoundingClientRect().width, x: s.getBoundingClientRect().x, bg: getComputedStyle(s).backgroundColor, p: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sky-p')) } })
   const a = await read()

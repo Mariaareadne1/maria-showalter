@@ -10,13 +10,15 @@
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/home.css">
 <link rel="stylesheet" href="/assets/css/dj.css">
-<style>body{background:var(--paper)} .lab-note{padding:24px var(--sheet-pad) 0;font-size:14px;color:var(--meta)}</style>
+<style>body{background:var(--paper)} .lab-h{margin:0;padding:32px 20px 0;font:500 28px/1.1 var(--sans)} .lab-h span{color:var(--meta);font-weight:400} .lab-note{padding:8px 20px 0;font-size:14px;color:var(--meta)} .lab-scroll{overflow-x:auto} body{overflow-x:hidden}</style>
 </head>
 <body>
 <!-- Unlisted: the V1 two-deck mixer, kept working for reference and tests/dj.mjs.
      The public site says "DJ Deck — Coming soon". Not linked, not in the sitemap. -->
-<p class="lab-note">Archived study, not linked from the site. <a href="/">Home</a></p>
 <main id="main">
+<h1 class="lab-h">Deck <span>(archived V1 study)</span></h1>
+<p class="lab-note">Not linked from the site. <a href="/">Home</a></p>
+<div class="lab-scroll">
 <section class="section deck-section" id="deck" aria-labelledby="deck-h">
   <div class="wrap">
     <header class="sec-head"><h2 id="deck-h">Deck</h2></header>
@@ -71,6 +73,7 @@
     </div>
   </div>
 </section>
+</div>
 </main>
 <script src="/assets/js/site.js" defer></script>
 <script src="/assets/js/dj.js" defer></script>

@@ -59,13 +59,29 @@ export function startAutosave(onState: (s: StorageState, message?: string) => vo
       failed = true;
     }
   };
-  const unsub = useSky.subscribe((state, prev) => {
-    if (state.scene === prev.scene || state.txn) return;
+  let pending = false;
+  const flush = () => {
+    if (!pending) return;
     window.clearTimeout(timer);
-    timer = window.setTimeout(save, SAVE_DELAY_MS);
+    pending = false;
+    save();
+  };
+  // A grouped edit (drag, resize, nudge) changes the scene while txn is open and
+  // closes with end(), which leaves the scene reference unchanged — so also save
+  // when a transaction closes.
+  const unsub = useSky.subscribe((state, prev) => {
+    if (state.txn || !(state.scene !== prev.scene || prev.txn)) return;
+    window.clearTimeout(timer);
+    pending = true;
+    timer = window.setTimeout(() => { pending = false; save(); }, SAVE_DELAY_MS);
   });
+  const onHide = () => { if (document.visibilityState === 'hidden') flush(); };
+  window.addEventListener('pagehide', flush);
+  document.addEventListener('visibilitychange', onHide);
   return () => {
     window.clearTimeout(timer);
+    window.removeEventListener('pagehide', flush);
+    document.removeEventListener('visibilitychange', onHide);
     unsub();
   };
 }

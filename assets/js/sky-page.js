@@ -14,7 +14,8 @@
     if (!el) return
     var url = null
     try { url = localStorage.getItem(STILL_KEY) } catch (e) { url = null }
-    if (url && url.indexOf('data:image/jpeg;base64,') === 0) el.style.backgroundImage = 'url("' + url + '")'
+    if (url && /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(url)) el.style.backgroundImage = 'url("' + url + '")'
+    else el.style.removeProperty('background-image')
   }
 
   var raf = 0

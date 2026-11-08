@@ -19,6 +19,14 @@ export interface ControllerEvents {
 }
 
 const STILL_DELAY_MS = 1200;
+
+/**
+ * Behind frosted glass and a veil, the sky needs far fewer raymarched pixels than
+ * Sky Study's own full-screen view. Browse uses a fixed, modest render scale (the
+ * engine still accumulates samples over frames); Edit Sky switches to Sky Study's
+ * adaptive 'auto' mode while the visitor is looking straight at the clouds.
+ */
+const browseQuality = () => ((window.devicePixelRatio || 1) >= 1.5 ? 'reduced' : 'balanced') as 'reduced' | 'balanced';
 const REVEAL_FRAMES = 6;
 
 export class PortfolioSkyController {
@@ -45,7 +53,7 @@ export class PortfolioSkyController {
     const st = useSky.getState();
     st.replaceScene(scene);
     st.setView(PORTFOLIO_VIEW);
-    st.setQuality('auto');
+    st.setQuality(browseQuality());
     if (message) this.events.announce(message);
 
     this.cleanups.push(
@@ -55,7 +63,7 @@ export class PortfolioSkyController {
       }),
       watchOtherTabs(() => this.editing),
       useSky.subscribe((s, prev) => {
-        if (s.scene !== prev.scene && !s.txn) this.scheduleStill();
+        if (!s.txn && (s.scene !== prev.scene || prev.txn)) this.scheduleStill();
       }),
     );
 
@@ -132,6 +140,7 @@ export class PortfolioSkyController {
 
   setInteractionMode(mode: 'browse' | 'edit') {
     this.editing = mode === 'edit';
+    useSky.getState().setQuality(this.editing ? 'auto' : browseQuality());
     this.interaction.setMode(mode);
     this.updateRunState();
   }

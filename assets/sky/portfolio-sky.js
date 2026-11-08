@@ -1875,10 +1875,10 @@ var un = 7, $ = (e) => e ? k.getState().scene.clouds.find((t) => t.id === e) : v
 		this.hooks = t, this.surface = e, e.innerHTML = "<svg class=\"sky-strokes\" aria-hidden=\"true\"></svg>\n<div class=\"sky-selection\" hidden><i data-handle=\"nw\"></i><i data-handle=\"ne\"></i><i data-handle=\"sw\"></i><i data-handle=\"se\"></i><span class=\"sky-selection-label\"></span></div>", this.svg = e.querySelector("svg"), this.sel = e.querySelector(".sky-selection"), this.label = e.querySelector(".sky-selection-label"), e.addEventListener("pointerdown", this.onDown), e.addEventListener("pointermove", this.onMove), e.addEventListener("pointerup", this.onUp), e.addEventListener("pointercancel", this.onUp), e.addEventListener("contextmenu", this.onContext), e.addEventListener("wheel", this.onWheel, { passive: !1 }), this.setMode("browse");
 	}
 	attach(e) {
-		this.offFrame?.(), this.offFrame = null, this.engine = e, e && (this.offFrame = e.onFrame(({ now: e }) => this.paint(e)));
+		e || this.cancelGesture(), this.offFrame?.(), this.offFrame = null, this.engine = e, e && (this.offFrame = e.onFrame(({ now: e }) => this.paint(e)));
 	}
 	setMode(e) {
-		this.cancelGesture(), this.mode = e, this.surface.dataset.mode = e, e === "browse" && k.getState().select(null), this.surface.dataset.cursor = e === "edit" && this.tool === "draw" ? "draw" : "default";
+		this.cancelGesture(), this.endWheel(), this.mode = e, this.surface.dataset.mode = e, e === "browse" && k.getState().select(null), this.surface.dataset.cursor = e === "edit" && this.tool === "draw" ? "draw" : "default";
 	}
 	setTool(e) {
 		this.tool = e, this.surface.dataset.tool = e, this.surface.dataset.cursor = this.mode === "edit" && e === "draw" ? "draw" : "default";
@@ -2027,7 +2027,11 @@ var un = 7, $ = (e) => e ? k.getState().scene.clouds.find((t) => t.id === e) : v
 	};
 	onUp = (e) => {
 		let t = this.gesture, n = this.engine;
-		if (!t || t.pointerId !== e.pointerId || !n) return;
+		if (!t || t.pointerId !== e.pointerId) return;
+		if (!n) {
+			this.cancelGesture();
+			return;
+		}
 		this.gesture = null, delete this.surface.dataset.dragging;
 		let r = k.getState();
 		if (t.kind !== "stroke") {
@@ -2064,9 +2068,13 @@ var un = 7, $ = (e) => e ? k.getState().scene.clouds.find((t) => t.id === e) : v
 	onWheel = (e) => {
 		let t = this.engine;
 		if (this.mode !== "edit" || !t) return;
+		if (this.gesture) {
+			e.preventDefault();
+			return;
+		}
 		let n = k.getState(), { x: r, y: i } = this.local(e), a = this.wheelTarget;
 		a === null && (a = this.pickAt(r, i)?.id ?? null, this.wheelTarget = a ?? "sky"), window.clearTimeout(this.wheelTimer), this.wheelTimer = window.setTimeout(() => {
-			this.wheelTarget = null, k.getState().end();
+			this.wheelTimer = 0, this.wheelTarget = null, k.getState().end();
 		}, 350), e.preventDefault();
 		let o = $(a);
 		if (!o) return;
@@ -2074,6 +2082,9 @@ var un = 7, $ = (e) => e ? k.getState().scene.clouds.find((t) => t.id === e) : v
 		let s = t.camera.position, c = u(Kt(s, o) * Math.exp(e.deltaY * .0016), 3, 42);
 		n.updateCloud(o.id, { position: this.liftAboveGround(qt(s, o.position, c), o) });
 	};
+	endWheel() {
+		this.wheelTimer && (window.clearTimeout(this.wheelTimer), this.wheelTimer = 0, this.wheelTarget = null, k.getState().end());
+	}
 	addCloudFromKeyboard() {
 		let e = this.engine;
 		if (!e) return !1;
@@ -2159,11 +2170,17 @@ function _n(e) {
 		} catch {
 			n || e("memory", "This browser isn’t saving the sky, so your clouds will last until you close the tab."), n = !0;
 		}
-	}, i = k.subscribe((e, n) => {
-		e.scene === n.scene || e.txn || (window.clearTimeout(t), t = window.setTimeout(r, mn));
-	});
-	return () => {
-		window.clearTimeout(t), i();
+	}, i = !1, a = () => {
+		i && (window.clearTimeout(t), i = !1, r());
+	}, o = k.subscribe((e, n) => {
+		!e.txn && (e.scene !== n.scene || n.txn) && (window.clearTimeout(t), i = !0, t = window.setTimeout(() => {
+			i = !1, r();
+		}, mn));
+	}), s = () => {
+		document.visibilityState === "hidden" && a();
+	};
+	return window.addEventListener("pagehide", a), document.addEventListener("visibilitychange", s), () => {
+		window.clearTimeout(t), window.removeEventListener("pagehide", a), document.removeEventListener("visibilitychange", s), o();
 	};
 }
 function vn(e) {
@@ -2180,7 +2197,7 @@ function yn(e) {
 	} catch {}
 }
 // sky/src/controller.ts
-var bn = 1200, xn = 6, Sn = class {
+var bn = 1200, xn = () => (window.devicePixelRatio || 1) >= 1.5 ? "reduced" : "balanced", Sn = 6, Cn = class {
 	events;
 	engine = null;
 	interaction;
@@ -2197,10 +2214,10 @@ var bn = 1200, xn = 6, Sn = class {
 	}
 	mount() {
 		let { scene: e, message: t } = gn(), n = k.getState();
-		n.replaceScene(e), n.setView(jt), n.setQuality("auto"), t && this.events.announce(t), this.cleanups.push(_n((e, t) => {
+		n.replaceScene(e), n.setView(jt), n.setQuality(xn()), t && this.events.announce(t), this.cleanups.push(_n((e, t) => {
 			e === "memory" && t && this.events.announce(t), this.root.dataset.storage = e;
 		}), vn(() => this.editing), k.subscribe((e, t) => {
-			e.scene !== t.scene && !e.txn && this.scheduleStill();
+			!e.txn && (e.scene !== t.scene || t.txn) && this.scheduleStill();
 		}));
 		let r = (e) => {
 			e.preventDefault(), this.engine?.stop(), this.setState("lost", "The graphics context was lost; the sky will come back when the browser restores it.");
@@ -2225,7 +2242,7 @@ var bn = 1200, xn = 6, Sn = class {
 			return;
 		}
 		this.engine.snapView(), this.framesSeen = 0, this.interaction.attach(this.engine), this.engine.onFrame(() => {
-			++this.framesSeen === xn && (this.root.dataset.reveal = "true");
+			++this.framesSeen === Sn && (this.root.dataset.reveal = "true");
 		}), this.setState("live"), this.updateRunState();
 	}
 	setState(e, t) {
@@ -2244,7 +2261,7 @@ var bn = 1200, xn = 6, Sn = class {
 		this.intensity = Math.min(1, Math.max(0, e)), this.updateRunState();
 	}
 	setInteractionMode(e) {
-		this.editing = e === "edit", this.interaction.setMode(e), this.updateRunState();
+		this.editing = e === "edit", k.getState().setQuality(this.editing ? "auto" : xn()), this.interaction.setMode(e), this.updateRunState();
 	}
 	updateRunState() {
 		let e = this.engine;
@@ -2287,12 +2304,12 @@ var bn = 1200, xn = 6, Sn = class {
 		for (let e of this.cleanups.splice(0)) e();
 		this.interaction.dispose(), this.engine?.dispose(), this.engine = null;
 	}
-}, Cn = ye.map((e) => ({
+}, wn = ye.map((e) => ({
 	id: e.id,
 	label: e.short,
 	full: e.label,
 	hour: e.hour
-})), wn = class {
+})), Tn = class {
 	sky;
 	opts;
 	el;
@@ -2308,7 +2325,7 @@ var bn = 1200, xn = 6, Sn = class {
     <button type="button" data-tool="move" aria-pressed="false">Move</button>
   </div>
   <div class="sky-group" role="group" aria-label="Light">
-    ${Cn.map((e) => `<button type="button" data-hour="${e.hour}" aria-pressed="false" title="${e.full}">${e.label}</button>`).join("")}
+    ${wn.map((e) => `<button type="button" data-hour="${e.hour}" aria-pressed="false" title="${e.full}">${e.label}</button>`).join("")}
   </div>
   <div class="sky-group" role="group" aria-label="Edit">
     <button type="button" data-act="add">Add cloud</button>
@@ -2347,7 +2364,7 @@ var bn = 1200, xn = 6, Sn = class {
 		let n = k.getState();
 		if (t.dataset.tool) this.setTool(t.dataset.tool);
 		else if (t.dataset.hour) {
-			let e = Cn.find((e) => String(e.hour) === t.dataset.hour);
+			let e = wn.find((e) => String(e.hour) === t.dataset.hour);
 			n.setHour(Number(t.dataset.hour)), this.opts.announce(`${e?.full ?? "Light"}.`);
 		} else switch (t.dataset.act) {
 			case "add":
@@ -2410,17 +2427,17 @@ var bn = 1200, xn = 6, Sn = class {
 	};
 };
 // sky/src/main.ts
-function Tn() {
+function En() {
 	let e = document.getElementById("sky-status");
 	return e || (e = document.createElement("p"), e.id = "sky-status", e.className = "vh", e.setAttribute("role", "status"), e.setAttribute("aria-live", "polite"), document.body.appendChild(e)), e;
 }
-var En = "Sky editing needs WebGL 2";
-function Dn() {
+var Dn = "Sky editing needs WebGL 2";
+function On() {
 	let e = document.querySelector("[data-sky-live]"), t = document.querySelector(".sheet");
 	if (!e || !t) return;
-	let n = Tn(), r = "", i = (e) => {
+	let n = En(), r = "", i = (e) => {
 		n.textContent = e === r ? `${e} ` : e, r = n.textContent;
-	}, a = Array.from(document.querySelectorAll("[data-sky-edit]")), o = new Sn(e, {
+	}, a = Array.from(document.querySelectorAll("[data-sky-edit]")), o = new Cn(e, {
 		onState: (e, t) => {
 			document.documentElement.dataset.sky = e;
 			let n = e === "unsupported" || e === "lost";
@@ -2428,13 +2445,13 @@ function Dn() {
 			for (let e of a) {
 				e.disabled = n;
 				let r = e.querySelector("[data-sky-label]");
-				r && (r.textContent = n ? En : "Edit sky"), n && t ? e.title = t : e.removeAttribute("title");
+				r && (r.textContent = n ? Dn : "Edit sky"), n && t ? e.title = t : e.removeAttribute("title");
 			}
 			e === "lost" && s?.open && s.exit();
 		},
 		announce: i
 	}), s = null;
-	s = new wn(o, {
+	s = new Tn(o, {
 		sheet: t,
 		announce: i
 	});
@@ -2449,8 +2466,8 @@ function Dn() {
 		e.persisted && o.resume();
 	});
 }
-var On = () => {
+var kn = () => {
 	let e = window.requestIdleCallback;
-	e ? e(Dn, { timeout: 500 }) : window.setTimeout(Dn, 1);
+	e ? e(On, { timeout: 500 }) : window.setTimeout(On, 1);
 };
-document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", On) : On();
+document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", kn) : kn();

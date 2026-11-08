@@ -1,3 +1,35 @@
+# Design decisions — V2 sky + editorial (2026-11-08)
+
+## Direction
+A small near-white publication floating on Sky Study's real sky. One narrow sheet (800 px max), black type, no accent colour; the sky and the project media supply all colour. No droplets, no forced sunset, no second 3D object.
+
+## Choices made by looking at screenshots
+- **Type:** Instrument Sans throughout (OFL, self-hosted), Plex Mono only for tiny data labels. Tried against PR #2's Fraunces + Plex: the serif display face fought the photographic clouds and read as the familiar "editorial AI" look; one sans next to the sky is calmer and makes **Design Engineer** unmistakable. Role 80 px / 500 / −0.045em.
+- **Sheet:** 800 px, 22 px radius, `rgba(250,250,247, .66 → .97)` with 22 px blur, inner top highlight and a soft long shadow. Width and position never animate; only `--sky-p` (0→1, measured from the top of the page to *Currently*) changes background alpha and a veil over the sky. Phone: sheet 16 px from the edges, starts 38svh down so the sky opens the page.
+- **Sky paleness:** the raw engine noon sky behind a page read slate-blue; a constant 27 % pale veil (rising to 63 % at *Currently*) gives the pale daylight asked for without touching the renderer.
+- **Selected Work:** compact. FrameFlow lead at 16:9 across the column, then an even 2-column grid (16:10). Title, one line, quiet links. Filo now shows real dev-build screenshots instead of the diagram.
+- **Playground:** four square tiles in one row on desktop (two on tablet, phone), visibly different from the work cards. Only worlds verified by drawing in them.
+- **Also:** Art and DJ Deck as two plain "Coming soon" rows; `#deck` anchor kept for old links.
+- **Edit sky:** a quiet pill with a tiny cloud glyph next to "Selected Work ↓"; a second corner pill appears only on wide screens once the hero button has scrolled away. Hover/focus hint "Draw and move clouds".
+
+## Screenshot critique (final pass, 1440×900 and 390×844; images in docs/v2-review/)
+1. Sky visible and beautiful, enough margin? Yes at 1280–1440 (240–320 px each side, clouds composed in the margins). At 1024 the margins are ~110 px: clouds are cut but still read. Phone opens on a band of sky with one cloud.
+2. Panel narrower than before and readable at every width? 800 px vs PR #2's full-bleed 1520 px grid. Contrast of body text on the most transparent state stays above 12:1 (near-black on ≈#E3EAF0).
+3. Design Engineer clear without repeated intro? One heading, one sentence; the wordmark is only in the masthead.
+4. Glass refined, not a dashboard card? One surface, no nested glass, media sit directly on it.
+5. Selected Work scannable in seconds? Five items, one rhythm, no hover-only information.
+6. Playground reads as independent playable worlds? Yes: painted tiles, verbs that match what each does, no product duplicates.
+7. Sky→off-white natural? A single continuous value; reversible; no width jump (tested).
+8. Effects competing with content? The play/pause chips were restyled smaller; the corner Edit pill hides at the top and once the sky is veiled.
+9. Coherent across pages? Same sheet, masthead, type and footer on Work, Playground, Art, Writing, About, case studies, essays, 404.
+10. Substantially different from the previous site? Yes (before/after: docs/v2-review/before-after-*.jpg).
+
+## Open for the owner
+- Lead item size: FrameFlow at full column width is the largest thing on the page; an all-equal grid is a one-line change in `scripts/build-content.mjs`.
+- Portrait: slot kept (hidden) — see REVIEW-NOTES.md.
+
+---
+
 # DESIGN-DECISIONS — Portfolio V1
 
 The earlier exploration record (three studies, background modes, provisional tokens) is in git at

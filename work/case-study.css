@@ -27,9 +27,9 @@ figure { margin: 0; }
 .cs-title em, .cs-section h2 em, .cs-section h3 em { font: inherit; color: inherit; }
 .cs-sub { margin: 12px 0 0; font: 400 var(--step-2)/1.4 var(--sans); color: var(--ink); max-width: 36ch; }
 .cs-lede { margin: 20px 0 0; max-width: 62ch; font-size: 16.5px; line-height: 1.65; color: var(--text); }
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px 24px; margin: 32px 0 0; padding-top: 18px; border-top: 1px solid var(--rule); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 16px 24px; margin: 32px 0 0; padding-top: 18px; border-top: 1px solid var(--rule); }
 .facts dt { font: 400 12.5px/1.4 var(--sans); color: var(--meta); margin-bottom: 4px; }
-.facts dd { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.facts dd { margin: 0; overflow-wrap: anywhere; font-size: 14px; line-height: 1.5; color: var(--ink); }
 
 /* media sits on the sheet, edge to edge of the text column */
 .film, .film-pair { margin: 8px 0 0; padding: 0 var(--cs-pad); }
