@@ -33,6 +33,14 @@ uniform float uFrostEdge, uFrostCore, uFrostVar, uRipple;
 uniform vec3 uTint0, uTint1;
 uniform float uTintA0, uTintA1, uGain, uLift, uCoreShade, uSat;
 uniform float uSpec, uInner, uAbsorb, uGrain;
+// 3D edge: bulge of the rounded rim, its diffuse shading, gloss, fresnel, inner caustic, lens
+uniform float uBulge, uShade, uGloss, uFresnel, uCaustic, uLens, uSheen;
+// Local text shading (V2.2): soft halos behind each run of text, in canvas CSS px.
+const int MAX_TEXT = 64;
+uniform vec4 uText[MAX_TEXT];   // x0, y0, x1, y1
+uniform int uTextN;
+uniform float uLocal;           // 1 = shade/frost only behind text; 0 = the whole column
+uniform float uHalo;            // halo falloff, px
 uniform float uInkLight;     // 1 = white text sits on this glass
 uniform float uContrastLum;  // background luminance floor (dark ink) or ceiling (white ink)
 uniform float uSkyLod;       // mip bias for the texture's own resolution
@@ -113,7 +121,8 @@ void main() {
   // Surface tension: the bevel widens a little where the pointer is near the rim.
   vec2 dp = q - uPtr;
   float near = uNear * exp(-dot(dp, dp) / (150.0 * 150.0)) * uJelly;
-  float bevel = uBevel * (1.0 + 0.55 * near);
+  // narrow panels (phones) get a proportionally narrower bevel, so it stays clear of the text
+  float bevel = min(uBevel, max(hb.x * 0.12, 14.0)) * (1.0 + 0.55 * near);
 
   // The bevel field uses a rounder corner so the normal turns smoothly.
   float rr = max(uRadius, bevel);
@@ -129,6 +138,14 @@ void main() {
   // Refraction: at the bevel the slab bends rays outward, so the rim shows a
   // compressed strip of sky from just beyond the edge.
   vec2 disp = n * bevel * uRefract * pow(rim, 1.6) * 1.6;
+  // The rounded edge as a 3D surface: a circular profile, so the rim is steep at the
+  // outside and flattens into the top face.
+  float hgt = sqrt(max(1.0 - rim * rim, 0.0));
+  float slope = rim / max(hgt, 0.2);
+  vec3 n3 = normalize(vec3(n * slope * uBulge, 1.0));
+  // A thick lens: where the surface is steep the view through it bends hard, smearing
+  // and stretching the sky near the edge.
+  disp += n3.xy * bevel * uLens;
   // gentle waviness across the whole surface
   vec2 wv = vec2(fbm(qp / 210.0), fbm(qp / 210.0 + 19.7)) - 0.5;
   disp += wv * uRipple * 2.0;
@@ -147,6 +164,16 @@ void main() {
   float sideE = min(q.x - uPanel.x, uPanel.z - q.x);
   float column = smoothstep(uPad * 0.1, uPad * 2.4, sideE);
   float core = column * smoothstep(bevel * 0.5, bevel * 3.5, e);
+  float textMask = 0.0;
+  if (uLocal > 0.5) {
+    for (int i = 0; i < MAX_TEXT; i++) {
+      if (i >= uTextN) break;
+      vec4 r = uText[i];
+      float d = sdBox(q - (r.xy + r.zw) * 0.5, (r.zw - r.xy) * 0.5 + 4.0, 6.0);
+      textMask = max(textMask, 1.0 - smoothstep(0.0, uHalo, max(d, 0.0)));
+    }
+    core = textMask;
+  }
   float lod = mix(uFrostEdge, uFrostCore, core) + uFrostVar * (fbm(qp / 340.0 + 3.3) - 0.5) * 2.0;
   // pressing into the slab clears its frost a little, like warmth on frosted glass
   lod -= (0.9 * uHover + 0.8 * max(uPress, 0.0)) * g * uJelly;
@@ -184,26 +211,62 @@ void main() {
   // The dome (or dent) catches the light: sheen on its lit side, shade on the other.
   vec2 domeN = dp / R * g * dome;            // surface slope of the bump
   float domeLight = dot(domeN, toLight);
-  col += 0.24 * domeLight * (1.0 - 0.4 * uInkLight);
-  col += 0.035 * uJelly * uHover * g;
+  if (uInkLight < 0.5) {
+    col += 0.24 * domeLight;
+    col += 0.035 * uJelly * uHover * g;
+  }
+
+  // The top face reflects the sky: a broad, soft diagonal sheen that depends on the
+  // viewing position (so it stays put while the slab slides under it).
+  vec2 vn = (q + uOrigin) / uViewport;
+  float sheen = smoothstep(0.95, 0.0, vn.x * 0.55 + vn.y * 0.9) * 0.7 + 0.3 * exp(-pow((vn.x * 0.7 + vn.y - 0.62) / 0.07, 2.0));
+  col += uSheen * sheen;
 
   // Contrast floor (or ceiling) behind text, computed per pixel in linear light.
   // text can sit anywhere in the column, including the masthead on the top rim
   float tm = smoothstep(uPad * 0.15, uPad * 0.85, sideE) * smoothstep(4.0, 14.0, e);
+  if (uLocal > 0.5) tm = textMask;
   vec3 lin = toLin(col);
   float L = lum(lin);
   if (uInkLight > 0.5) {
     // pull toward a deeper shade of the body tint (keeps the hue; no grey smudges)
+    // Soft compression into [0, ceiling]: bright clouds behind stay visible as shapes
+    // (tinted glass) instead of being clipped flat, and nothing exceeds the ceiling.
     vec3 deep = toLin(tint) * 0.55;
-    float Ld = lum(deep);
-    float k = L > uContrastLum ? clamp((L - uContrastLum) / max(L - Ld, 1e-3), 0.0, 1.0) : 0.0;
-    lin = mix(lin, deep, k * tm);
+    float Ld = max(lum(deep), 1e-4);
+    float Lt = uContrastLum * (1.0 - exp(-L / (uContrastLum * 0.85)));
+    vec3 mapped = mix(lin * (Lt / max(L, 1e-4)), deep * (Lt / Ld), 0.3);
+    lin = mix(lin, mapped, tm);
   } else if (L < uContrastLum) {
     float k = (uContrastLum - L) / max(1.0 - L, 1e-3);
     lin = mix(lin, mix(lin, vec3(1.0), k), tm);
   }
   col = toSrgb(lin);
 
+  // 3D lighting of the rim, after the contrast step and kept off the text column:
+  // diffuse relative to the flat top, a tight gloss, fresnel brightening at grazing
+  // angles, and light gathered inside the lower rim (caustic).
+  vec3 L3 = normalize(vec3(-0.35, -0.9, 0.9));
+  float diff = dot(n3, L3) - L3.z;
+  diff = diff < 0.0 ? diff * 0.55 : diff;   // the shaded wall stays glass, not a dark band
+  vec3 H3 = normalize(L3 + vec3(0.0, 0.0, 1.0));
+  float gloss = pow(max(dot(n3, H3), 0.0), 70.0);
+  float fres = pow(1.0 - n3.z, 2.2);
+  float caustic = exp(-pow((e - bevel * 0.38) / (bevel * 0.16), 2.0)) * max(-facing, 0.0);
+  float edgeW = 1.0 - smoothstep(uPad * 0.55, uPad * 0.92, sideE) * smoothstep(12.0, 20.0, e);
+  // contact line where the slab meets what is behind it, and a lit lip just inside
+  float contact = exp(-e / 1.4);
+  float lip = exp(-pow((e - 3.0) / 1.6, 2.0)) * (0.5 + 0.5 * max(facing, 0.0));
+  col += (uShade * diff + uGloss * gloss + uFresnel * fres + uCaustic * caustic) * edgeW;
+  col += uShade * (0.55 * lip - 0.35 * contact * max(-facing, 0.2));
+
+  // White ink: the dome is shaded after the contrast step so it stays visible. Shade
+  // may darken freely (it only helps white text); highlights are held back over text.
+  if (uInkLight > 0.5) {
+    float dl = 0.3 * domeLight;
+    col += dl < 0.0 ? vec3(dl) : vec3(dl) * (1.0 - 0.75 * tm);
+    col += 0.03 * uJelly * uHover * g * (1.0 - 0.8 * tm);
+  }
   col += (ign(gl_FragCoord.xy + 17.0) - 0.5) * uGrain;
   float a = clamp(0.5 - sd, 0.0, 1.0);
   outColor = vec4(clamp(col, 0.0, 1.0) * a, a);

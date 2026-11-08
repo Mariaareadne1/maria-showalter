@@ -2,7 +2,7 @@
 // For each treatment and scroll position: screenshot with all text made transparent, then for
 // every visible text box compare its computed ink colour with the darkest/lightest 5% of the
 // pixels behind it. WCAG 2.2 AA: 4.5:1, or 3:1 for large text (≥ 24px, or ≥ 18.66px bold).
-//   node tests/glass-contrast.mjs [base] [ids] [paths]
+//   node tests/glass-contrast.mjs [base] [ids] [paths] [width=1440]
 import { chromium } from '@playwright/test'
 import { PNG } from 'pngjs'
 const base = process.argv[2] || 'http://127.0.0.1:5471'
@@ -12,7 +12,8 @@ const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 
 const L = (r, g, b) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
 const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] })
-const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })
+const width = +(process.argv[5] || 1440)
+const page = await browser.newPage({ viewport: { width, height: width < 700 ? 844 : 900 }, deviceScaleFactor: 1 })
 let failed = 0
 for (const path of paths) for (const id of ids) {
   for (const y of [0, 700, 1800]) {
@@ -63,7 +64,7 @@ for (const path of paths) for (const id of ids) {
       if (r / need < worst.r / (worst.need || 1)) worst = { r: +r.toFixed(2), need, text: b.text }
     }
     if (bad) failed++
-    console.log(`${bad ? 'FAIL' : 'PASS'} ${path} ${id} scroll ${y}: ${boxes.length} text boxes, ${bad} below AA; tightest ${worst.r}:1 (needs ${worst.need}) "${worst.text}"`)
+    console.log(`${bad ? 'FAIL' : 'PASS'} ${width}px ${path} ${id} scroll ${y}: ${boxes.length} text boxes, ${bad} below AA; tightest ${worst.r}:1 (needs ${worst.need}) "${worst.text}"`)
   }
 }
 await browser.close()

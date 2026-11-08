@@ -38,6 +38,19 @@ export interface Treatment {
   /** Linear luminance floor (dark ink) or ceiling (white ink) behind text. */
   contrastLum: number;
   jelly: number;
+  /** 3D rim (V2.2): steepness of the rounded edge, its diffuse shading, gloss, fresnel,
+   *  inner caustic, and the extra lensing through the steep part. Omitted = flat (V2.1). */
+  bulge?: number;
+  shade?: number;
+  gloss?: number;
+  fresnel?: number;
+  caustic?: number;
+  lens?: number;
+  /** Broad reflection of the sky on the top face. */
+  sheen?: number;
+  /** Shade and frost only behind text (soft halos), leaving the rest of the glass clear. */
+  local?: boolean;
+  halo?: number;
 }
 
 const rgb = (hex: string): Rgb => {
@@ -87,5 +100,26 @@ export const TREATMENTS: Record<string, Treatment> = {
   },
 };
 
-export const TREATMENT_ORDER = ['lens', 'jelly', 'smoke', 'tide'] as const;
-export const DEFAULT_TREATMENT = 'jelly';
+// V2.2 — the owner's pick: Sky glass colour and white type with Soft jelly's thickness,
+// made into an object that sits on the sky: a thick, lit, rounded rim that lenses hard,
+// and a clearer middle so the clouds read through it.
+TREATMENTS.skyjelly = {
+  id: 'skyjelly', label: 'Sky jelly', ink: 'light', radius: 36, bevel: 58, refract: 0.35, dispersion: 0.09,
+  frostEdge: 0.8, frostCore: 2.6, frostVar: 0.7, ripple: 2.2,
+  tint0: rgb('#22598F'), tint1: rgb('#172A40'), tintA0: 0.22, tintA1: 0.88,
+  gain: 0.94, lift: 0, coreShade: 0, sat: 1.3, spec: 0.35, inner: 0.06, absorb: 0.18, grain: 0.01,
+  contrastLum: LIGHT_CEIL, jelly: 1,
+  bulge: 2.2, shade: 0.8, gloss: 1.1, fresnel: 0.4, caustic: 0.3, lens: 0.45, sheen: 0.09,
+};
+// The same object nearly clear: the sky barely tinted, frost only where text needs it.
+TREATMENTS.clearjelly = {
+  id: 'clearjelly', label: 'Clear jelly', ink: 'light', radius: 36, bevel: 58, refract: 0.35, dispersion: 0.1,
+  frostEdge: 0.8, frostCore: 4.2, frostVar: 0.6, ripple: 2.4,
+  tint0: rgb('#3C78B4'), tint1: rgb('#1A2E46'), tintA0: 0.1, tintA1: 0.86,
+  gain: 0.97, lift: 0, coreShade: 0, sat: 1.2, spec: 0.35, inner: 0.06, absorb: 0.16, grain: 0.01,
+  contrastLum: LIGHT_CEIL, jelly: 1,
+  bulge: 2.2, shade: 0.8, gloss: 1.1, fresnel: 0.45, caustic: 0.3, lens: 0.5, sheen: 0.08, local: true, halo: 110,
+};
+
+export const TREATMENT_ORDER = ['skyjelly', 'clearjelly', 'lens', 'jelly', 'smoke', 'tide'] as const;
+export const DEFAULT_TREATMENT = 'skyjelly';

@@ -1,5 +1,20 @@
 # Design decisions — V2 sky + editorial (2026-11-08)
 
+## V2.2 — Sky jelly: a 3D slab on the sky (2026-11-08)
+Owner feedback on V2.1: liked Sky glass's colour and white type and Soft jelly's texture, but none had enough depth — it should feel 3D, like a jelly object laid on top (references: a "liquid glass" UI kit, two glass weather cards).
+
+What the references do that V2.1 did not, and what changed:
+- **The rim is a lit, rounded surface.** The shader now builds a 3D normal from a circular edge profile (`bulge`) and lights it: diffuse relative to the flat top (`shade`), a tight gloss (`gloss`), fresnel at grazing angles, light gathered inside the lower rim (`caustic`), a lit lip and a contact line at the very edge. Lit top-left, a softer glass wall bottom-right.
+- **Heavy lensing where the surface is steep** (`lens`): the sky smears and stretches through the edge, with stronger dispersion.
+- **Seen through, not painted over.** For white ink, brightness behind text is now *compressed* smoothly into the readable range instead of clipped flat, so clouds behind stay visible as darker shapes in tinted glass. Rim lighting is applied after the contrast step and kept off the text column, so it can be bright.
+- **A reflection on the top face** (`sheen`), fixed to the view so the slab slides beneath it.
+- **Lifted off the sky:** contact, offset and ambient shadows, cool-tinted (CSS, `html[data-glass=skyjelly]`).
+- **Pointer response** for white ink is shaded after the contrast step (shade free, highlights held back over text), so the dome and the press dent read without hurting legibility.
+- Bevel scales with panel width (≤ 12 % of the half-width) so phones keep the edge clear of the text.
+
+Two new treatments: **Sky jelly** (default now — Sky glass colour, jelly thickness, 3D rim) and **Clear jelly** (the same object nearly clear; shading and frost only in soft halos behind each run of text, positions sent to the shader each frame). Older four kept in the switcher for comparison. See docs/v2-review/glass-skyjelly-clearjelly.jpg, glass-skyjelly-frames.jpg, glass-jelly-demo.mp4.
+
+
 ## V2.1 — the panel as a glass object (2026-11-08)
 Owner feedback: the panel read as "a frosted card over a sky"; make it a real material — thickness, refraction, luminous edges, varied frost, a quiet physical response — and try white type. The sky is the environment; the panel is the object.
 

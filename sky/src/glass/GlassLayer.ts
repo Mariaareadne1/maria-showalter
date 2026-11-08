@@ -15,6 +15,9 @@ export interface GlassFrame {
   near: number;
   press: number;
   slosh: number;
+  /** Text runs in canvas CSS px (x0, y0, x1, y1), at most 64. */
+  text: Float32Array;
+  textN: number;
 }
 
 /** Source of the sky behind the sheet: the live renderer's canvas or an image. */
@@ -191,6 +194,17 @@ export class GlassLayer {
     gl.uniform1f(u('uPress'), f.press);
     gl.uniform1f(u('uSlosh'), f.slosh);
     gl.uniform1f(u('uJelly'), t.jelly);
+    gl.uniform1f(u('uBulge'), t.bulge ?? 0);
+    gl.uniform1f(u('uShade'), t.shade ?? 0);
+    gl.uniform1f(u('uGloss'), t.gloss ?? 0);
+    gl.uniform1f(u('uFresnel'), t.fresnel ?? 0);
+    gl.uniform1f(u('uCaustic'), t.caustic ?? 0);
+    gl.uniform1f(u('uLens'), t.lens ?? 0);
+    gl.uniform1f(u('uSheen'), t.sheen ?? 0);
+    gl.uniform1f(u('uLocal'), t.local ? 1 : 0);
+    gl.uniform1f(u('uHalo'), t.halo ?? 28);
+    gl.uniform4fv(u('uText[0]'), f.text);
+    gl.uniform1i(u('uTextN'), f.textN);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 

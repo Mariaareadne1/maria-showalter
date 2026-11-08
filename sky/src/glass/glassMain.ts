@@ -131,6 +131,44 @@ function boot() {
     layer.resize(canvasRect.width, canvasRect.height, GLASS_SCALE);
   }
 
+  // Text runs on the sheet, for local shading behind them. The node list is cached;
+  // rects are read each draw (layout is clean then, so this is cheap).
+  const MAX_TEXT = 64;
+  const textBuf = new Float32Array(MAX_TEXT * 4);
+  let textNodes: Text[] = [];
+  const range = document.createRange();
+  function collectText() {
+    const out: Text[] = [];
+    const walker = document.createTreeWalker(sheet!, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const n = walker.currentNode as Text;
+      if (!n.textContent?.trim()) continue;
+      const el = n.parentElement;
+      if (!el || el.closest('.media, .thumb, .vh, dialog, [hidden], .glass-clip, script, style')) continue;
+      out.push(n);
+    }
+    textNodes = out;
+  }
+  collectText();
+  new MutationObserver(() => collectText()).observe(sheet, { childList: true, subtree: true, characterData: true });
+  function textRects(): number {
+    if (!treatment.local) return 0;
+    let k = 0;
+    const top = canvasRect.top, left = canvasRect.left, h = canvasRect.height;
+    for (const n of textNodes) {
+      if (k >= MAX_TEXT) break;
+      range.selectNodeContents(n);
+      const r = range.getBoundingClientRect();
+      if (!r.width || r.bottom < top - 40 || r.top > top + h + 40) continue;
+      textBuf[k * 4] = r.left - left;
+      textBuf[k * 4 + 1] = r.top - top;
+      textBuf[k * 4 + 2] = r.right - left;
+      textBuf[k * 4 + 3] = r.bottom - top;
+      k++;
+    }
+    return k;
+  }
+
   function draw(now: number) {
     if (html.classList.contains('sky-editing') || !layer.ready) return;
     const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
@@ -150,7 +188,10 @@ function boot() {
       near: jelly.near.value,
       press: jelly.press.value,
       slosh: jelly.slosh.value,
+      text: textBuf,
+      textN: 0,
     };
+    f.textN = textRects();
     layer.draw(f, treatment);
     pending = false;
     stats.draws++;

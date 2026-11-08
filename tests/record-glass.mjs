@@ -10,7 +10,7 @@ const tmp = mkdtempSync(`${tmpdir()}/glassrec-`)
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] })
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, recordVideo: { dir: tmp, size: { width: 1280, height: 800 } } })
 const page = await ctx.newPage()
-await page.goto(`${base}/?glass=jelly`)
+await page.goto(`${base}/?glass=skyjelly`)
 await page.waitForFunction(() => window.__portfolioGlass?.state === 'live', null, { timeout: 30000 })
 await page.waitForTimeout(1500)
 const m = page.mouse
@@ -24,7 +24,7 @@ for (let i = 0; i < 14; i++) { await m.wheel(0, 70); await page.waitForTimeout(3
 await page.waitForTimeout(1200)
 for (let i = 0; i < 14; i++) { await m.wheel(0, -70); await page.waitForTimeout(30) }
 await page.waitForTimeout(1200)
-for (const id of ['lens', 'smoke', 'tide', 'jelly']) {
+for (const id of ['clearjelly', 'jelly', 'tide', 'skyjelly']) {
   await page.evaluate((id) => window.__portfolioGlass.setTreatment(id), id)
   await m.move(420 + Math.random() * 300, 360, { steps: 25 })
   await page.waitForTimeout(1500)

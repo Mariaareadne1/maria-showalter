@@ -216,7 +216,7 @@ await check('a browse-mode drag (a grouped edit) is saved and survives reload', 
   await page.waitForTimeout(600)
 })
 
-await check('scroll progress: panel opacity rises, width never changes, and reverses', async () => {
+await check('scroll progress: panel settles into a reading surface, width never changes, and reverses', async () => {
   // The panel's body is drawn by the glass canvas when it is live, so read its pixels
   // (a strip inside the side padding, clear of text) rather than a CSS colour.
   const panelLum = async () => {
@@ -236,7 +236,8 @@ await check('scroll progress: panel opacity rises, width never changes, and reve
   const c = await read()
   assert(a.w === b.w && a.x === b.x, 'sheet width/position changed')
   assert(b.p > 0.95 && a.p < 0.05 && c.p < 0.05, `p ${a.p} ${b.p} ${c.p}`)
-  assert(b.bg > a.bg + 12, `panel did not turn lighter (${a.bg.toFixed(0)} → ${b.bg.toFixed(0)})`)
+  // dark ink: the panel turns off-white; white ink: it deepens. Either way it must change.
+  assert(Math.abs(b.bg - a.bg) > 12, `panel did not change for reading (${a.bg.toFixed(0)} → ${b.bg.toFixed(0)})`)
   assert(Math.abs(c.bg - a.bg) < 10, `did not reverse (${a.bg.toFixed(0)} → ${c.bg.toFixed(0)})`)
 })
 

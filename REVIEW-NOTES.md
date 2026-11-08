@@ -1,5 +1,11 @@
 # Review notes — V2 (for the owner)
 
+## V2.2 — Sky jelly
+- Default is now **Sky jelly**. Compare with **Clear jelly** (more sky visible through it, soft shading only behind the text): http://127.0.0.1:5471/?glass-compare
+- Pictures: docs/v2-review/glass-skyjelly-clearjelly.jpg (top / scrolled), glass-skyjelly-frames.jpg (rest, near rim, hover, press, release), glass-jelly-demo.mp4.
+- White type stays AA everywhere by measurement (tests/glass-contrast.mjs at 1440 and 390 px). The cost is that the glass is a tinted blue, not water-clear: white text on a pale sky cannot be both clear and readable. Clear jelly is the closest to clear.
+
+
 ## V2.1 glass panel — decide
 - **Which material?** Open http://127.0.0.1:5471/?glass-compare and use the switcher (bottom right), or look at docs/v2-review/glass-treatments-0.jpg / -1500.jpg. Default is *Soft jelly*; *Sky glass* is the white-type option I'd consider most. Making a treatment the default is one line: `DEFAULT_TREATMENT` in sky/src/glass/treatments.ts, then `npx vite build -c sky/vite.config.mjs`.
 - **Motion:** docs/v2-review/glass-jelly-demo.mp4 (pointer near rim, hover, press/spring-back, scroll trail, all four treatments) and glass-jelly-frames.jpg.
