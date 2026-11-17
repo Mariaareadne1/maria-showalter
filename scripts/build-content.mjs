@@ -106,8 +106,8 @@ const thumb = (x) => x.still
   : `<span class="thumb thumb-type" aria-hidden="true"><span>${esc(x.name)}</span></span>`
 
 /* Playground: independent playable worlds (verified live; see PROJECT-AUDIT.md). */
-const pgItem = (x, withSource) => `<li class="pg"><a class="pg-link" href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)} <span class="pg-ext" aria-hidden="true">↗</span></span><span class="pg-line">${esc(x.line)}</span></a>${withSource && x.repo ? `<a class="pg-src" href="${esc(x.repo)}">Source<span class="vh"> for ${esc(x.name)}</span></a>` : ''}</li>`
-R['home-playground'] = () => `<ul class="pg-row">${site.playground.slice(0, 4).map((x) => pgItem(x, false)).join('')}</ul>`
+const pgItem = (x, withSource) => `<li class="pg"><a class="pg-link" href="${esc(x.href)}">${thumb(x)}<span class="pg-name">${esc(x.name)}${x.href.startsWith('/') ? '' : ' <span class="pg-ext" aria-hidden="true">↗</span>'}</span><span class="pg-line">${esc(x.line)}</span></a>${withSource && x.repo ? `<a class="pg-src" href="${esc(x.repo)}">Source<span class="vh"> for ${esc(x.name)}</span></a>` : ''}</li>`
+R['home-playground'] = () => `<ul class="pg-row">${site.playground.filter((x) => x.home).slice(0, 4).concat(site.playground.filter((x) => !x.home && x.name !== 'Meadow')).slice(0, 4).map((x) => pgItem(x, false)).join('')}</ul>`
 
 R['home-soon'] = () => `<dl class="soon-list">${site.soon.map((x) => `<div><dt>${x.href ? `<a href="${esc(x.href)}">${esc(x.name)}</a>` : esc(x.name)}</dt><dd>Coming soon. <span class="meta">${esc(x.line)}</span></dd></div>`).join('')}</dl>`
 
@@ -130,7 +130,7 @@ R['work-index'] = () => {
   }).join('\n')
 }
 
-R['playground-list'] = () => `<ul class="pg-grid">${site.playground.map((x) => pgItem(x, true)).join('')}</ul>`
+R['playground-list'] = () => site.playgroundGroups.map((g) => `<section class="pg-group" aria-labelledby="pg-${g.id}"><header class="sec-head"><h2 id="pg-${g.id}">${esc(g.title)}</h2><p>${esc(g.line)}</p></header><ul class="pg-grid">${site.playground.filter((x) => x.group === g.id).map((x) => pgItem(x, true)).join('')}</ul>${g.note ? `<p class="pg-note">${esc(g.note)} <a href="https://github.com/dmitrykurash/holocloth">Holocloth ↗</a></p>` : ''}</section>`).join('\n')
 
 R['writing-list'] = () => `<ol class="wl">${site.writing.map((w, k) => `<li><span class="wl-n meta">${String(k + 1).padStart(2, '0')}</span><div><a class="wl-title" href="${esc(w.href)}">${esc(w.title)}${w.external ? ' ↗' : ''}</a><p class="wl-dek">${esc(w.dek)}</p></div><span class="meta wl-meta">${esc(w.topic)} · ${esc(w.date)}${w.external ? ' · external' : ''}</span></li>`).join('')}</ol>`
 
