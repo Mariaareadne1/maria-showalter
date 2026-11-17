@@ -144,6 +144,29 @@
    },
    "detail": "A campus map of places ranked by people you trust: rank by comparison in about log₂(n) taps and find your taste twins. Prototype; privacy rules are designed into the database but some read policies are still broader than intended.",
    "line": "A social map for saving and ranking places."
+  },
+  {
+   "id": "little-tide",
+   "name": "Little Tide",
+   "kind": "product",
+   "medium": "iPhone app · SwiftUI · WidgetKit · Swift 6",
+   "role": "Sole designer and engineer",
+   "status": "Simulator builds · not yet on the App Store",
+   "links": {
+    "case": "/work/little-tide/",
+    "source": "https://github.com/Mariaareadne1/LittleTide"
+   },
+   "media": {
+    "type": "image",
+    "src": "/assets/media/littletide/10-home-curve.jpg",
+    "poster": "/assets/media/littletide/10-home-curve.jpg",
+    "thumb": "/assets/media/littletide/10-home-curve.jpg",
+    "w": 600,
+    "h": 1304,
+    "alt": "Little Tide home screen: the Santa Monica illustration and the day's tide curve"
+   },
+   "detail": "One coast, one honest number, and a timeline you can drag: NOAA predictions drawn as a coastal postcard, with widgets.",
+   "line": "A quiet coastal almanac for iPhone."
   }
  ],
  "otherWork": [

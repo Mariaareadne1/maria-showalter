@@ -90,3 +90,6 @@
 .pg-note { margin: 22px 0 0; max-width: 70ch; font-size: 14px; line-height: 1.55; color: var(--meta); }
 @media (max-width: 900px) { .pg-group .pg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .pg-group .pg-grid { grid-template-columns: 1fr; } }
+.about-interests { color: var(--text); }
+.about-interests .label { display: block; margin-bottom: 4px; }
+.about-copy p:first-child { font: 300 clamp(24px, 2.4vw, 32px)/1.3 var(--serif); color: var(--ink); letter-spacing: -0.01em; }

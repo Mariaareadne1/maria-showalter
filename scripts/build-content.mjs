@@ -17,7 +17,7 @@ const PAGES = [
   'index.html', '404.html',
   'work/index.html', 'playground/index.html', 'art/index.html', 'writing/index.html', 'about/index.html',
   'work/frameflow/index.html', 'work/filo/index.html',
-  'work/hinge/index.html', 'work/edition/index.html', 'work/orbit/index.html',
+  'work/hinge/index.html', 'work/edition/index.html', 'work/orbit/index.html', 'work/little-tide/index.html',
   'blog-creativity.html', 'blog-cartpole.html', 'blog-pid.html', 'blog-filo.html'
 ]
 
@@ -99,7 +99,7 @@ R['home-work'] = () => {
   return `<div class="work-grid">\n${order.map(item).join('\n')}\n</div>`
 }
 
-R['home-currently'] = () => `<dl class="currently">${site.currently.map((c) => `<div><dt>${esc(c.label)}</dt><dd>${c.links ? c.links.map((l) => `<a href="${esc(l.href)}">${esc(l.text)}</a>`).join('<span class="sep">; </span>') : esc(c.text)}</dd></div>`).join('')}</dl>`
+R['home-currently'] = () => `<dl class="currently">${site.currently.map((c) => `<div><dt>${esc(c.label)}</dt><dd>${c.links ? c.links.map((l) => `<a href="${esc(l.href)}">${esc(l.text)}</a>`).join('<span class="sep" aria-hidden="true"> · </span>') : esc(c.text)}</dd></div>`).join('')}</dl>`
 
 const thumb = (x) => x.still
   ? `<span class="thumb"><img loading="lazy" decoding="async" src="${esc(x.still)}" alt="${esc(x.alt || '')}" width="960" height="600"></span>`

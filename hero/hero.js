@@ -38,7 +38,7 @@ async function n(n) {
 	try {
 		let [a, { WorldApp: s }, { WORLDS: c }] = await Promise.all([
 			t(r, n.quality ?? e()),
-			import("./WorldApp-BwihENp7.js"),
+			import("./WorldApp-DmwzqHo5.js"),
 			import("./scenes-Csh5zrJE.js")
 		]);
 		o = new s({

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Little Tide — case study — Maria Showalter</title>
+<link rel="canonical" href="https://mariashowalter.com/work/little-tide/"/>
+<meta name="description" content="Little Tide: a quiet coastal almanac for iPhone. NOAA tide predictions, a day you can scrub with your finger, and Home Screen widgets."/>
+<meta property="og:title" content="Little Tide — case study — Maria Showalter"/>
+<meta property="og:description" content="A quiet coastal almanac for iPhone: NOAA tide predictions, a tactile timeline and Home Screen widgets."/>
+<meta property="og:image" content="https://mariashowalter.com/assets/media/littletide/10-home-curve.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="theme-color" content="#F4F0E7">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="/assets/css/tokens.css"/>
+<link rel="stylesheet" href="/assets/css/base.css"/>
+<link rel="stylesheet" href="/assets/css/nav.css"/>
+<link rel="stylesheet" href="/assets/css/paper.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
+<link rel="stylesheet" href="../case-study.css"/>
+<style>
+  .phones { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); }
+  .phones img { width: 100%; height: auto; border-radius: 22px; box-shadow: 0 0 0 1px var(--rule), 0 20px 36px -26px rgba(29, 38, 24, 0.45); }
+  .phones figcaption { margin-top: 8px; }
+  .film-phone { max-width: 320px; margin: 0 auto; }
+  .film-phone video { width: 100%; border-radius: 34px; box-shadow: 0 0 0 7px #1a1d17, 0 30px 60px -30px rgba(29, 38, 24, 0.55); }
+  @media (max-width: 720px) { .phones { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<div class="sheet">
+<!-- region:nav current=work -->
+<header class="mast glass"><div class="wrap">
+<a class="home" href="/">Maria Showalter</a>
+<nav aria-label="Primary"><ul><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
+<button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
+</div></header>
+<dialog class="menu" id="menu" aria-label="Site menu"><div class="inner">
+<div class="top"><a class="home" href="/">Maria Showalter</a><button class="close" type="button" data-menu-close>Close</button></div>
+<nav aria-label="Primary (menu)"><ol><li><a href="/work/" aria-current="page">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ol></nav>
+<p class="contact-line meta"><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></p>
+</div></dialog>
+<!-- /region:nav -->
+<main id="main">
+<header class="cs-hero">
+  <span class="eyebrow">Case study · iPhone app · 2026</span>
+  <h1 class="cs-title">Little Tide</h1>
+  <p class="cs-sub">A quiet coastal almanac for iPhone.</p>
+  <p class="cs-lede">Tide apps are usually dashboards for boaters. Little Tide is for people who just want to know when the tide is out at their beach, and to feel the shape of the day: one coast, one honest number, a timeline you can drag with your finger, and Home Screen widgets that stay true to NOAA's published predictions.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Sole designer and engineer</dd></div>
+    <div><dt>Stack</dt><dd>SwiftUI · WidgetKit · Swift 6 strict concurrency · XcodeGen · no third-party dependencies</dd></div>
+    <div><dt>Status</dt><dd>Builds and runs in the iOS Simulator · iOS 17+ · not yet on the App Store</dd></div>
+    <div><dt>Links</dt><dd><a href="https://github.com/Mariaareadne1/LittleTide">Source ↗</a></dd></div>
+  </dl>
+</header>
+
+<div class="film">
+  <figure class="film-phone">
+    <video src="/assets/media/apps/littletide-widget.mp4" poster="/assets/media/littletide/home-light.jpg" muted loop playsinline controls preload="metadata"
+      aria-label="Little Tide: the Home Screen with the small and medium widgets, a tap opens the app at Santa Monica, and the day's tide curve is scrubbed."></video>
+    <figcaption><span class="label">Simulator recording</span> From the repository's own demo (iPhone 17 Pro simulator): widgets on the Home Screen, tap into the app, scrub the day. Silent loop.</figcaption>
+  </figure>
+</div>
+
+<section class="cs-section" aria-labelledby="s1">
+  <header><span class="num">01 — Overview</span><h2 id="s1">A postcard, not a dashboard.</h2></header>
+  <div class="prose">
+    <p>The home screen is a framed illustration of the chosen coast, a serif place name and one headline fact: the next high or low. Everything else is quieter. The illustration is drawn in code, one of six regional characters, and its waterline is set by NOAA's predicted height, so at low water the rocks and pilings show, and at high water they're covered.</p>
+    <p>The timeline is the app. Dragging across the day moves a marker, updates the readout and raises or lowers the drawn water, with a soft haptic at each real high and low.</p>
+  </div>
+  <div class="wide">
+    <div class="phones">
+      <figure><img src="/assets/media/littletide/10-home-curve.jpg" width="600" height="1304" loading="lazy" alt="Little Tide home: the Santa Monica illustration, the next low tide time, and the day's tide curve."><figcaption>The coast and its day.</figcaption></figure>
+      <figure><img src="/assets/media/littletide/11-home-scrubbed.jpg" width="600" height="1304" loading="lazy" alt="Little Tide with the timeline scrubbed to an earlier time; the readout and the illustration's water level have changed."><figcaption>Scrubbed: the water follows.</figcaption></figure>
+      <figure><img src="/assets/media/littletide/20-home-highlow.jpg" width="600" height="1304" loading="lazy" alt="Little Tide's table of the day's highs and lows with heights."><figcaption>Highs and lows.</figcaption></figure>
+      <figure><img src="/assets/media/littletide/30-offline-cached.jpg" width="600" height="1304" loading="lazy" alt="Little Tide showing cached predictions with an offline label."><figcaption>Offline, labelled as cached.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" aria-labelledby="s2">
+  <header><span class="num">02 — Engineering</span><h2 id="s2">Truthfulness as a design material.</h2></header>
+  <div class="prose">
+    <p>Live probing found that NOAA's local-time output skips daylight saving for some Alaska stations, and that some metadata offsets are wrong. So Little Tide fetches times in GMT and resolves each station's civil IANA time zone itself. It asks for the 15-minute curve only from reference stations; subordinate stations show stems at their published events, never an invented curve.</p>
+    <p>All of this runs through a pure, clock-injected <code>TideEngine</code>, tested across DST changes, midnight and year boundaries, uneven event counts, gaps, negative heights and malformed data. The catalogue of 3,228 US stations is bundled with the app, so search works offline, and predictions are cached and labelled when they're stale.</p>
+  </div>
+  <article class="decision">
+    <div>
+      <h3>Widgets that refresh at the right moments.</h3>
+      <p>Each widget timeline entry is a pure piece of content with its own compositions per size. Entries come every 30 minutes and one second after each tide event, and the timeline reloads at the earlier of six hours or the last known event. When the Home Screen is tinted or clear, the scene redraws as single-colour line art in system colours.</p>
+      <p class="where">LittleTideWidgets · App Group shared data</p>
+    </div>
+    <div class="phones" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+      <img src="/assets/media/littletide/home-light.jpg" width="600" height="1304" loading="lazy" alt="Home Screen with Little Tide's small and medium widgets in light mode.">
+      <img src="/assets/media/littletide/home-tinted.jpg" width="600" height="1304" loading="lazy" alt="Home Screen with the widgets redrawn as tinted line art.">
+      <img src="/assets/media/littletide/home-dark.jpg" width="600" height="1304" loading="lazy" alt="Home Screen with the widgets in dark mode.">
+    </div>
+  </article>
+</section>
+
+<section class="cs-section" id="testing" aria-labelledby="s3">
+  <header><span class="num">03 — Evidence</span><h2 id="s3">What is tested, and what isn't.</h2></header>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence table">
+    <table class="evidence">
+      <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>TideKit package tests (engine, data, catalogue)</td><td class="ok">82 / 82</td><td><code>swift test</code>, run 17 Nov 2026 for this page</td></tr>
+        <tr><td>App builds for the iOS Simulator</td><td class="ok">pass</td><td>Unsigned <code>xcodebuild</code>, iPhone 17 Pro, run 17 Nov 2026</td></tr>
+        <tr><td>Full suite including UI and widget tests</td><td class="ok">84 pass, 3 skipped</td><td>Repository record; skips are the opt-in Home Screen and live-NOAA tests. Not re-run here</td></tr>
+        <tr><td>Event times against NOAA's published tables</td><td class="ok">5 stations, every event</td><td>Repository record, matched to the minute</td></tr>
+        <tr><td>Physical iPhone: haptics, VoiceOver on hardware, signing</td><td class="no">not yet</td><td>No App Store release; no analytics, by design</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Illustrations only for now (photography is pending licensing). US NOAA stations only, iPhone only, no location permission.</p>
+</section>
+</main>
+<!-- region:foot -->
+<footer class="site-foot"><div class="wrap">
+<div class="foot-row">
+<p class="foot-name">Maria Showalter</p>
+<ul class="foot-links"><li><a href="mailto:m.showalter@columbia.edu">m.showalter@columbia.edu</a></li><li><a href="https://github.com/Mariaareadne1">GitHub</a></li><li><a href="https://www.linkedin.com/in/maria-showalter-16a905240/">LinkedIn</a></li><li><a href="https://www.youtube.com/@Mariaareadne1">YouTube</a></li></ul>
+<a class="top-link" href="#top">Back to top</a>
+</div>
+</div></footer>
+<!-- /region:foot -->
+</div>
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/glass-light.js" defer></script>
+</body>
+</html>

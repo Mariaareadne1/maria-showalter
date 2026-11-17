@@ -6047,6 +6047,7 @@ var Ei = .945 ** 60, Di = class {
 		x: 0,
 		y: 0
 	};
+	fit = 1;
 	target = new G();
 	base = new G();
 	constructor(e) {
@@ -6057,7 +6058,7 @@ var Ei = .945 ** 60, Di = class {
 	update(e, t, n, r, i, a) {
 		let o = this.scene.camera, s = a ? 0 : n.x, c = a ? 0 : n.y;
 		this.smooth.x = Ti(this.smooth.x, s, Ei, e), this.smooth.y = Ti(this.smooth.y, c, Ei, e);
-		let l = this.smooth.x, u = this.smooth.y, d = i < 1 ? 1 + (1 - i) * o.portrait.pullBack : i < 1.4 ? 1 + (1.4 - i) * .25 : 1, f = this.base.clone().sub(this.target).multiplyScalar(d);
+		let l = this.smooth.x, u = this.smooth.y, d = this.fit = i < 1 ? 1 + (1 - i) * o.portrait.pullBack : i < 1.4 ? 1 + (1.4 - i) * .25 : 1, f = this.base.clone().sub(this.target).multiplyScalar(d);
 		f.setLength(f.length() + r);
 		let p = this.camera;
 		p.aspect = i, p.position.copy(this.target).add(f);
@@ -6110,6 +6111,7 @@ const vec3 FILL_COL = ${Ii(K)};
 const vec3 AMB_COL = ${Ii(ce)};
 const vec3 HAZE_COL = ${Ii(de)};
 uniform float uHaze;
+uniform float uHazeFit; // the rig's portrait pull-back: haze is measured at the unpulled distance
 // Sylva's litSurface: key + fill from the lit floor + sky ambient
 vec3 litSurface(vec3 N, vec3 albedo, float ao, float sun) {
   float k = max(dot(N, KEY_DIR), 0.0);
@@ -6119,7 +6121,7 @@ vec3 litSurface(vec3 N, vec3 albedo, float ao, float sun) {
 }
 // aerial perspective toward lit air, by distance from the lens; darks lift least (after Sylva)
 vec3 aerial(vec3 c, vec3 w) {
-  float d = distance(w, cameraPosition);
+  float d = distance(w, cameraPosition) / max(uHazeFit, 1.0);
   float amt = uHaze * smoothstep(6.0, 15.0, d);
   float gain = smoothstep(0.003, 0.075, dot(c, vec3(0.30, 0.59, 0.11)));
   return mix(c, HAZE_COL, amt * mix(0.35, 1.0, gain));
@@ -7114,6 +7116,7 @@ void main() {
 			uTime: { value: 0 },
 			uWind: { value: +!t.reducedMotion },
 			uHaze: { value: .22 },
+			uHazeFit: { value: 1 },
 			uRes: { value: new D(1, 1) },
 			uScanO: { value: new G(...n.scanOrigin) },
 			uScanR: { value: 0 },
@@ -7344,7 +7347,7 @@ void main() {
 		let a = this.shared;
 		a.uTime.value = this.time, a.uScanOn.value = +!!i.scanOn, a.uScanR.value = i.scanR, a.uWire.value = i.wire, a.uReveal.value = r ? Math.min(1, this.introTime / .6) : Math.min(1, this.introTime / 2), this.wire.visible = i.wire > .002, this.cmat.uniforms.uGlass.value = i.glass, this.cmat.uniforms.uTime.value = this.time, this.pollen.material.uniforms.uAmbient.value = i.ambient;
 		let o = this.rig.camera.aspect;
-		this.rig.update(e, this.time, this.pointer, i.dolly, o, r || !!this.opts.still);
+		this.rig.update(e, this.time, this.pointer, i.dolly, o, r || !!this.opts.still), this.shared.uHazeFit.value = this.rig.fit;
 		let s = r ? 0 : this.pointer.x, c = r ? 0 : this.pointer.y;
 		this.lightX = wi({
 			...this.lightX,

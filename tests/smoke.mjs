@@ -8,7 +8,7 @@ const ROUTES = only.length ? only : [
   '', 'work/', 'playground/', 'art/', 'writing/', 'about/',
   'work/frameflow/', 'work/filo/',
   'blog-creativity.html', 'blog-cartpole.html', 'blog-pid.html', 'blog-filo.html',
-  'gallery.html', 'work/iris/', 'work/hinge/', 'work/edition/', 'work/orbit/', '404.html', 'lab/deck/'
+  'gallery.html', 'work/iris/', 'work/hinge/', 'work/edition/', 'work/orbit/', 'work/little-tide/', '404.html', 'lab/deck/'
 ]
 const WIDTHS = [[1440, 900], [1024, 768], [768, 1024], [390, 844], [320, 640]]
 const engines = (process.env.ENGINES ?? 'chromium,webkit').split(',')
@@ -57,8 +57,13 @@ for (const engine of engines) {
   }
 
   // Phone menu: opens as a modal, Escape closes, focus returns to the button.
+  // On the home page the bar waits below the hero (the hero panel carries its own nav),
+  // so the menu is checked after scrolling past it.
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
   await page.goto(base, { waitUntil: 'domcontentloaded' })
+  check(!(await page.locator('[data-menu-open]').isVisible()), 'home bar hidden over the hero')
+  check(await page.locator('.panel-nav a').first().isVisible(), 'hero panel nav visible')
+  await page.evaluate(() => scrollTo(0, innerHeight * 1.2))
   const btn = page.locator('[data-menu-open]')
   await btn.click()
   check(await page.locator('#menu').evaluate((d) => d.open), 'menu opens')

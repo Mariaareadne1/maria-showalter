@@ -1,3 +1,33 @@
+# PROGRESS — Portfolio V3 "Living Material" (first draft)
+
+- **Worktree:** `~/Developer/design-engineering-build-2026/living-material`
+- **Branch:** `design/living-material`, from `design/sky-glass-editorial-v2` (draft PR #3), so the unmerged case studies, media, tests and content pipeline carry over. Not merged; no PR opened yet.
+- **Live site:** untouched. `main` (GitHub Pages, CNAME mariashowalter.com) was never written. There is no preview host; review locally.
+- **Preview:** launch config `living-material` → `python3 -m http.server 5481 --bind 127.0.0.1 --directory <worktree>`.
+
+## What changed from V2
+
+- **Hero:** the Living Knot moss world (built bundle in `hero/`, from the private `moss-hero` repo, branch `sylva-systems`; `npm run build:embed` there, then copy `dist-embed/` here). A still renders first, the live canvas fades in when ready; `?hero=ribbon` shows the Ribbon, `?still` skips WebGL. The glass intro panel carries the primary nav; the glass bar appears once you scroll past the hero.
+- **Look:** the sky is gone. Warm paper, Newsreader serif headings, liquid-glass bar and panels (`assets/css/glass.css`, pointer-following light in `assets/js/glass-light.js`, after Glass Studies).
+- **Play:** Meadow runs in a window on the home page (self-hosted build in `play/meadow/`, because the Vercel deploy refuses framing). It loads only on click.
+- **Work:** FrameFlow lead, then Hinge, Edition, Orbit; an **iPhone apps** section with real Simulator footage of Little Tide and Filo (development build, test data), and Daylight marked in progress (no screenshots).
+- **New case study:** `/work/little-tide/` (facts and test counts from the repo and a fresh `swift test` run).
+- **Playground:** three groups (Painted worlds, Studies, Iris), nine new entries checked live on 2026-11-17, with the Holocloth credit on the Iris group.
+- **About:** FoRG and the Computer Music Center with their own descriptors, linked; no role or contribution claimed.
+
+## Tests (2026-11-17)
+
+- `node tests/a11y.mjs http://127.0.0.1:5481/`: no axe violations (14 routes × 2 widths).
+- `node tests/play.mjs`: Meadow wakes in the window, a drawn loop works, no errors.
+- `ENGINES=chromium node tests/smoke.mjs http://127.0.0.1:5481/`: see QA-RESULTS.md / final report.
+- Visual QA at 1672×941, 1920×1080, 1440×900 and 390×844 (hero, home sections, Work, About, Orbit and Little Tide case studies, Playground).
+
+## Next safe action
+
+Owner review (REVIEW-NOTES.md, FACTS_TO_CONFIRM.md). Do not merge to `main` or touch `CNAME` without approval: `main` deploys straight to mariashowalter.com.
+
+---
+
 # PROGRESS — Portfolio V2 (sky + editorial)
 
 - **Worktree:** `~/Developer/design-engineering-build-2026/portfolio-v2`

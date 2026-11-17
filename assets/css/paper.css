@@ -24,3 +24,9 @@ body::before {
 
 :focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.85); }
 ::selection { background: var(--moss); color: #fff; }
+body .cs-title, body .cs-section h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.015em; font-variation-settings: 'opsz' 48; }
+/* case-study section links: a small glass pill under the floating bar, not a band */
+body .cs-nav { top: calc(var(--mast-h, 60px) + 14px); padding: 0 max(12px, calc((100% - var(--sheet-max)) / 2 + 20px)); background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; pointer-events: none; }
+body .cs-nav .links { pointer-events: auto; padding: 0 16px; border-radius: 999px; background: rgba(250, 247, 238, 0.72); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75), 0 8px 20px -12px rgba(40, 50, 20, 0.35); }
+body .cs-nav a { padding: 9px 0; }
+@media (max-width: 640px) { body .cs-nav { display: none; } }
