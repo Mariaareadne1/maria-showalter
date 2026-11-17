@@ -90,11 +90,11 @@ R.foot = () => `<footer class="site-foot"><div class="wrap">
 /* Home — compact Selected Work: one slightly wider lead, then an even two-column grid.
    Thumbnail, name, one line, quiet links. Nothing hover-only. */
 R['home-work'] = () => {
-  const order = ['frameflow', 'hinge', 'edition', 'orbit', 'filo'].map((id) => byId[id])
+  const order = ['frameflow', 'hinge', 'edition', 'orbit'].map((id) => byId[id])
   const item = (p, k) => {
     const lead = k === 0
     const keys = p.links.live ? ['case', 'live'] : ['case', 'source']
-    return `<article class="wk${lead ? ' wk-lead' : ''}" aria-labelledby="wk-${p.id}">${media(p, { cls: lead ? 'm-lead' : 'm-card', sizes: lead ? '(max-width: 680px) 100vw, 720px' : '(max-width: 680px) 100vw, 360px', eager: lead })}<div class="cap"><h3 class="title" id="wk-${p.id}"><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p class="line">${esc(p.line)}</p>${links(p.links, keys)}</div></article>`
+    return `<article class="wk${lead ? ' wk-lead' : ''}" aria-labelledby="wk-${p.id}">${media(p, { cls: lead ? 'm-lead' : 'm-card', sizes: lead ? '(max-width: 680px) 100vw, 1000px' : '(max-width: 680px) 100vw, 330px', eager: lead })}<div class="cap"><h3 class="title" id="wk-${p.id}"><a href="${esc(primaryHref(p))}">${esc(p.name)}</a></h3><p class="line">${esc(p.line)}</p>${links(p.links, keys)}</div></article>`
   }
   return `<div class="work-grid">\n${order.map(item).join('\n')}\n</div>`
 }
