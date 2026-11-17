@@ -79,3 +79,21 @@
   .currently > div, .soon-list > div { grid-template-columns: 1fr; gap: 0; }
   .edit-sky-hint { display: none; }
 }
+
+/* ---------- Play: one live world, woken on request ---------- */
+.play-frame { position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; background: var(--paper-2); box-shadow: 0 0 0 1px var(--rule), 0 30px 60px -40px rgba(29, 38, 24, 0.35); }
+.play-poster, .play-live { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.play-poster { object-fit: cover; transition: opacity 600ms var(--ease), filter 600ms var(--ease); }
+.play-live { opacity: 0; transition: opacity 600ms var(--ease); background: var(--paper); }
+.play-frame.is-live .play-live { opacity: 1; }
+.play-frame.is-live .play-poster { opacity: 0; }
+.play-frame.is-loading .play-poster { filter: saturate(0.7) brightness(1.04); }
+.play-start { position: absolute; left: 50%; bottom: clamp(16px, 4%, 28px); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 999px; cursor: pointer; font: 500 15px/1 var(--sans); color: var(--ink); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms var(--ease); }
+.play-start:hover { transform: translateX(-50%) translateY(-2px); }
+.play-start:active { transform: translateX(-50%) scale(0.98); }
+.play-frame.is-loading .play-start { opacity: 0; pointer-events: none; }
+.play-dot { width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e3d99a, #7e8f3a 70%); box-shadow: 0 0 0 3px rgba(126, 143, 58, 0.15); }
+.play-cap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; align-items: baseline; margin-top: 14px; }
+.play-title { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text); max-width: 60ch; }
+.play-name { font: 400 21px/1.2 var(--serif); color: var(--ink); margin-right: 6px; }
+@media (max-width: 680px) { .play-cap { grid-template-columns: 1fr; } .play-frame { aspect-ratio: 4 / 5; } .play-poster { object-position: 50% 40%; } }

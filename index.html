@@ -4,39 +4,55 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maria Showalter — Design Engineer</title>
-<meta name="description" content="Maria Showalter, design engineer. Software, interactive tools and digital experiments: FrameFlow, Hinge, Edition, Orbit, Filo, and small playable worlds.">
+<meta name="description" content="Maria Showalter, design engineer. Software, interactive tools and digital experiments: FrameFlow, Hinge, Edition, Orbit, Filo, iPhone apps, and small playable worlds.">
 <link rel="canonical" href="https://mariashowalter.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Maria Showalter — Design Engineer">
 <meta property="og:description" content="I design and build software, interactive tools, and digital experiments.">
 <meta property="og:url" content="https://mariashowalter.com/">
-<meta property="og:image" content="https://mariashowalter.com/assets/media/frameflow/frameflow-step-1.jpg">
+<meta property="og:image" content="https://mariashowalter.com/assets/media/hero/living-knot-1600.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#C9DBEC">
+<meta name="theme-color" content="#F4F0E7">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preload" href="/assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/instrument-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-sans-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/sky/sky-still.jpg" as="image">
+<link rel="preload" href="/assets/media/hero/living-knot-1600.jpg" as="image">
 <link rel="stylesheet" href="/assets/css/tokens.css">
 <link rel="stylesheet" href="/assets/css/base.css">
 <link rel="stylesheet" href="/assets/css/nav.css">
 <link rel="stylesheet" href="/assets/css/media.css">
-<link rel="stylesheet" href="/assets/css/sky.css">
+<link rel="stylesheet" href="/assets/css/paper.css">
+<link rel="stylesheet" href="/assets/css/glass.css">
 <link rel="stylesheet" href="/assets/css/home.css">
-<link rel="modulepreload" href="/assets/sky/portfolio-sky.js">
+<link rel="stylesheet" href="/assets/css/world.css">
+<link rel="modulepreload" href="/hero/hero.js">
 </head>
 <body id="top" class="is-home">
 <a class="skip" href="#main">Skip to content</a>
-<div class="sky" id="sky" data-sky-live>
-<div class="sky-still" aria-hidden="true"></div>
-<canvas class="sky-canvas" aria-hidden="true"></canvas>
-<div class="sky-veil" aria-hidden="true"></div>
-<div class="sky-surface" aria-hidden="true"></div>
-</div>
-<button class="edit-sky sky-corner" type="button" data-sky-edit disabled aria-describedby="sky-what"><span data-sky-label>Edit sky</span></button>
+<section class="world" aria-labelledby="hero-h">
+  <img class="world-still" src="/assets/media/hero/living-knot-1600.jpg" srcset="/assets/media/hero/living-knot-1600.jpg 1600w, /assets/media/hero/living-knot-2880.jpg 2880w" sizes="100vw" alt="" aria-hidden="true" width="1600" height="1000" fetchpriority="high">
+  <canvas class="world-canvas" aria-hidden="true"></canvas>
+  <article class="intro-panel" id="intro">
+    <div class="intro-inner">
+      <p class="eyebrow">Design Engineer</p>
+      <h1 id="hero-h"><span>Maria</span> <span>Showalter</span></h1>
+      <p class="lede">I design and build software, interactive tools, and digital experiments.</p>
+      <nav class="panel-nav" aria-label="Introduction">
+        <ul>
+          <li><a href="#work"><span class="idx">01</span><span class="label">Work</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li><a href="/playground/"><span class="idx">02</span><span class="label">Playground</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li><a href="/about/"><span class="idx">03</span><span class="label">About</span><span class="arrow" aria-hidden="true">→</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </article>
+  <div class="world-foot" aria-hidden="true"><p class="world-hint"><i></i>Brush the moss</p></div>
+  <p class="vh">The image behind this introduction is a live sculpture of moss on pale stone. Moving the pointer over it parts the moss; it is decorative and has no controls.</p>
+</section>
 <div class="sheet">
 <!-- region:nav current=home -->
-<header class="mast"><div class="wrap">
+<header class="mast glass"><div class="wrap">
 <a class="home" href="/" aria-current="page">Maria Showalter</a>
 <nav aria-label="Primary"><ul><li><a href="/work/">Work</a></li><li><a href="/playground/">Playground</a></li><li><a href="/art/">Art</a></li><li><a href="/writing/">Writing</a></li><li><a href="/about/">About</a></li></ul></nav>
 <button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
@@ -49,20 +65,20 @@
 <!-- /region:nav -->
 
 <main id="main">
-<section class="hero wrap" aria-labelledby="hero-h">
-  <div class="hero-text">
-    <h1 class="role" id="hero-h"><span class="vh">Maria Showalter, </span>Design Engineer</h1>
-    <p class="intro">I design and build software, interactive tools, and digital experiments.</p>
-    <div class="hero-actions">
-      <a class="to-work" href="#work">Selected Work <span aria-hidden="true">↓</span></a>
-      <button class="edit-sky" type="button" data-sky-edit disabled aria-describedby="sky-what"><span data-sky-label>Edit sky</span></button>
-      <span class="edit-sky-hint" aria-hidden="true">Draw and move clouds</span>
-    </div>
-    <p class="vh" id="sky-what">The sky behind this page is a live volumetric cloud renderer from Sky Study. Edit sky lets you draw, move and resize clouds and change the light; keyboard controls are listed in the editor.</p>
+<section class="section wrap home-intro" aria-label="Introduction">
+  <p class="intro-big">I study computer science at Barnard College, Columbia, and build things that feel good to use: tools for making films, prints and motion, iPhone apps, and small worlds you can play with.</p>
+</section>
+
+<section class="section wrap play" id="play" aria-labelledby="play-h">
+  <header class="sec-head"><h2 id="play-h">Play</h2><a href="/playground/">More in Playground</a></header>
+  <div class="play-frame" data-play>
+    <img class="play-poster" src="/assets/media/playground/meadow-play-1600.jpg" srcset="/assets/media/playground/meadow-play-960.jpg 960w, /assets/media/playground/meadow-play-1600.jpg 1600w" sizes="(max-width: 1080px) 100vw, 1000px" alt="Meadow: a painted field on paper with a stream, hedgerows and several sheep grazing at different depths" loading="lazy" decoding="async" width="1600" height="1000">
+    <button class="play-start glass" type="button" data-play-start aria-describedby="play-what"><span class="play-dot" aria-hidden="true"></span>Play Meadow here</button>
   </div>
-  <figure class="portrait-slot" data-halftone-slot hidden>
-    <div data-halftone-stage></div>
-  </figure>
+  <div class="play-cap">
+    <p class="play-title"><span class="play-name">Meadow</span> <span id="play-what">Draw a loose loop on the grass and it becomes a sheep. Drag it back or forward through the field.</span></p>
+    <p class="links"><a href="/play/meadow/">Open full screen ↗</a><a href="https://meadow-interactive.vercel.app/">meadow-interactive.vercel.app ↗</a></p>
+  </div>
 </section>
 
 <section class="section wrap" id="work" aria-labelledby="work-h">
@@ -78,7 +94,7 @@
 <!-- /region:home-work -->
 </section>
 
-<section class="section wrap" id="currently" aria-labelledby="cur-h" data-sky-end>
+<section class="section wrap" id="currently" aria-labelledby="cur-h">
   <header class="sec-head"><h2 id="cur-h">Currently</h2></header>
 <!-- region:home-currently -->
 <dl class="currently"><div><dt>Studying</dt><dd>Computer Science at Barnard / Columbia</dd></div><div><dt>Research</dt><dd><a href="https://www.cs.columbia.edu/~ms6147/">Formal Methods and Reasoning Group</a><span class="sep">; </span><a href="https://cmc.music.columbia.edu/">Computer Music Center</a></dd></div><div><dt>Building</dt><dd>Creative software and interactive tools</dd></div></dl>
@@ -110,11 +126,9 @@
 </div></footer>
 <!-- /region:foot -->
 </div>
-<p class="vh" id="sky-status" role="status" aria-live="polite"></p>
 <script src="/assets/js/site.js" defer></script>
-<script src="/assets/js/sky-page.js"></script>
-<script type="module" src="/assets/sky/portfolio-glass.js"></script>
-<script src="/assets/js/hero-slot.js" defer></script>
-<script type="module" src="/assets/sky/portfolio-sky.js"></script>
+<script src="/assets/js/glass-light.js" defer></script>
+<script type="module" src="/assets/js/world.js"></script>
+<script src="/assets/js/play.js" defer></script>
 </body>
 </html>

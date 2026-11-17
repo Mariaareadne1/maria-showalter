@@ -1,0 +1,26 @@
+/* Paper — replaces the V2 sky. The page is warm paper with a faint, slow leaf light;
+   the moss hero (home) is the only image-led surface. Old sky markup stays inert. */
+html { background: var(--paper); }
+body { background: transparent; }
+.sky, .edit-sky, .edit-sky-hint, .sky-corner { display: none !important; }
+
+/* a whisper of daylight and grain on the paper (no images, no motion) */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 72% 18%, rgba(255, 252, 240, 0.65), transparent 70%),
+    radial-gradient(60% 50% at 10% 90%, rgba(226, 220, 200, 0.35), transparent 70%),
+    var(--paper);
+}
+
+.sheet { position: relative; z-index: 2; width: min(var(--sheet-max), 100%); margin: 0 auto; }
+
+/* Headings take the serif. */
+.page-head h1, .sec-head h2, .wk .title, .pg-name, .foot-name, .role { font-family: var(--serif); }
+.page-head h1 { font-weight: 400; letter-spacing: -0.02em; font-variation-settings: 'opsz' 60; }
+.sec-head h2 { font-size: 21px; font-weight: 400; letter-spacing: -0.01em; font-variation-settings: 'opsz' 24; }
+.wk .title { font-size: 21px; font-weight: 400; font-variation-settings: 'opsz' 24; }
+.pg-name { font-size: 18px; font-weight: 400; }
+
+:focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.85); }
+::selection { background: var(--moss); color: #fff; }

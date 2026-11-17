@@ -67,7 +67,7 @@ const R = {}
 
 R.nav = ({ current }) => {
   const items = NAV.map(([id, label, href]) => `<li><a href="${href}"${id === current ? ' aria-current="page"' : ''}>${label}</a></li>`).join('')
-  return `<header class="mast"><div class="wrap">
+  return `<header class="mast glass"><div class="wrap">
 <a class="home" href="/"${current === 'home' ? ' aria-current="page"' : ''}>${esc(site.person.name)}</a>
 <nav aria-label="Primary"><ul>${items}</ul></nav>
 <button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-expanded="false" aria-controls="menu">Menu</button>
